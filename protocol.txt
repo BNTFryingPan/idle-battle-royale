@@ -1,0 +1,37 @@
+packet format:
+server bound packets (sent from the client) should have a type-data seperator of '%'
+client bount packets (sent from the server) should have a type-data seperator of '$'
+
+in this documentation, packet sequence examples will haves lines
+that start with > and <. > means server bound, and < means client bound.
+
+packet types:
+server bound:
+    hs user
+    chatevent
+    game.requestdata
+
+client bound:
+    hs return
+    chatmsg
+    sysmsg
+
+authentication:
+
+client should send an 'hs user' packet with the clients username as the data
+the server will respond with an 'hs return' packet with the result as data
+example:
+    > hs user %bob
+    < hs return $ auth complete
+
+note that currently, authentication is very insecure, but this will be expanded in the future
+
+chat:
+
+the client should send a 'chatevent' packet to the server with a json formatted string containing the
+type of chat event, the username, and the message.
+
+the server will send clients 'chatmsg' packets and the client should print the data of the packet.
+example:
+    > chatevent %{"type":"chat","username":"bob","message":"hello!"}
+    < chatmsg ${"content":"bob> hello!"}

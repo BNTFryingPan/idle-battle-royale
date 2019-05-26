@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>Idle Battle Royale Client</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="js/game.js"></script>
+        <script src="js/upgrades.js"></script>
+        <script src="js/buildings.js"></script>
+        <script src="js/interface.js"></script>
+    </head>
+
+    <body>
+        <div id="header">
+            Idle Battle Royale Client
+        </div>
+        <div id="client-border" style="height: 90%">
+            <div id="client" style="height: 98.5%">
+                <div id="left-bar" class="bar" style="width:30%">
+                    <div id="stats" class="container">
+                        <p style="text-align: center" id="total-lootbox-display">Total Lootboxes: 0</p>
+                        <p style="text-align: center" id="lootbox-display">Lootboxes: 0</p>
+                        <p style="text-align: center" id="lbps-display">LBPS: 0</p>
+                        <p style="text-align: center"><button onclick="clickLootbox()">Open Lootbox</button></p>
+                    </div>
+                </div>
+                <div id="middle-bar" class="bar" style="width:45%">
+                    <div id='middle-bar-buttons'>
+                        <button class='mb-button' onclick="mbSwitchToOnline()">Online</button><button class='mb-button' onclick="mbSwitchToCheats()">Cheats</button><button class='mb-button' onclick='alert("Coming Soon!")'>Achivements</button>
+                    </div>
+                    <div id="mb-online-tab" class="container" hidden>
+                        Online Data: WIP
+                    </div>
+                    <div id="mb-cheats-tab" class="container">
+                        Cheats:<br>
+                        <button onclick="addTotalLBs()">Increase total lootboxes</button>
+                        <button onclick="resetAll()">Reset <b>ALL</b> progress</button><br>
+                        <input id="lootbox-cheat-input" type="text" placeholder="Lootboxes to add" style="margin-top: 2px"> <button onclick="lootboxCheatButton()">Add</button>
+                    </div>
+                </div>
+                <div id="right-bar" class="bar" style="width:25%">
+                    Upgrades:<br>
+                    <div id="upgrades" class="container" style="height: auto; width: 100%; float: left;">
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                        <button class="upgrade">hi</button>
+                    </div><br>
+                    Buildings:
+                    <div id="buildings" class="container" style="margin-top: 3px">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="https://github.com/leotomasmc/idle-battle-royale">Source Code</a><div id="version-display" style="text-align: right">Loading...</div>
+    </body>
+</html>
