@@ -83,12 +83,12 @@ window.onload = function() {
 function clickLootbox() {
     window.game.lootboxes = window.game.lootboxes + window.game.lootboxesPerClick;
     window.game.totalLootboxes = window.game.totalLootboxes + window.game.lootboxesPerClick;
-    updateUI();
+    //updateUI();
 }
 
 function tick() {
-    window.game.lootboxes = window.game.lootboxes + window.game.lootboxesPerSecond;
-    window.game.totalLootboxes = window.game.totalLootboxes + window.game.lootboxesPerSecond;
+    window.game.lootboxes = window.game.lootboxes + (window.game.lootboxesPerSecond/100);
+    window.game.totalLootboxes = window.game.totalLootboxes + (window.game.lootboxesPerSecond/100);
 
     if (window.game.totalLootboxes<window.game.lootboxes) {
         window.game.hasCheated = true;
@@ -151,4 +151,4 @@ function confirmCheat() {
 }
 
 // Starts the main game loop
-var Timer = window.setInterval(function(){tick()}, 1000);
+var Timer = window.setInterval(function(){tick()}, 10);
