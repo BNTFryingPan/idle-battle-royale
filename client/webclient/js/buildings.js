@@ -1,6 +1,7 @@
 var player = {
     name: "Player",
     intname: "Player",
+    basepersec: 1,
     persec: 1,
     basecost: 15,
     amount: 0
@@ -9,6 +10,7 @@ var player = {
 var gamer = {
     name: "Gamer",
     intname: "Gamer",
+    basepersec: 3,
     persec: 3,
     basecost: 50,
     amount: 0
@@ -17,6 +19,7 @@ var gamer = {
 var nolife = {
     name: "No Lifer",
     intname: "NoLife",
+    basepersec: 10,
     persec: 10,
     basecost: 150,
     amount: 0
@@ -25,6 +28,7 @@ var nolife = {
 var epicgamer = {
     name: "Epic Gamer",
     intname: "EpicGamer",
+    basepersec: 25,
     persec: 25,
     basecost: 325,
     amount: 0
@@ -85,9 +89,9 @@ function updateBuildings() {
     for (var build in buildings) {
         tb = buildings[build];
         tbg = window.game.buildings[build];
-        price = Math.round(tb.basecost * priceMultiplier ** tbg.amount);
+        price = Math.round(Math.round(tb.basecost * priceMultiplier ** tbg.amount) * window.game.buildingDiscount);
         //console.log('tb: ' + tb.intname)
-        if ((window.game.totalLootboxes >= tb.basecost) || (tbg.amount >= 1)) {
+        if ((window.game.totalLootboxes >= (tb.basecost * window.game.buildingDiscount)) || (tbg.amount >= 1)) {
             //console.log(document.getElementById('building-' + tb.intname))
             document.getElementById("building-" + tb.intname).hidden = false;
         } else {
