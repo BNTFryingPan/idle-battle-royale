@@ -108,7 +108,7 @@ function buyBuilding(build, amount=1) {
     //console.log(window.game.lootboxes + "/" + tb.basecost)
     for (i = 1; i <= amount; i++) {
         console.log('buying ' + i + ' of ' + amount);
-        price = Math.round(parseInt(tb.basecost * priceMultiplier ** window.game.buildings[build].amount))
+        price = Math.round(Math.round(tb.basecost * priceMultiplier ** window.game.buildings[build].amount) * window.game.buildingDiscount)
         if (window.game.lootboxes >= price) {
             window.game.lootboxes = window.game.lootboxes - price;
             window.game.buildings[build].amount++;

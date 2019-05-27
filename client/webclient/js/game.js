@@ -7,8 +7,8 @@ function decode_utf8(s) {return decodeURIComponent(escape(s));}
 //function setInputFilter(textbox, inputFilter) {["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {textbox.addEventListener(event, function() {if (inputFilter(this.value)) {this.oldValue = this.value;this.oldSelectionStart = this.selectionStart;this.oldSelectionEnd = this.selectionEnd;} else if (this.hasOwnProperty("oldValue")) {this.value = this.oldValue;this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);}});});}
 //setInputFilter(document.getElementById("lootbox-cheat-input"), function(value) {return /^\d*$/.test(value); });
 
-var gameVersionNumber = 6;
-var gameVersionString = "Alpha 0.1.1";
+var gameVersionNumber = 8;
+var gameVersionString = "Alpha 0.1.3";
 var isLoaded = false;
 var saveTick = 0;
 
@@ -72,6 +72,7 @@ function updateLBPS() {
         tb.totalPerSec = tb.persec * tb.amount;
         totalLBPS = totalLBPS + tb.totalPerSec;
     }
+    totalLBPS = totalLBPS * window.game.totalMultiplier;
     document.getElementById("lbps-display").innerHTML = "LBPS: " + totalLBPS;
     window.game.lootboxesPerSecond = totalLBPS;
 }
@@ -92,14 +93,19 @@ function clickLootbox() {
     //updateUI();
 }
 
-function earnLootboxes(amount) {
-    window.game.totalLootboxes += amount * window.game.totalMultiplier;
-    window.game.lootboxes += amount * window.game.totalMultiplier;
+function earnLootboxes(amount, exludeMultiplier=false) {
+    if (exludeMultiplier == false) {
+        window.game.totalLootboxes += amount * window.game.totalMultiplier;
+        window.game.lootboxes += amount * window.game.totalMultiplier;
+    } else {
+        window.game.totalLootboxes += amount;
+        window.game.lootboxes += amount;
+    }
 }
 
 function tick() {
     if (isLoaded == true) {
-        earnLootboxes(lootboxesPerSecond/100);
+        earnLootboxes(window.game.lootboxesPerSecond/100, true);
 
         if (window.game.totalLootboxes<window.game.lootboxes) {
             window.game.hasCheated = true;
