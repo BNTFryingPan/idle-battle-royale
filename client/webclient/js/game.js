@@ -9,6 +9,7 @@ function decode_utf8(s) {return decodeURIComponent(escape(s));}
 
 var gameVersionNumber = 6;
 var gameVersionString = "Alpha 0.1.1";
+var isLoaded = false;
 
 // gamesave
 function gameSave() {
@@ -76,6 +77,7 @@ window.onload = function() {
     cacheElements();
     loadBuildings();
     loadGame();
+    isLoaded = true;
     //loadUpdateBuildings();
 }
 
@@ -87,16 +89,24 @@ function clickLootbox() {
 }
 
 function tick() {
-    window.game.lootboxes = window.game.lootboxes + (window.game.lootboxesPerSecond/100);
-    window.game.totalLootboxes = window.game.totalLootboxes + (window.game.lootboxesPerSecond/100);
+    if (isLoaded == true) {
+        window.game.lootboxes = window.game.lootboxes + (window.game.lootboxesPerSecond/100);
+        window.game.totalLootboxes = window.game.totalLootboxes + (window.game.lootboxesPerSecond/100);
 
-    if (window.game.totalLootboxes<window.game.lootboxes) {
-        window.game.hasCheated = true;
-        window.game.totalLootboxes = window.game.lootboxes;
-        alert("You have cheated! You will no longer be able to get online bonuses.")
+        if (window.game.totalLootboxes<window.game.lootboxes) {
+            window.game.hasCheated = true;
+            window.game.totalLootboxes = window.game.lootboxes;
+            alert("You have cheated! You will no longer be able to get online bonuses.")
+        }
+        updateUI();
+        saveGame();
+    } else {
+        isLoadedTimer++;
+        if (isLoadedTimer >= 500) {
+            alert("The game appears to be loading slowly. Try refreshing the page");
+            isLoadedTimer = 0;
+        }
     }
-    updateUI();
-    saveGame();
 }
 
 function updateUI() {
