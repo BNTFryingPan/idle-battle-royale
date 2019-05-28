@@ -3,6 +3,7 @@
 var onlineTab;
 var cheatsTab;
 var achTab;
+var statsTab;
 var lootboxDisplay;
 var lootboxPerSecDisplay;
 var lootboxTotalDisplay;
@@ -10,7 +11,8 @@ var lootboxTotalDisplay;
 function cacheElements() {
     onlineTab            = document.getElementById('mb-online-tab');
     cheatsTab            = document.getElementById('mb-cheats-tab');
-    achTab               = document.getElementById('mb-ach-tab')
+    achievementsTab      = document.getElementById('mb-ach-tab');
+    statsTab             = document.getElementById('mb-stats-tab')
     lootboxPerSecDisplay = document.getElementById('lbps-display');
     lootboxTotalDisplay  = document.getElementById('total-lootbox-display');
     lootboxDisplay       = document.getElementById('lootbox-display');
@@ -21,17 +23,27 @@ function cacheElements() {
 function mbSwitchToOnline() {
     cheatsTab.hidden = true;
     onlineTab.hidden = false;
-    achTab.hidden = true;
+    achievementsTabTab.hidden = true;
+    statsTab.hidden = true;
 }
 
 function mbSwitchToCheats() {
     cheatsTab.hidden = false;
     onlineTab.hidden = true;
-    achTab.hidden = true;
+    achievementsTab.hidden = true;
+    statsTab.hidden = true;
 }
 
-function mbSwitchToAch() {
+function mbSwitchToAchievements() {
     cheatsTab.hidden = true;
     onlineTab.hidden = true;
-    achTab.hidden = false;
+    achievementsTab.hidden = false;
+    statsTab.hidden = true;
+}
+
+function mbSwitchToStats() {
+    cheatsTab.hidden = true;
+    onlineTab.hidden = true;
+    achievementsTab.hidden = true;
+    statsTab.hidden = false;
 }

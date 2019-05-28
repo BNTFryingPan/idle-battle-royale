@@ -7,10 +7,53 @@ function decode_utf8(s) {return decodeURIComponent(escape(s));}
 //function setInputFilter(textbox, inputFilter) {["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {textbox.addEventListener(event, function() {if (inputFilter(this.value)) {this.oldValue = this.value;this.oldSelectionStart = this.selectionStart;this.oldSelectionEnd = this.selectionEnd;} else if (this.hasOwnProperty("oldValue")) {this.value = this.oldValue;this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);}});});}
 //setInputFilter(document.getElementById("lootbox-cheat-input"), function(value) {return /^\d*$/.test(value); });
 
+function abbrNum(number) {
+    // 2 decimal places => 100, 3 => 1000, etc
+    decPlaces = 3
+    decPlaces = Math.pow(10,decPlaces);
+
+    // Enumerate number abbreviations
+    
+    //this little bit of code was taken from main.js of cookie clicker 2.019 and slightly modified (removed spaces from first line, and changed var name)
+    var abbrev = ['thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion'];
+    var prefixes = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'sex', 'septen', 'octo', 'novem'];
+    var suffixes = ['decillion', 'vigintillion', 'trigintillion', 'quadragintillion', 'quinquagintillion', 'sexagintillion', 'septuagintillion', 'octogintillion', 'nonagintillion'];
+    for (var i in suffixes) { for (var ii in prefixes) {abbrev.push(' '+prefixes[ii]+suffixes[i]); } } 
+
+    // Go through the array backwards, so we do the largest first
+    for (var i=abbrev.length-1; i>=0; i--) {
+
+        // Convert array index to "1000", "1000000", etc
+        var size = Math.pow(10,(i+1)*3);
+
+        // If the number is bigger or equal do the abbreviation
+        if(size <= number) {
+            // Here, we multiply by decPlaces, round, and then divide by decPlaces.
+            // This gives us nice rounding to a particular decimal place.
+            number = Math.round(number*decPlaces/size)/decPlaces;
+
+            // Handle special case where we round up to the next abbreviation
+            if((number == 1000) && (i < abbrev.length - 1)) {
+                number = 1;
+                i++;
+            }
+
+            // Add the letter for the abbreviation
+            number += ' ' + abbrev[i];
+
+            // We are done... stop
+            break;
+        }
+    }
+
+    return number;
+}
+
 var gameVersionNumber = 8;
 var gameVersionString = "Alpha 0.1.3";
 var isLoaded = false;
 var saveTick = 0;
+var isLoadedTimer = 0;
 
 // gamesave
 function gameSave() {
@@ -73,7 +116,7 @@ function updateLBPS() {
         totalLBPS = totalLBPS + tb.totalPerSec;
     }
     totalLBPS = totalLBPS * window.game.totalMultiplier;
-    document.getElementById("lbps-display").innerHTML = "LBPS: " + totalLBPS;
+    document.getElementById("lbps-display").innerHTML = "LBPS: " + abbrNum(totalLBPS);
     window.game.lootboxesPerSecond = totalLBPS;
 }
 
@@ -130,8 +173,8 @@ function tick() {
 
 function updateUI() {
     //updateUnlocks();
-    document.getElementById('lootbox-display').innerHTML = "Lootboxes: " + Math.round(window.game.lootboxes);
-    document.getElementById('total-lootbox-display').innerHTML = "Total Lootboxes: " + Math.ceil(window.game.totalLootboxes);
+    document.getElementById('lootbox-display').innerHTML = "Lootboxes: " + abbrNum(Math.round(window.game.lootboxes));
+    document.getElementById('total-lootbox-display').innerHTML = "Total Lootboxes: " + abbrNum(Math.ceil(window.game.totalLootboxes));
     updateBuildings();
     updateLBPS();
     //document.getElementById('building-Player-amount').innerHTML = buildingPlayer.amount.toString();

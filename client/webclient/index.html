@@ -15,7 +15,7 @@
         <div id="client-border" style="height: 90%">
             <div id="client" style="height: 98.5%">
                 <div id="left-bar" class="bar" style="width:30%">
-                    <div id="stats" class="container">
+                    <div id="main-left" class="container">
                         <p style="text-align: center" id="total-lootbox-display">Total Lootboxes: 0</p>
                         <p style="text-align: center" id="lootbox-display">Lootboxes: 0</p>
                         <p style="text-align: center" id="lbps-display">LBPS: 0</p>
@@ -24,7 +24,10 @@
                 </div>
                 <div id="middle-bar" class="bar" style="width:45%">
                     <div id='middle-bar-buttons'>
-                        <button class='mb-button' onclick="mbSwitchToOnline()">Online</button><button class='mb-button' onclick="mbSwitchToCheats()">Cheats</button><button class='mb-button' onclick='alert("Coming Soon!")'>Achivements</button>
+                        <button class='mb-button' onclick="mbSwitchToOnline()">Online</button>
+                        <button class='mb-button' onclick="mbSwitchToCheats()">Cheats</button>
+                        <button class='mb-button' onclick="mbSwitchToStats()">Cheats</button>
+                        <button class='mb-button' onclick="mbSwitchToAchievements()">Achievements</button>
                     </div>
                     <div id="mb-online-tab" class="container" hidden>
                         Online Data: WIP

@@ -97,9 +97,9 @@ function updateBuildings() {
         } else {
             document.getElementById("building-" + tb.intname).hidden = true;
         }
-        document.getElementById('building-' + tb.intname + '-cost').innerHTML = "Cost: " + price;
+        document.getElementById('building-' + tb.intname + '-cost').innerHTML = "Cost: " + abbrNum(price);
         document.getElementById("building-" + tb.intname + "-amount").innerHTML = tbg.amount;
-        document.getElementById("building-" + tb.intname + "-persec").innerHTML = tb.persec + " [" + tb.persec*tbg.amount + "]";
+        document.getElementById("building-" + tb.intname + "-persec").innerHTML = abbrNum(tb.persec) + " [" + abbrNum(tb.persec*tbg.amount) + "]";
     }
 }
 
@@ -107,12 +107,12 @@ function buyBuilding(build, amount=1) {
     tb = buildings[build]
     //console.log(window.game.lootboxes + "/" + tb.basecost)
     for (i = 1; i <= amount; i++) {
-        console.log('buying ' + i + ' of ' + amount);
+        //console.log('buying ' + i + ' of ' + amount);
         price = Math.round(Math.round(tb.basecost * priceMultiplier ** window.game.buildings[build].amount) * window.game.buildingDiscount)
         if (window.game.lootboxes >= price) {
             window.game.lootboxes = window.game.lootboxes - price;
             window.game.buildings[build].amount++;
             updateUI();
-        } else { console.log('not enough lbs, ' + window.game.lootboxes + ' of ' + price);break }
+        } else { /*console.log('not enough lbs, ' + window.game.lootboxes + ' of ' + price);*/break }
     }
 }
