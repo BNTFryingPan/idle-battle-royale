@@ -27,14 +27,14 @@ function abbrNum(number) {
     for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(' '+shortPrefixes[ii]+shortSuffixes[i]); } } 
     // end code stolen from cookie clicker
 
-    if (window.game.options['shortNumbers'] == "long") {
+    if (window.game.options.shortNumbers == "long") {
         var abbrev = longShort;
-    } else if (window.game.options['shortNumbers'] == "short") {
+    } else if (window.game.options.shortNumbers == "short") {
         var abbrev = shortShort;
-    } else if (window.game.options['shortNumbers'] == "sci") {
+    } else if (window.game.options.shortNumbers == "sci") {
         return number;
     } else {
-        window.game.options['shortNumbers'] = "long";
+        window.game.options.shortNumbers = "long";
         var abbrev = longShort;
     }
 
@@ -85,7 +85,7 @@ function gameSave() {
     this.buildingDiscount = 1;
     this.buildings = {};
     this.options = {}
-    this.options['shortNumbers'] = "long"
+    this.options.shortNumbers = "long"
     this.totalLootboxClicks = 0;
     this.totalLootboxesFromClicks = 0;
     Object.assign(this.buildings, buildings);
@@ -118,7 +118,7 @@ function loadGame() {
         //console.log('loaded: ' + loadstring);
         window.game = new gameSave();
         window.game = loadedgame;
-        window.game.options['shortNumbers'] = "long";
+        window.game.options.shortNumbers = "long";
         window.game.lootboxes = loadedgame.lootboxes;
         window.game.lootboxesPerClick = loadedgame.lootboxesPerClick;
         window.game.lootboxesPerSecond = loadedgame.lootboxesPerSecond;
