@@ -27,14 +27,14 @@ function abbrNum(number) {
     for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(' '+shortPrefixes[ii]+shortSuffixes[i]); } } 
     // end code stolen from cookie clicker
 
-    if (window.game.options.shortNumbers == "long") {
+    if (window.game.options['shortNumbers'] == "long") {
         var abbrev = longShort;
-    } else if (window.game.options.shortNumbers == "short") {
+    } else if (window.game.options['shortNumbers'] == "short") {
         var abbrev = shortShort;
-    } else if (window.game.options.shortNumbers == "sci") {
+    } else if (window.game.options['shortNumbers'] == "sci") {
         return number;
     } else {
-        window.game.options.shortNumbers = "long";
+        window.game.options['shortNumbers'] = "long";
         var abbrev = longShort;
     }
 
@@ -69,8 +69,8 @@ function abbrNum(number) {
 
 // end copied and pasted stuff
 
-var gameVersionNumber = 12;
-var gameVersionString = "Alpha 0.1.7";
+var gameVersionNumber = 14;
+var gameVersionString = "Alpha 0.1.7b";
 var isLoaded = false;
 var saveTick = 0;
 var isLoadedTimer = 0;
@@ -85,7 +85,7 @@ function gameSave() {
     this.buildingDiscount = 1;
     this.buildings = {};
     this.options = {}
-    this.options.shortNumbers = "long"
+    this.options['shortNumbers'] = "long"
     this.totalLootboxClicks = 0;
     this.totalLootboxesFromClicks = 0;
     Object.assign(this.buildings, buildings);
@@ -117,6 +117,7 @@ function loadGame() {
         loadedgame = JSON.parse(loadstring);
         //console.log('loaded: ' + loadstring);
         window.game = new gameSave();
+        //window.game.options['shortNumbers'] = "long"
         window.game = loadedgame;
         window.game.lootboxes = loadedgame.lootboxes;
         window.game.lootboxesPerClick = loadedgame.lootboxesPerClick;
