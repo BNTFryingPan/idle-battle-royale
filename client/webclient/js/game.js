@@ -49,8 +49,8 @@ function abbrNum(number) {
     return number;
 }
 
-var gameVersionNumber = 8;
-var gameVersionString = "Alpha 0.1.3";
+var gameVersionNumber = 10;
+var gameVersionString = "Alpha 0.1.6";
 var isLoaded = false;
 var saveTick = 0;
 var isLoadedTimer = 0;
