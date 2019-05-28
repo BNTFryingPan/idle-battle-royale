@@ -117,8 +117,8 @@ function loadGame() {
         loadedgame = JSON.parse(loadstring);
         //console.log('loaded: ' + loadstring);
         window.game = new gameSave();
-        window.game.options['shortNumbers'] = "long"
         window.game = loadedgame;
+        window.game.options['shortNumbers'] = "long";
         window.game.lootboxes = loadedgame.lootboxes;
         window.game.lootboxesPerClick = loadedgame.lootboxesPerClick;
         window.game.lootboxesPerSecond = loadedgame.lootboxesPerSecond;
