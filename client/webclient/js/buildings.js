@@ -86,9 +86,11 @@ function loadBuildings() {
 }
 
 function updateBuildings() {
+    window.game.totalBuildings = 0;
     for (var build in buildings) {
         tb = buildings[build];
         tbg = window.game.buildings[build];
+        window.game.totalBuildings += tbg.amount;
         price = Math.round(Math.round(tb.basecost * priceMultiplier ** tbg.amount) * window.game.buildingDiscount);
         //console.log('tb: ' + tb.intname)
         if ((window.game.totalLootboxes >= (tb.basecost * window.game.buildingDiscount)) || (tbg.amount >= 1)) {
@@ -108,10 +110,11 @@ function buyBuilding(build, amount=1) {
     //console.log(window.game.lootboxes + "/" + tb.basecost)
     for (i = 1; i <= amount; i++) {
         //console.log('buying ' + i + ' of ' + amount);
-        price = Math.round(Math.round(tb.basecost * priceMultiplier ** window.game.buildings[build].amount) * window.game.buildingDiscount)
+        price = Math.round(Math.round(tb.basecost * priceMultiplier ** window.game.buildings[build].amount) * window.game.buildingDiscount);
         if (window.game.lootboxes >= price) {
             window.game.lootboxes = window.game.lootboxes - price;
             window.game.buildings[build].amount++;
+            window.game.totalBuildings++;
             updateUI();
         } else { /*console.log('not enough lbs, ' + window.game.lootboxes + ' of ' + price);*/break }
     }

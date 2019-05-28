@@ -15,10 +15,28 @@ function abbrNum(number) {
     // Enumerate number abbreviations
     
     //this little bit of code was taken from main.js of cookie clicker 2.019 and slightly modified (removed spaces from first line, and changed var name)
-    var abbrev = ['thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion'];
-    var prefixes = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'sex', 'septen', 'octo', 'novem'];
-    var suffixes = ['decillion', 'vigintillion', 'trigintillion', 'quadragintillion', 'quinquagintillion', 'sexagintillion', 'septuagintillion', 'octogintillion', 'nonagintillion'];
-    for (var i in suffixes) { for (var ii in prefixes) {abbrev.push(' '+prefixes[ii]+suffixes[i]); } } 
+    var longShort = ['thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion'];
+    var longPrefixes = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'sex', 'septen', 'octo', 'novem'];
+    var longSuffixes = ['decillion', 'vigintillion', 'trigintillion', 'quadragintillion', 'quinquagintillion', 'sexagintillion', 'septuagintillion', 'octogintillion', 'nonagintillion'];
+    
+    var shortShort = ['k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    var shortPrefixes = ['', 'u', 'd', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    
+    for (var i in longSuffixes ) { for (var ii in longPrefixes ) {longShort.push( ' '+longPrefixes[ii]+ longSuffixes[i] ); } } 
+    for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(' '+shortPrefixes[ii]+shortSuffixes[i]); } } 
+    // end code stolen from cookie clicker
+
+    if (window.game.options.shortNumbers == "long") {
+        var abbrev = longShort;
+    } else if (window.game.options.shortNumbers == "short") {
+        var abbrev = shortShort;
+    } else if (window.game.options.shortNumbers == "sci") {
+        return number;
+    } else {
+        window.game.options.shortNumbers = "long";
+        var abbrev = longShort;
+    }
 
     // Go through the array backwards, so we do the largest first
     for (var i=abbrev.length-1; i>=0; i--) {
@@ -49,8 +67,10 @@ function abbrNum(number) {
     return number;
 }
 
-var gameVersionNumber = 10;
-var gameVersionString = "Alpha 0.1.6";
+// end copied and pasted stuff
+
+var gameVersionNumber = 12;
+var gameVersionString = "Alpha 0.1.7";
 var isLoaded = false;
 var saveTick = 0;
 var isLoadedTimer = 0;
@@ -64,6 +84,10 @@ function gameSave() {
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
+    this.options = {}
+    this.options.shortNumbers = "long"
+    this.totalLootboxClicks = 0;
+    this.totalLootboxesFromClicks = 0;
     Object.assign(this.buildings, buildings);
     //for (var build in buildings) {
     //    this.buildings[build].amount = 0;
@@ -74,6 +98,7 @@ function saveGame() {
     savestring = JSON.stringify(window.game);
     savestring = lzw_encode(encode_utf8(savestring));
     window.localStorage['SaveName'] = savestring;
+    //console.log('saved game')
 }
 
 function loadGame() {
@@ -92,6 +117,7 @@ function loadGame() {
         loadedgame = JSON.parse(loadstring);
         //console.log('loaded: ' + loadstring);
         window.game = new gameSave();
+        window.game = loadedgame;
         window.game.lootboxes = loadedgame.lootboxes;
         window.game.lootboxesPerClick = loadedgame.lootboxesPerClick;
         window.game.lootboxesPerSecond = loadedgame.lootboxesPerSecond;
@@ -133,6 +159,8 @@ window.onload = function() {
 // funtions
 function clickLootbox() {
     earnLootboxes(window.game.lootboxesPerClick)
+    window.game.totalLootboxClicks++;
+    window.game.totalLootboxesFromClicks += window.game.lootboxesPerClick;
     //updateUI();
 }
 
@@ -177,6 +205,10 @@ function updateUI() {
     document.getElementById('total-lootbox-display').innerHTML = "Total Lootboxes: " + abbrNum(Math.ceil(window.game.totalLootboxes));
     updateBuildings();
     updateLBPS();
+    document.getElementById('total-building-display').innerHTML = "Total Buildings: " + abbrNum(window.game.totalBuildings);
+    document.getElementById('lbpc-display').innerHTML = "Lootboxes per Click: " + abbrNum(Math.round(window.game.lootboxesPerClick));
+    document.getElementById('total-clicks-display').innerHTML = "Total Lootbox Clicks: " + window.game.totalLootboxClicks;
+    document.getElementById('lb-from-clicks').innerHTML = "Total Lootboxes from Clicks: " + abbrNum(Math.round(window.game.totalLootboxesFromClicks));
     //document.getElementById('building-Player-amount').innerHTML = buildingPlayer.amount.toString();
 }
 

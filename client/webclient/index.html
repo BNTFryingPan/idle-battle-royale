@@ -16,9 +16,9 @@
             <div id="client" style="height: 98.5%">
                 <div id="left-bar" class="bar" style="width:30%">
                     <div id="main-left" class="container">
-                        <p style="text-align: center" id="total-lootbox-display">Total Lootboxes: 0</p>
                         <p style="text-align: center" id="lootbox-display">Lootboxes: 0</p>
                         <p style="text-align: center" id="lbps-display">LBPS: 0</p>
+                        <br>
                         <p style="text-align: center"><button onclick="clickLootbox()">Open Lootbox</button></p>
                     </div>
                 </div>
@@ -26,14 +26,57 @@
                     <div id='middle-bar-buttons'>
                         <button class='mb-button' onclick="mbSwitchToOnline()">Online</button>
                         <button class='mb-button' onclick="mbSwitchToCheats()">Cheats</button>
-                        <button class='mb-button' onclick="mbSwitchToStats()">Cheats</button>
+                        <button class='mb-button' onclick="mbSwitchToStats()">Stats</button>
+                        <button class='mb-button' onclick="mbSwitchToOptions()">Options</button>
+                        <button class='mb-button' onclick="mbSwitchToLegacy()">Legacy</button>
                         <button class='mb-button' onclick="mbSwitchToAchievements()">Achievements</button>
+                        <button class='mb-button' onclick="mbSwitchToChangelog()">Changelog</button>
+                    </div>
+                    <div id='mb-changelog-tab' class="container" hidden>
+                        <p style="text-align: center; font-size: 20px">-= Changelog =-</p>
+                        <p>Quick note on versioning -</p>
+                        <p>Version string is in the format "stage" main.major.minor similar to Minecraft<br>
+                        The build number for public releases on github are only even numbers, as odd numbers are the development in between</p>
+                        
+                        <br>
+                        <p>Alpha 0.1.7 - Build 12</p>
+                        <p>Hey. I just added this changelog!</p><br>
+                        <p>Update Notes:<br>
+                        + added changelog<br>
+                        + added a bunch of tabs<br>
+                        * moved total lootboxes to stats tab<br>
+                        + options tab lets you change number notation</p>
                     </div>
                     <div id="mb-online-tab" class="container" hidden>
-                        Online Data: WIP
+                        <p style="text-align: center; font-size: 20px">-= Online =-</p>
+                        Coming Soon!
                     </div>
-                    <div id="mb-cheats-tab" class="container">
-                        Cheats:<br>
+                    <div id="mb-stats-tab" class="container">
+                        <p style="text-align: center; font-size: 20px">-= Stats =-</p>
+                        <p id="total-lootbox-display">Total Lootboxes: 0</p>
+                        <p id="total-building-display">Total Buildings: 0</p>
+                        <p id="lbpc-display">Lootboxes per Click: 1</p>
+                        <p id="total-clicks-display">Total Lootbox Clicks: 0</p>
+                        <p id="lb-from-clicks">Total Lootboxes from Clicks: 0</p>
+                    </div>
+                    <div id="mb-options-tab" class="container" hidden>
+                        <p style="text-align: center; font-size: 20px">-= Options =-</p>
+                        <select onchange="optionstabUpdateNumberFormat()" id="option-numformat">
+                            <option value="long">Long Number Notation</option>
+                            <option value="short">Short Number Notation</option>
+                            <option value="sci">Scientific Notation (WIP)</option>
+                        </select>
+                    </div>
+                    <div id="mb-legacy-tab" class="container" hidden>
+                        <p style="text-align: center; font-size: 20px">-= Legacy =-</p>
+                        Coming Soon!
+                    </div>
+                    <div id="mb-ach-tab" class="container" hidden>
+                        <p style="text-align: center; font-size: 20px">-= Achievements =-</p>
+                        Coming Soon!
+                    </div>
+                    <div id="mb-cheats-tab" class="container" hidden>
+                        <p style="text-align: center; font-size: 20px">-= Cheats =-</p>
                         <button onclick="addTotalLBs()">Increase total lootboxes</button>
                         <button onclick="resetAll()">Reset <b>ALL</b> progress</button><br>
                         <input id="lootbox-cheat-input" type="text" placeholder="Lootboxes to add" style="margin-top: 2px"> <button onclick="lootboxCheatButton()">Add</button>
