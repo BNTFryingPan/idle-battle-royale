@@ -70,7 +70,7 @@ function abbrNum(number) {
 // end copied and pasted stuff
 
 var gameVersionNumber = 14;
-var gameVersionString = "Alpha 0.1.7b";
+var gameVersionString = "Alpha 0.1.7c";
 var isLoaded = false;
 var saveTick = 0;
 var isLoadedTimer = 0;
