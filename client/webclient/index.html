@@ -19,25 +19,37 @@
                         <p style="text-align: center" id="lootbox-display">Lootboxes: 0</p>
                         <p style="text-align: center" id="lbps-display">LBPS: 0</p>
                         <br>
-                        <p style="text-align: center"><button onclick="clickLootbox()">Open Lootbox</button></p>
+                        <p style="text-align: center"><button onclick="clickLootbox()" id="open-lootbox-button">Open Lootbox</button></p>
                     </div>
                 </div>
                 <div id="middle-bar" class="bar" style="width:45%">
-                    <div id='middle-bar-buttons'>
-                        <button class='mb-button' onclick="mbSwitchToOnline()">Online</button>
-                        <button class='mb-button' onclick="mbSwitchToCheats()">Cheats</button>
-                        <button class='mb-button' onclick="mbSwitchToStats()">Stats</button>
-                        <button class='mb-button' onclick="mbSwitchToOptions()">Options</button>
-                        <button class='mb-button' onclick="mbSwitchToLegacy()">Legacy</button>
-                        <button class='mb-button' onclick="mbSwitchToAchievements()">Achievements</button>
-                        <button class='mb-button' onclick="mbSwitchToChangelog()">Changelog</button>
+                    <div id='middle-bar-buttons' style="display:flex;justify-content: space-evenly">
+                        <button class='mb-button' id="mb-online-button" onclick="mbSwitchToOnline()">Online</button>
+                        <button class='mb-button' id="mb-cheats-button" onclick="mbSwitchToCheats()">Cheats</button>
+                        <button class='mb-button' id="mb-stats-button" onclick="mbSwitchToStats()" disabled>Stats</button>
+                        <button class='mb-button' id="mb-options-button" onclick="mbSwitchToOptions()">Options</button>
+                        <button class='mb-button' id="mb-legacy-button" onclick="mbSwitchToLegacy()">Legacy</button>
+                        <button class='mb-button' id="mb-ach-button" onclick="mbSwitchToAchievements()">Achievements</button>
+                        <button class='mb-button' id="mb-changelog-button" onclick="mbSwitchToChangelog()">Changelog</button>
+                        <button class='mb-button' id="mb-chat-button" onclick="mbSwitchToChat()">Chat</button>
                     </div>
-                    <div id='mb-changelog-tab' class="container" hidden>
+                    <div id='mb-changelog-tab' class="container" style="height: 95%;overflow-y:scroll" hidden>
                         <p style="text-align: center; font-size: 20px">-= Changelog =-</p>
                         <p>Quick note on versioning -</p>
                         <p>Version string is in the format "stage" main.major.minor similar to Minecraft<br>
                         The build number for public releases on github are only even numbers, as odd numbers are the development in between</p>
-                        
+                        <a href="https://discord.gg/nHkGBun">Join the discord for the latest news, updates, and to provide feedback</a>
+                        <br>
+                        <br>
+                        <p>Alpha 0.2.0 - Build 16 - <b>The Smoothing</b></p>
+                        <p>Saves are going to be reset a lot in near future. Don't get too attached to your saves.</p>
+                        <br>
+                        <p>+ made edges of a bunch of stuff rounded, including buttons, and divs<br>
+                        + made tabs of middle bar look nicer<br>
+                        + added 4 new buildings, noob and speedrunner, streamer, and modder<br>
+                        * buildings are now revealed after having at least 1 of the building before it<br>
+                        * building layout changed, top row shows name, count, and lbps. putting mouse over building reveals cost and buy buttons<br>
+                        * all existing buildings were pushed up, as noob replaced player, player replaced gamer, etc</p>
                         <br>
                         <p>Alpha 0.1.7c - Build 14</p>
                         <p>Im sorry, but this update breaks existing saves, and I am unable to figure out how to fix this.</p>
@@ -59,6 +71,9 @@
                         <p style="text-align: center; font-size: 20px">-= Online =-</p>
                         Coming Soon!
                     </div>
+                    <div id="mb-chat-tab" class="container" hidden>
+                        Coming Soon!
+                    </div>
                     <div id="mb-stats-tab" class="container">
                         <p style="text-align: center; font-size: 20px">-= Stats =-</p>
                         <p id="total-lootbox-display">Total Lootboxes: 0</p>
@@ -74,10 +89,13 @@
                             <option value="short">Short Number Notation</option>
                             <option value="sci">Scientific Notation (WIP)</option>
                         </select>
+                        <br><button onclick="resetAll()" style="margin-top: 2px">Reset <b>ALL</b> progress</button><br>
                     </div>
                     <div id="mb-legacy-tab" class="container" hidden>
                         <p style="text-align: center; font-size: 20px">-= Legacy =-</p>
-                        Coming Soon!
+                        Prestige Level if you Ascend now: <span id="prestige-plian">0</span><br>
+                        Lootboxes Required for next Prestige Level: <span id="prestige-lbfnp">0</span><br>
+                        Current Prestige Level: <span id="prestige-current">0</span><br>
                     </div>
                     <div id="mb-ach-tab" class="container" hidden>
                         <p style="text-align: center; font-size: 20px">-= Achievements =-</p>
@@ -86,7 +104,6 @@
                     <div id="mb-cheats-tab" class="container" hidden>
                         <p style="text-align: center; font-size: 20px">-= Cheats =-</p>
                         <button onclick="addTotalLBs()">Increase total lootboxes</button>
-                        <button onclick="resetAll()">Reset <b>ALL</b> progress</button><br>
                         <input id="lootbox-cheat-input" type="text" placeholder="Lootboxes to add" style="margin-top: 2px"> <button onclick="lootboxCheatButton()">Add</button>
                     </div>
                 </div>

@@ -69,8 +69,8 @@ function abbrNum(number) {
 
 // end copied and pasted stuff
 
-var gameVersionNumber = 14;
-var gameVersionString = "Alpha 0.1.7c";
+var gameVersionNumber = 16;
+var gameVersionString = "Alpha 0.2.0";
 var isLoaded = false;
 var saveTick = 0;
 var isLoadedTimer = 0;
@@ -84,10 +84,11 @@ function gameSave() {
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
-    this.options = {'shortNumbers': 'long'}
-    this.options['shortNumbers'] = "long"
+    this.options = {'shortNumbers': 'short'}
+    //this.options['shortNumbers'] = "long"
     this.totalLootboxClicks = 0;
     this.totalLootboxesFromClicks = 0;
+    this.prestige = 0;
     Object.assign(this.buildings, buildings);
     //for (var build in buildings) {
     //    this.buildings[build].amount = 0;
@@ -115,23 +116,14 @@ function loadGame() {
     if (newFile == false) {
         loadstring = decode_utf8(lzw_decode(loadstring));
         loadedgame = JSON.parse(loadstring);
-        //console.log('loaded: ' + loadstring);
         window.game = new gameSave();
-        window.game = loadedgame;
-        window.game.options['shortNumbers'] = "long";
-        window.game.lootboxes = loadedgame.lootboxes;
-        window.game.lootboxesPerClick = loadedgame.lootboxesPerClick;
-        window.game.lootboxesPerSecond = loadedgame.lootboxesPerSecond;
-        window.game.totalLootboxes = loadedgame.totalLootboxes;
-        window.game.buildings = loadedgame.buildings;
-        window.game.hasCheated = loadedgame.hasCheated;
-        window.game.totalMultiplier = loadedgame.totalMultiplier;
-        window.game.buildingDiscount = loadedgame.buildingDiscount;
+        Object.assign(window.game, loadedgame)
     } else {
         window.game = new gameSave();
         window.game.buildings = buildings;
     }
 
+    document.getElementById('option-numformat').value = window.game.options['shortNumbers']
     document.getElementById('version-display').innerHTML = gameVersionString + " - <i>[" + gameVersionNumber + "]</i>"
 }
 
@@ -145,6 +137,27 @@ function updateLBPS() {
     totalLBPS = totalLBPS * window.game.totalMultiplier;
     document.getElementById("lbps-display").innerHTML = "LBPS: " + abbrNum(totalLBPS);
     window.game.lootboxesPerSecond = totalLBPS;
+}
+
+function calcPrestige() {
+    var totalPrestigeLevels = Math.floor(Math.cbrt( (window.game.totalLootboxes) / (10 ** 10) ));
+    return totalPrestigeLevels;
+}
+
+function calcLbsNextPrestigeLevel() {
+    var currPresAfterReset = calcPrestige()
+    var lbForNextPresLevel = ( 10 ** 10 ) * ( ( ( currPresAfterReset + 1 ) ** 3 ) - currPresAfterReset ** 3)
+    return lbForNextPresLevel
+}
+
+function prestige() {
+    window.prestige = calcPrestige()
+    window.game.buildings = buildings;
+    window.game.lootboxes = 0;
+    window.game.lootboxesPerSecond = 0;
+    window.game.lootboxesPerClick = 1;
+
+    //window.game.buildingDiscount = 1 * (
 }
 
 window.onload = function() {
@@ -210,6 +223,9 @@ function updateUI() {
     document.getElementById('lbpc-display').innerHTML = "Lootboxes per Click: " + abbrNum(Math.round(window.game.lootboxesPerClick));
     document.getElementById('total-clicks-display').innerHTML = "Total Lootbox Clicks: " + window.game.totalLootboxClicks;
     document.getElementById('lb-from-clicks').innerHTML = "Total Lootboxes from Clicks: " + abbrNum(Math.round(window.game.totalLootboxesFromClicks));
+    document.getElementById('prestige-current').innerHTML = window.game.prestige;
+    document.getElementById('prestige-lbfnp').innerHTML = abbrNum(Math.ceil(calcLbsNextPrestigeLevel() - window.game.totalLootboxes));
+    document.getElementById('prestige-plian').innerHTML = abbrNum(calcPrestige());
     //document.getElementById('building-Player-amount').innerHTML = buildingPlayer.amount.toString();
 }
 

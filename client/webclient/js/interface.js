@@ -1,98 +1,96 @@
 //contains functions that control ui, like tabs in the middle bar
 
-var onlineTab;
-var cheatsTab;
-var achTab;
-var statsTab;
-var lootboxDisplay;
-var lootboxPerSecDisplay;
-var lootboxTotalDisplay;
-
 function cacheElements() {
     onlineTab            = document.getElementById('mb-online-tab');
+    onlineButton         = document.getElementById('mb-online-button');
     cheatsTab            = document.getElementById('mb-cheats-tab');
+    cheatsButton         = document.getElementById('mb-cheats-button');
     achievementsTab      = document.getElementById('mb-ach-tab');
+    achievementsButton   = document.getElementById('mb-ach-button');
     statsTab             = document.getElementById('mb-stats-tab');
+    statsButton          = document.getElementById('mb-stats-button');
     legacyTab            = document.getElementById('mb-legacy-tab');
+    legacyButton         = document.getElementById('mb-legacy-button');
     optionsTab           = document.getElementById('mb-options-tab');
+    optionsButton        = document.getElementById('mb-options-button');
     changelogTab         = document.getElementById('mb-changelog-tab');
+    changelogButton      = document.getElementById('mb-changelog-button');
+    chatTab              = document.getElementById('mb-chat-tab');
+    chatButton           = document.getElementById('mb-chat-button');
     lootboxPerSecDisplay = document.getElementById('lbps-display');
     lootboxTotalDisplay  = document.getElementById('total-lootbox-display');
     lootboxDisplay       = document.getElementById('lootbox-display');
 }
 
+function hideAllTabs () {
+    cheatsTab.hidden = true;
+    cheatsButton.disabled = false;
+    onlineTab.hidden = true;
+    onlineButton.disabled = false;
+    achievementsTab.hidden = true;
+    achievementsButton.disabled = false;
+    statsTab.hidden = true;
+    statsButton.disabled = false;
+    legacyTab.hidden = true;
+    legacyButton.disabled = false;
+    optionsTab.hidden = true;
+    optionsButton.disabled = false;
+    changelogTab.hidden = true;
+    changelogButton.disabled = false;
+    chatTab.hidden = true;
+    chatButton.disabled = false;
+}
+
 function optionstabUpdateNumberFormat() {
     var newFormat = document.getElementById('option-numformat').value;
-    window.game.options.shortNumbers = newFormat;
+    window.game.options['shortNumbers'] = newFormat;
 }
 
 //tabs
 function mbSwitchToOnline() {
-    cheatsTab.hidden = true;
+    hideAllTabs();
     onlineTab.hidden = false;
-    achievementsTab.hidden = true;
-    statsTab.hidden = true;
-    legacyTab.hidden = true;
-    optionsTab.hidden = true;
-    changelogTab.hidden = true;
+    onlineButton.disabled = true;
 }
 
 function mbSwitchToCheats() {
+    hideAllTabs();
     cheatsTab.hidden = false;
-    onlineTab.hidden = true;
-    achievementsTab.hidden = true;
-    statsTab.hidden = true;
-    legacyTab.hidden = true;
-    optionsTab.hidden = true;
-    changelogTab.hidden = true;
+    cheatsButton.disabled = true;
 }
 
 function mbSwitchToAchievements() {
-    cheatsTab.hidden = true;
-    onlineTab.hidden = true;
+    hideAllTabs();
     achievementsTab.hidden = false;
-    statsTab.hidden = true;
-    legacyTab.hidden = true;
-    changelogTab.hidden = true;
-    optionsTab.hidden = true;
+    achievementsButton.disabled = true;
 }
 
 function mbSwitchToStats() {
-    cheatsTab.hidden = true;
-    onlineTab.hidden = true;
-    achievementsTab.hidden = true;
+    hideAllTabs();
     statsTab.hidden = false;
-    legacyTab.hidden = true;
-    changelogTab.hidden = true;
-    optionsTab.hidden = true;
+    statsButton.disabled = true;
 }
 
 function mbSwitchToOptions() {
-    cheatsTab.hidden = true;
-    onlineTab.hidden = true;
-    achievementsTab.hidden = true;
-    statsTab.hidden = true;
-    legacyTab.hidden = true;
-    changelogTab.hidden = true;
+    hideAllTabs();
     optionsTab.hidden = false;
+    optionsButton.disabled = true;
 }
 
 function mbSwitchToLegacy() {
-    cheatsTab.hidden = true;
-    onlineTab.hidden = true;
-    achievementsTab.hidden = true;
-    statsTab.hidden = true;
+    hideAllTabs();
     legacyTab.hidden = false;
-    changelogTab.hidden = true;
-    optionsTab.hidden = true;
+    legacyButton.disabled = true;
 }
 
 function mbSwitchToChangelog() {
-    cheatsTab.hidden = true;
-    onlineTab.hidden = true;
-    achievementsTab.hidden = true;
-    statsTab.hidden = true;
-    legacyTab.hidden = true;
+    hideAllTabs();
     changelogTab.hidden = false;
-    optionsTab.hidden = true;
+    changelogButton.disabled = true;
+}
+
+function mbSwitchToChat() {
+    hideAllTabs();
+    chatTab.hidden = false;
+    chatButton.disabled = true;
 }

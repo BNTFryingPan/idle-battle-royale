@@ -15,6 +15,10 @@ p {
     margin-bottom: 0px;
 }
 
+a {
+    color: #8080ff
+}
+
 #header {
     font-family: Ubuntu;
     font-size: 25px;
@@ -38,6 +42,39 @@ p {
     display: flex;
 }
 
+.mb-button {
+    border: none;
+    background-color: #8080ff;
+    color: #232233;
+    border-radius: 10px 10px 0px 0px;
+    padding: 5px;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.mb-button:hover:enabled {
+    border-radius: 5px 5px 0px 0px;
+    padding-left: 3%;
+    padding-right: 3%;
+    background-color: #8888ff;
+    color: #bbbbbb;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.mb-button:disabled {
+    border-radius: 4px 4px 0px 0px;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: #6868ff;
+    color: #ffffff;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
 .bar {
     padding: 3px;
     margin-left: 2px;
@@ -47,14 +84,32 @@ p {
     background-color: rgba(100, 80, 125, 60);
 }
 .container {
-    padding: 2px;
+    padding: 3px;
     background-color: rgba(50, 20, 125, 60);
+    border-radius: 15px;
+    margin-bottom: 2px;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
 }
 
 .building {
-    padding: 2px;
+    padding-left: 5px;
     margin: 2px;
     background-color: rgba(50, 150, 165, 50);
+    border-radius: 10px;
+    height: 18px;
+    overflow-y: hidden;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.building:hover {
+    height: 62px;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
 }
 
 .upgrade {
@@ -65,6 +120,25 @@ p {
     margin-right: 1px;
 }
 
-/*.hidden {
-    visibility: hidden;
-}*/
+#open-lootbox-button {
+    background-color: #8888ff;
+    border: none;
+    font-size: 20px;
+    border-radius: 10px;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms
+}
+
+#open-lootbox-button:hover {
+    border-radius: 5px;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms
+}
+
+#notifs {
+    width: 25%;
+    margin-left: 40%;
+    margin-bottom: 5px;
+}
