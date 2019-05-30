@@ -105,18 +105,21 @@ function loadBuildings() {
         elementTopRow.innerHTML = tb.name + " x0 | LBPS: " + tb.basepersec + " [0]" 
         elementBuy1 = document.createElement("button");
         elementBuy1.setAttribute("id", "building-" + tb.intname + "-buy");
-        elementBuy1.setAttribute('style', "border-radius: 2px; border: none; padding: 3px")
+        //elementBuy1.setAttribute('style', "border-radius: 2px; border: none; padding: 3px")
         elementBuy1.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 1)");
+        elementBuy1.setAttribute("class", "fancy-button")
         elementBuy1.innerHTML = "Buy 1 " + tb.name;
         elementBuy10 = document.createElement("button");
         elementBuy10.setAttribute("id", "building-" + tb.intname + "-buy10");
-        elementBuy10.setAttribute("style", "margin-left: 3px; border-radius: 2px; border: none; padding: 3px")
+        //elementBuy10.setAttribute("style", "margin-left: 3px; border-radius: 2px; border: none; padding: 3px")
         elementBuy10.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 10)");
+        elementBuy10.setAttribute("class", "fancy-button")
         elementBuy10.innerHTML = "x10";
         elementBuy100 = document.createElement("button");
         elementBuy100.setAttribute("id", "building-" + tb.intname + "-buy100");
-        elementBuy100.setAttribute("style", "margin-left: 3px; border-radius: 2px; border: none; padding: 3px")
+        //elementBuy100.setAttribute("style", "margin-left: 3px; border-radius: 2px; border: none; padding: 3px")
         elementBuy100.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 100)");
+        elementBuy100.setAttribute("class", "fancy-button")
         elementBuy100.innerHTML = "x100";
         elementCost = document.createElement("div");
         elementCost.setAttribute("id", "building-" + tb.intname + "-cost");

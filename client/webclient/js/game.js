@@ -7,70 +7,27 @@ function decode_utf8(s) {return decodeURIComponent(escape(s));}
 //function setInputFilter(textbox, inputFilter) {["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {textbox.addEventListener(event, function() {if (inputFilter(this.value)) {this.oldValue = this.value;this.oldSelectionStart = this.selectionStart;this.oldSelectionEnd = this.selectionEnd;} else if (this.hasOwnProperty("oldValue")) {this.value = this.oldValue;this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);}});});}
 //setInputFilter(document.getElementById("lootbox-cheat-input"), function(value) {return /^\d*$/.test(value); });
 
-function abbrNum(number) {
-    // 2 decimal places => 100, 3 => 1000, etc
-    decPlaces = 3
-    decPlaces = Math.pow(10,decPlaces);
-
-    // Enumerate number abbreviations
-    
+function abbrNum(number) { decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
     //this little bit of code was taken from main.js of cookie clicker 2.019 and slightly modified (removed spaces from first line, and changed var name)
     var longShort = ['thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion'];
     var longPrefixes = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'sex', 'septen', 'octo', 'novem'];
     var longSuffixes = ['decillion', 'vigintillion', 'trigintillion', 'quadragintillion', 'quinquagintillion', 'sexagintillion', 'septuagintillion', 'octogintillion', 'nonagintillion'];
-    
-    var shortShort = ['k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
-    var shortPrefixes = ['', 'u', 'd', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
-    var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    var shortShort = ['k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortPrefixes = ['', 'u', 'd', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
     
     for (var i in longSuffixes ) { for (var ii in longPrefixes ) {longShort.push( ' '+longPrefixes[ii]+ longSuffixes[i] ); } } 
     for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(' '+shortPrefixes[ii]+shortSuffixes[i]); } } 
     // end code stolen from cookie clicker
 
-    if (window.game.options['shortNumbers'] == "long") {
-        var abbrev = longShort;
-    } else if (window.game.options['shortNumbers'] == "short") {
-        var abbrev = shortShort;
-    } else if (window.game.options['shortNumbers'] == "sci") {
-        return number;
-    } else {
-        window.game.options['shortNumbers'] = "long";
-        var abbrev = longShort;
-    }
+    if (window.game.options['shortNumbers'] == "long") { var abbrev = longShort; } else if (window.game.options['shortNumbers'] == "short") { var abbrev = shortShort; } else if (window.game.options['shortNumbers'] == "sci") { return number; } else { window.game.options['shortNumbers'] = "long"; var abbrev = longShort; }
+    for (var i=abbrev.length-1; i>=0; i--) {var size = Math.pow(10,(i+1)*3);if(size <= number) {number = Math.round(number*decPlaces/size)/decPlaces;if((number == 1000) && (i < abbrev.length - 1)) {number = 1;i++;}number += ' ' + abbrev[i]; break;}}return number; }
 
-    // Go through the array backwards, so we do the largest first
-    for (var i=abbrev.length-1; i>=0; i--) {
-
-        // Convert array index to "1000", "1000000", etc
-        var size = Math.pow(10,(i+1)*3);
-
-        // If the number is bigger or equal do the abbreviation
-        if(size <= number) {
-            // Here, we multiply by decPlaces, round, and then divide by decPlaces.
-            // This gives us nice rounding to a particular decimal place.
-            number = Math.round(number*decPlaces/size)/decPlaces;
-
-            // Handle special case where we round up to the next abbreviation
-            if((number == 1000) && (i < abbrev.length - 1)) {
-                number = 1;
-                i++;
-            }
-
-            // Add the letter for the abbreviation
-            number += ' ' + abbrev[i];
-
-            // We are done... stop
-            break;
-        }
-    }
-
-    return number;
-}
+function getUrlVars() { var vars = {}; var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { vars[key] = value; }); return vars; }
+function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; if(window.location.href.indexOf(parameter) > -1){ urlparameter = getUrlVars()[parameter]; } return urlparameter; }
 
 // end copied and pasted stuff
 
-var gameVersionNumber = 16;
-var gameVersionString = "Alpha 0.2.0";
+var gameVersionNumber = 17;
+var gameVersionString = "Alpha dev-0.2.0";
 var isLoaded = false;
 var saveTick = 0;
 var isLoadedTimer = 0;
@@ -84,7 +41,7 @@ function gameSave() {
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
-    this.options = {'shortNumbers': 'short'}
+    this.options = {'shortNumbers': 'short', 'tab': 'stats'}
     //this.options['shortNumbers'] = "long"
     this.totalLootboxClicks = 0;
     this.totalLootboxesFromClicks = 0;
@@ -165,7 +122,10 @@ window.onload = function() {
     console.log('Loading game...');
     cacheElements();
     loadBuildings();
+    //loadUpgrades();
     loadGame();
+    var openTab = getUrlParam("tab", "stats");
+    document.getElementById("mb-" + openTab + "-button").click()
     isLoaded = true;
     //loadUpdateBuildings();
 }

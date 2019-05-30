@@ -23,21 +23,21 @@ function cacheElements() {
 }
 
 function hideAllTabs () {
-    cheatsTab.hidden = true;
+    cheatsTab.setAttribute('class', 'container');
     cheatsButton.disabled = false;
-    onlineTab.hidden = true;
+    onlineTab.setAttribute('class', 'container');
     onlineButton.disabled = false;
-    achievementsTab.hidden = true;
+    achievementsTab.setAttribute('class', 'container');
     achievementsButton.disabled = false;
-    statsTab.hidden = true;
+    statsTab.setAttribute('class', 'container');
     statsButton.disabled = false;
-    legacyTab.hidden = true;
+    legacyTab.setAttribute('class', 'container');
     legacyButton.disabled = false;
-    optionsTab.hidden = true;
+    optionsTab.setAttribute('class', 'container');
     optionsButton.disabled = false;
-    changelogTab.hidden = true;
+    changelogTab.setAttribute('class', 'container');
     changelogButton.disabled = false;
-    chatTab.hidden = true;
+    chatTab.setAttribute('class', 'container');
     chatButton.disabled = false;
 }
 
@@ -49,48 +49,48 @@ function optionstabUpdateNumberFormat() {
 //tabs
 function mbSwitchToOnline() {
     hideAllTabs();
-    onlineTab.hidden = false;
+    onlineTab.setAttribute('class', 'container selected');
     onlineButton.disabled = true;
 }
 
 function mbSwitchToCheats() {
     hideAllTabs();
-    cheatsTab.hidden = false;
+    cheatsTab.setAttribute('class', 'container selected');
     cheatsButton.disabled = true;
 }
 
 function mbSwitchToAchievements() {
     hideAllTabs();
-    achievementsTab.hidden = false;
+    achievementsTab.setAttribute('class', 'container selected');
     achievementsButton.disabled = true;
 }
 
 function mbSwitchToStats() {
     hideAllTabs();
-    statsTab.hidden = false;
+    statsTab.setAttribute('class', 'container selected');
     statsButton.disabled = true;
 }
 
 function mbSwitchToOptions() {
     hideAllTabs();
-    optionsTab.hidden = false;
+    optionsTab.setAttribute('class', 'container selected');
     optionsButton.disabled = true;
 }
 
 function mbSwitchToLegacy() {
     hideAllTabs();
-    legacyTab.hidden = false;
+    legacyTab.setAttribute('class', 'container selected');
     legacyButton.disabled = true;
 }
 
 function mbSwitchToChangelog() {
     hideAllTabs();
-    changelogTab.hidden = false;
+    changelogTab.setAttribute('class', 'container selected');
     changelogButton.disabled = true;
 }
 
 function mbSwitchToChat() {
     hideAllTabs();
-    chatTab.hidden = false;
+    chatTab.setAttribute('class', 'container selected');
     chatButton.disabled = true;
 }

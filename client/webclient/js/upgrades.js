@@ -8,7 +8,7 @@ var testupgrade = {
     cost: function() {return window.game.lootboxes >= 5},
     onUnlock: function() {
         window.game.lootboxes = window.game.lootboxes - 5;
-        document.getElementById("upgrades").removeChild(getElementById('upgrade-test'));
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-test'));
         window.game.lootboxesPerClick = window.game.lootboxesPerClick + 1;
     }
 }
@@ -24,12 +24,25 @@ function tickUpgrades() {
     }
 }
 
+function buyUpgrade(id) {
+    for (var upgrade in upgrades) {
+        if (upgrades[upgrade].id = id) {
+            if (upgrades[upgrade].cost() == true) {
+                upgrades[upgrade].onUnlock()
+            }
+            break;
+        }
+    }
+}
+
 function loadUpgrades() {
     var upgradeContainer = document.getElementById('upgrades');
     for (var upgrade in upgrades) {
         tu = upgrades[upgrade];
         element = document.createElement('button');
         element.setAttribute("id", "upgrade-" + tu.id);
+        element.setAttribute('class', 'upgrade')
+        element.setAttribute('onclick', "buyUpgrade('" + tu.id + "')")
         //element.hidden = true
         upgradeContainer.appendChild(element);
         
