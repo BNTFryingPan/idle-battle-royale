@@ -65,7 +65,7 @@
                         </div>
                         <div id="mb-legacy-tab" class="container" onclick="mbSwitchToLegacy()">
                             <p class='mb-header'>-= Legacy =-</p>
-                            <br><button class='fancy-button' onclick="prestigeButton()">Ascend Now<br>Costs 1 Trillion Lootboxes</button>
+                            <br><!--<button class='fancy-button' onclick="prestigeButton()">Ascend Now<br>Costs 1 Trillion Lootboxes</button>-->
                             <br>Prestige Level if you Ascend now: <span id="prestige-plian">0</span><br>
                             Lootboxes Required for next Prestige Level: <span id="prestige-lbfnp">0</span><br>
                             Current Prestige Level: <span id="prestige-current">0</span><br>
@@ -77,13 +77,8 @@
                         <div id='mb-changelog-tab' class="container" onclick="mbSwitchToChangelog()">
                             <p class='mb-header' style="overflow-y: hidden">-= Changelog =-</p>
                             <div style="overflow-y: scroll; height: 94%; border-style:solid; border-color: black; border-width: 5px; border-radius: 10px">
-                                <br>
                                 <p style='text-align: center;color: red;'>If you play on FireFox, Opera, IE, or Normal Edge, you may have problems!<br>
                                 This game was mostly tested in <a href="https://microsoftedgeinsider.com">Edge Canary 76 (Edge Insider Build)</a> and <a href="https://www.google.com/chrome/canary/">Chrome Canary 77</a></p><br>
-                                
-                                <p>Quick note on versioning:</p>
-                                <p>Version string is in the format "stage" main.major.minor similar to Minecraft<br>
-                                The build number for public releases won't always be in order, as dev builds and release builds use the same build number</p>
                                 <a href="https://discord.gg/nHkGBun">Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>
                                 <br><br>
                                 <p>Whats Next?<br>
@@ -92,6 +87,8 @@
                                 - online chat (i have no idea)<br></p>
                                 <hr>
                                 <br>
+                                <p>Alpha 0.3.0 - Build 26 - Upgrades-pre2<br>
+                                * fixed buyable indicator to include buildingDiscount<br><br></p>
                                 <p>Alpha 0.3.0 - Build 25 - Upgrades-pre1<br>
                                 Currently upgrades for building price, click power, noob, and player LBS<br>
                                 im not gonna put changelogs here because all i really did was open this by default<br>
@@ -162,7 +159,7 @@
                 <div id="right-bar" class="bar" style="width:25%">
                     Upgrades:<br>
                     <div id="upgrades" class="container" style="height: auto; display:block">
-                    </div><br>
+                    </div><hr>
                     <span>Buildings: <input type="radio" checked id='building-select-buy' onclick="document.getElementById('building-select-sell').checked = false;buildingBuyMode = true;"> Buy || <input type="radio" id='building-select-sell' onclick="document.getElementById('building-select-buy').checked = false;buildingBuyMode=false;"> Sell</span>
                     <div id="buildings" class="container" style="margin-top: 3px">
                     </div>
