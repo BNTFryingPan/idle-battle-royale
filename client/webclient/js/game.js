@@ -27,8 +27,8 @@ function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; 
 
 // end copied and pasted stuff
 
-var gameVersionNumber = 24;
-var gameVersionString = "Alpha 0.2.6";
+var gameVersionNumber = 25;
+var gameVersionString = "Alpha 0.3.0-pre1";
 var isLoaded = false;
 var saveTick = 0;
 var splashTick = 250;
@@ -137,7 +137,7 @@ window.onload = function() {
     chatCacheElements();
     loadBuildings();
     loadGame();
-    //loadUpgrades();
+    loadUpgrades();
     var openTab = getUrlParam("tab", "stats");
     document.getElementById("mb-" + openTab + "-button").click()
     isLoaded = true;
@@ -175,7 +175,7 @@ function tick() {
             alert("You have cheated! You will no longer be able to get online bonuses.")
         }
         updateUI();
-        //tickUpgrades();
+        tickUpgrades();
         if (saveTick >= 300) {
             saveGame();
             saveTick = 0;
@@ -194,14 +194,16 @@ function tick() {
 function splashCycleFunction() {
     var splashElement = document.getElementById('header-splash');
     if (fastSplash == true) {
+        splashTick = 0;
         fastSplashTick++;
         if (fastSplashTick == 1) {
             splashElement.classList.add('changing');
-        } else if (fastSplashTick ==  3) {
+        } else if (fastSplashTick >= 3) {
             changeSplash();
             splashElement.classList.remove('changing');
             fastSplash = false;
             fastSplashTick = 0;
+            splashTick = 0;
         }
     } else {
         splashTick++;

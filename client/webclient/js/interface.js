@@ -35,6 +35,7 @@ function changeSplash() {
         '<sub>O</sub><sup>G</sup><sub>V</sub><sup>A</sup><sub>E</sub><sup>M</sup><sub>R</sub><sup>E</sup>',
         'Not on Steam! (yet...)',
         'Also try <a href="http://www.filltheoceans.com/">Fill the Oceans</a>',
+        'Also try <a href="http://decisionproblem.com/paperclips/index2.html">Universal Paperclips</a>',
         'Village and Pillage',
         'Minceraft',
         'Have a hug!',
@@ -46,6 +47,7 @@ function changeSplash() {
         'minecraft double smooth stone slab'
         ];
     var newSplash = ''
+    var newSplash = splashes[parseInt(Math.random() * splashes.length)];
     if (currentSplash != '') {
         console.log(newSplash)
         while (currentSplash == newSplash) {

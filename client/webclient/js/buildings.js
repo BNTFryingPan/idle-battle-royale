@@ -170,7 +170,7 @@ function updateBuildings() {
         tb = buildings[build];
         tbg = window.game.buildings[build];
         window.game.totalBuildings += tbg.amount;
-        price = Math.round(Math.round(tb.basecost * priceMultiplier ** tbg.amount))// * window.game.buildingDiscount);
+        price = buildingPrice(build);
         //console.log('tb: ' + tb.intname)
         if ((window.game.totalLootboxes >= (tb.basecost * window.game.buildingDiscount)) || build == 'noob' || (window.game.buildings[tbg.parent].amount >= 1) || (tbg.parent.amount >= 1)) {
             document.getElementById("building-" + tb.intname).hidden = false;
@@ -197,7 +197,7 @@ function buyBuilding(build, amount=1) {
     //console.log(window.game.lootboxes + "/" + tb.basecost)
     for (i = 1; i <= amount; i++) {
         if (buildingBuyMode == true) {
-            price = Math.round(Math.round(tbg.basecost * priceMultiplier ** tbg.amount))// * window.game.buildingDiscount);
+            price = buildingPrice(build)
             console.log('buying ' + i + ' of ' + amount + ' for ' + abbrNum(price) + '[' + abbrNum(window.game.lootboxes) + ']');
             if (window.game.lootboxes >= price) {
                 window.game.lootboxes = window.game.lootboxes - price;
@@ -218,4 +218,10 @@ function buyBuilding(build, amount=1) {
             }
         }
     }
+}
+
+function buildingPrice(build) {
+    tbg = window.game.buildings[build];
+    var price = Math.round(Math.round(tbg.basecost * priceMultiplier ** tbg.amount) * window.game.buildingDiscount);
+    return price;
 }

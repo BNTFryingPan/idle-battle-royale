@@ -87,7 +87,6 @@ var noobPower3 = {
     unlock: function(){return window.game.buildings['noob'].amount >= 50},
     cost: function(){return window.game.lootboxes >= 1500},
     onBuy: function(){
-        console.log('bought noobpower3');
         window.game.upgrades[this.id] = true;
         document.getElementById("upgrades").removeChild(document.getElementById('upgrade-button-' + this.id));
         document.getElementById("upgrades").removeChild(document.getElementById('upgrade-desc-' + this.id));
@@ -100,7 +99,103 @@ upgrades.push(noobPower1);
 upgrades.push(noobPower2);
 upgrades.push(noobPower3);
 
-//var 
+var playerPower1 = {
+    name: "Better Players",
+    desc: "Cost: 100<br>+1 production from Players",
+    id: "playerPower1",
+    unlock: function(){return window.game.buildings['player'].amount >= 10},
+    cost: function(){return window.game.lootboxes >= 100},
+    onBuy: function(){
+        window.game.upgrades[this.id] = true;
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-button-' + this.id));
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-desc-' + this.id));
+        window.game.lootboxes = window.game.lootboxes - 100;
+        window.game.buildings['player'].persec += 2;
+    }
+}
+
+var playerPower2 = {
+    name: "Improved Players",
+    desc: "Cost: 500<br>Double production from Players",
+    id: "playerPower2",
+    unlock: function(){return window.game.buildings['player'].amount >= 25},
+    cost: function(){return window.game.lootboxes >= 500},
+    onBuy: function(){
+        window.game.upgrades[this.id] = true;
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-button-' + this.id));
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-desc-' + this.id));
+        window.game.lootboxes = window.game.lootboxes - 500;
+        window.game.buildings['player'].persec *= 2;
+    }
+}
+
+var playerPower3 = {
+    name: "Even Better Players",
+    desc: "Cost: 1500<br>Double production from Players",
+    id: "playerPower3",
+    unlock: function(){return window.game.buildings['player'].amount >= 50},
+    cost: function(){return window.game.lootboxes >= 1500},
+    onBuy: function(){
+        window.game.upgrades[this.id] = true;
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-button-' + this.id));
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-desc-' + this.id));
+        window.game.lootboxes = window.game.lootboxes - 1500;
+        window.game.buildings['player'].persec *= 2;
+    }
+}
+
+upgrades.push(playerPower1);
+upgrades.push(playerPower2);
+upgrades.push(playerPower3);
+
+var buildingPrice1 = {
+    name: "Bob the Builder",
+    desc: "Cost: 50,000<br>Buildings cost 25% less",
+    id: "buildingPrice1",
+    unlock: function(){return window.game.totalBuildings >= 100},
+    cost: function(){return window.game.lootboxes >= 50000},
+    onBuy: function(){
+        window.game.upgrades[this.id] = true;
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-button-' + this.id));
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-desc-' + this.id));
+        window.game.lootboxes = window.game.lootboxes - 50000;
+        window.game.buildingDiscount -= window.game.buildingDiscount * 0.75;
+    }
+}
+
+var buildingPrice2 = {
+    name: "Master Builder",
+    desc: "Cost: 175,000<br>Buildings cost 25% less",
+    id: "buildingPrice2",
+    unlock: function(){return window.game.totalBuildings >= 300},
+    cost: function(){return window.game.lootboxes >= 175000},
+    onBuy: function(){
+        window.game.upgrades[this.id] = true;
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-button-' + this.id));
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-desc-' + this.id));
+        window.game.lootboxes = window.game.lootboxes - 175000;
+        window.game.buildingDiscount -= window.game.buildingDiscount * 0.75;
+    }
+}
+
+var buildingPrice3 = {
+    name: "Steve",
+    desc: "Cost: 552,000<br>Buildings cost 25% less",
+    id: "buildingPrice3",
+    unlock: function(){return window.game.totalBuildings >= 800},
+    cost: function(){return window.game.lootboxes >= 552000},
+    onBuy: function(){
+        window.game.upgrades[this.id] = true;
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-button-' + this.id));
+        document.getElementById("upgrades").removeChild(document.getElementById('upgrade-desc-' + this.id));
+        window.game.lootboxes = window.game.lootboxes - 552000;
+        window.game.buildingDiscount -= window.game.buildingDiscount * 0.75;
+    }
+}
+
+upgrades.push(buildingPrice1);
+upgrades.push(buildingPrice2);
+upgrades.push(buildingPrice3);
 
 function tickUpgrades() {
     for (var i = 0; i < upgrades.length; i++) {
@@ -119,7 +214,7 @@ function buyUpgrade(id) {
     for (var i = 0; i < upgrades.length; i++) {
         if (upgrades[i].id == id) {
             if (upgrades[i].cost() == true) {
-                console.log('triggering onBuy() of ' + upgrades[i].id + ' which has id ' + i + ' and name of ' + upgrades[i].name)
+                //console.log('triggering onBuy() of ' + upgrades[i].id + ' which has id ' + i + ' and name of ' + upgrades[i].name)
                 //console.log('upgrades[i]: ' + upgrades[i])
                 upgrades[i].onBuy()
             }
