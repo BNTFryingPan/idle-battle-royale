@@ -180,7 +180,7 @@ function updateBuildings() {
 
         document.getElementById('building-' + tb.intname + '-cost').innerHTML = "Cost: " + abbrNum(price);
         document.getElementById('building-' + tb.intname + '-toprow').innerHTML = tb.name + " x" + tbg.amount + ' | LBPS ' + abbrNum(tbg.persec * tbg.multiplier) + ' [' + abbrNum((tbg.persec*tbg.multiplier)*tbg.amount) + ']'
-        if (window.game.lootboxes >= Math.round(Math.round(tbg.basecost * priceMultiplier ** tbg.amount))) {
+        if (window.game.lootboxes >= buildingPrice(build)) {
             document.getElementById('building-' + tb.intname + '-toprow').style = "color: green"
         } else {
             document.getElementById('building-' + tb.intname + '-toprow').style = "color: red"
