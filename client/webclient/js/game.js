@@ -27,8 +27,8 @@ function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; 
 
 // end copied and pasted stuff
 
-var gameVersionNumber = 22;
-var gameVersionString = "Alpha 0.2.5";
+var gameVersionNumber = 24;
+var gameVersionString = "Alpha 0.2.6";
 var isLoaded = false;
 var saveTick = 0;
 var splashTick = 250;
@@ -124,9 +124,10 @@ function prestige() {
 }
 
 function prestigeButton() {
-    if (window.game.lootboxes > 1000000000000) {
-        prestige();
-    }
+    //if (window.game.lootboxes > 1000000000000) {
+    //    prestige();
+    //}
+    alert('no u');
 }
 
 window.onload = function() {
@@ -174,7 +175,7 @@ function tick() {
             alert("You have cheated! You will no longer be able to get online bonuses.")
         }
         updateUI();
-        tickUpgrades();
+        //tickUpgrades();
         if (saveTick >= 300) {
             saveGame();
             saveTick = 0;

@@ -1,4 +1,6 @@
 //contains functions that control ui, like tabs in the middle bar
+var currentSplash = "";
+
 
 function cacheElements() {
     onlineTab            = document.getElementById('mb-online-tab');
@@ -20,6 +22,7 @@ function cacheElements() {
     lootboxPerSecDisplay = document.getElementById('lbps-display');
     lootboxTotalDisplay  = document.getElementById('total-lootbox-display');
     lootboxDisplay       = document.getElementById('lootbox-display');
+    splashElement        = document.getElementById('header-splash');
 }
 
 function changeSplash() {
@@ -34,11 +37,26 @@ function changeSplash() {
         'Also try <a href="http://www.filltheoceans.com/">Fill the Oceans</a>',
         'Village and Pillage',
         'Minceraft',
-        'Have a hug!'
+        'Have a hug!',
+        'DOOR STUCK! DOOR STUCK!',
+        'Updating Windows... 99%',
+        'A darkness lingers',
+        'Don\'t forget to <b>SMASH</b> that like button',
+        '😢 T-series is winning',
+        'minecraft double smooth stone slab'
         ];
-    var newSplash = splashes[parseInt(Math.random() * splashes.length)];
-    var splashElement = document.getElementById('header-splash');
-
+    var newSplash = ''
+    if (currentSplash != '') {
+        console.log(newSplash)
+        while (currentSplash == newSplash) {
+            var newSplash = splashes[parseInt(Math.random() * splashes.length)];
+        }
+    } else {
+        var newSplash = splashes[parseInt(Math.random() * splashes.length)];
+    }
+    currentSplash = newSplash
+    // adding invisibile sub and sup text allows me to make splashes with sub and sup text without changing the height of the line
+    // i tried a zero-width character, but it just showed up as a ~ (tilda tilde whatever, i like to call it the relative indicator because minecraft)
     splashElement.innerHTML = "<sup style='color: #232233'>.</sup>" + newSplash + "<sub style='color: #232233'>.</sub>";
 }
 
