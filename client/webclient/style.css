@@ -28,12 +28,14 @@ a {
 #client-border {
     background-color: #ff8080;
     border-color: #ee5050;
-    border-style: outset;
+    border-style: groove;
+    border-radius: 10px;
     padding: 5px;
 }
 
 #client {
     background-color: #232233;
+    border-radius: 10px;
     padding: 5px;
     display: flex;
 }
@@ -75,6 +77,7 @@ a {
     padding: 3px;
     margin-left: 2px;
     margin-right: 2px;
+    border-radius: 10px;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: rgba(100, 80, 125, 60);
@@ -85,6 +88,11 @@ a {
     background-color: rgba(50, 20, 125, 60);
     border-radius: 15px;
     margin-bottom: 2px;
+}
+
+.mb-header {
+    font-size: 20px;
+    text-align: center;
 }
 
 #middle-bar .container {
@@ -117,7 +125,7 @@ a {
 }
 
 .building:hover {
-    height: 6.6ch;
+    height: 6.8ch;
     background-color: rgba(70, 170, 185, 80);
     overflow-y: scroll;
     transition: ease-in-out;
@@ -131,12 +139,62 @@ a {
     min-width: 25px;
     margin-left:1px;
     margin-right: 1px;
+    background-color: rgba(50, 150, 165, 60);
+    border-radius: 10px;
+    border: none;
+    overflow-y: hidden;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.upgrade-desc {
+    height: 0px;
+    width: 0px;
+    background-color: rgba(50, 150, 165, 25);
+    opacity: 0.6;
+    margin: 0px;
+    padding: 0px;
+    border: solid;
+    border-width: 0px;
+    border-color: black;
+    position: fixed;
+    text-align: center;
+    overflow: hidden;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.upgrade:hover + .upgrade-desc , .upgrade-desc:hover{
+    height: 100px;
+    width: 23%;
+    overflow: hidden;
+    border-width: 5px;
+    margin-left: 1px;
+    margin-right: 1px;
+    border-radius: 10px;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.upgrade-desc:hover {
+    opacity: 1;
+}
+
+#upgrades {
+    height: 50px;
+}
+
+#upgrades:hover {
+    height: auto;
 }
 
 .fancy-button {
     background-color: #8888ff;
     border: none;
-    font-size: 20px;
+    padding: 4px;
     border-radius: 10px;
     transition: ease-in-out;
     transition-property: all;
@@ -156,4 +214,33 @@ a {
     width: 25%;
     margin-left: 40%;
     margin-bottom: 5px;
+}
+
+#chat-log {
+    width: 100%;
+    height: 10%;
+    background-color: #232233;
+    color: #8888ff;
+    font-size: 12pt;
+    resize: none;
+}
+
+#header-splash {
+    opacity: 1;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+#header-splash.changing {
+    opacity: 0;
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 200ms;
+}
+
+.building-toprow {
+    transition: ease-in-out;
+    transition-property: all;
+    transition-duration: 500ms;
 }

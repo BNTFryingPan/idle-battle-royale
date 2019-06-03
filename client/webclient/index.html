@@ -6,12 +6,14 @@
         <script src="js/upgrades.js"></script>
         <script src="js/buildings.js"></script>
         <script src="js/interface.js"></script>
+        <script src="js/online/chat.js"></script>
     </head>
 
     <body>
         <div id="header">
-            Idle Battle Royale Client
+            <span id='header-text'>Idle Battle Royale Client</span><br>
         </div>
+        <p id='header-splash' onclick='splashClick()' style='color: #40d0e0; text-align: center' o></p>
         <div id="client-border" style="height: 90%">
             <div id="client" style="height: 98.5%">
                 <div id="left-bar" class="bar" style="width:30%">
@@ -19,11 +21,11 @@
                         <p style="text-align: center" id="lootbox-display">Lootboxes: 0</p>
                         <p style="text-align: center" id="lbps-display">LBPS: 0</p>
                         <br>
-                        <p style="text-align: center"><button onclick="clickLootbox()" class="fancy-button">Open Lootbox</button></p>
+                        <p style="text-align: center; font-size: 20px"><button onclick="clickLootbox()" class="fancy-button">Open Lootbox</button></p>
                     </div>
                 </div>
                 <div id="middle-bar-holder" style="width:45%">
-                    <div id='middle-bar-buttons' style="display:flex;justify-content: space-evenly">
+                    <div id='middle-bar-buttons' style="display:flex;justify-content: space-evenly;flex-wrap: nowrap">
                         <button class='mb-button' id="mb-online-button" onclick="mbSwitchToOnline()">Online</button>
                         <button class='mb-button' id="mb-cheats-button" onclick="mbSwitchToCheats()">Cheats</button>
                         <button class='mb-button' id="mb-stats-button" onclick="mbSwitchToStats()" disabled>Stats</button>
@@ -35,25 +37,25 @@
                         <button class='mb-button' id="mb-hideall-button" onclick="hideAllTabs()"><b style="color:red">X</b></button>
                     </div>
                     <div id="middle-bar" class="bar">
-                        <div id="mb-online-tab" class="container">
-                            <p style="text-align: center; font-size: 20px">-= Online =-</p>
+                        <div id="mb-online-tab" class="container" onclick="mbSwitchToOnline()">
+                            <p class='mb-header'>-= Online =-</p>
                             Coming Soon!
                         </div>
-                        <div id="mb-cheats-tab" class="container">
-                            <p style="text-align: center; font-size: 20px">-= Cheats =-</p>
+                        <div id="mb-cheats-tab" class="container" onclick="mbSwitchToCheats()">
+                            <p class='mb-header'>-= Cheats =-</p>
                             <button onclick="addTotalLBs()">Increase total lootboxes</button>
                             <input id="lootbox-cheat-input" type="text" placeholder="Lootboxes to add" style="margin-top: 2px"> <button onclick="lootboxCheatButton()">Add</button>
                         </div>
-                        <div id="mb-stats-tab" class="container">
-                            <p style="text-align: center; font-size: 20px">-= Stats =-</p>
+                        <div id="mb-stats-tab" class="container" onclick="mbSwitchToStats()">
+                            <p class='mb-header'>-= Stats =-</p>
                             <p id="total-lootbox-display">Total Lootboxes: 0</p>
                             <p id="total-building-display">Total Buildings: 0</p>
                             <p id="lbpc-display">Lootboxes per Click: 1</p>
                             <p id="total-clicks-display">Total Lootbox Clicks: 0</p>
                             <p id="lb-from-clicks">Total Lootboxes from Clicks: 0</p>
                         </div>
-                        <div id="mb-options-tab" class="container">
-                            <p style="text-align: center; font-size: 20px">-= Options =-</p>
+                        <div id="mb-options-tab" class="container" onclick="mbSwitchToOptions()"> 
+                            <p class='mb-header'>-= Options =-</p>
                             <select onchange="optionstabUpdateNumberFormat()" id="option-numformat">
                                 <option value="long">Long Number Notation</option>
                                 <option value="short">Short Number Notation</option>
@@ -61,31 +63,52 @@
                             </select>
                             <br><button onclick="resetAll()" style="margin-top: 2px">Reset <b>ALL</b> progress</button><br>
                         </div>
-                        <div id="mb-legacy-tab" class="container">
-                            <p style="text-align: center; font-size: 20px">-= Legacy =-</p>
-                            Prestige Level if you Ascend now: <span id="prestige-plian">0</span><br>
+                        <div id="mb-legacy-tab" class="container" onclick="mbSwitchToLegacy()">
+                            <p class='mb-header'>-= Legacy =-</p>
+                            <br><button class='fancy-button' onclick="prestigeButton()">Ascend Now<br>Costs 1 Trillion Lootboxes</button>
+                            <br>Prestige Level if you Ascend now: <span id="prestige-plian">0</span><br>
                             Lootboxes Required for next Prestige Level: <span id="prestige-lbfnp">0</span><br>
                             Current Prestige Level: <span id="prestige-current">0</span><br>
                         </div>
-                        <div id="mb-ach-tab" class="container">
-                            <p style="text-align: center; font-size: 20px">-= Achievements =-</p>
+                        <div id="mb-ach-tab" class="container" onclick="mbSwitchToAchievements()">
+                            <p class='mb-header'>-= Achievements =-</p>
                             Coming Soon!
                         </div>
-                        <div id='mb-changelog-tab' class="container">
-                            <p style="text-align: center; font-size: 20px; overflow-y: hidden">-= Changelog =-</p>
+                        <div id='mb-changelog-tab' class="container" onclick="mbSwitchToChangelog()">
+                            <p class='mb-header' style="overflow-y: hidden">-= Changelog =-</p>
                             <div style="overflow-y: scroll; height: 94%; border-style:solid; border-color: black; border-width: 5px; border-radius: 10px">
-                                <br><p>Quick note on versioning -</p>
+                                <br>
+                                <p style='text-align: center;color: red;'>If you play on FireFox, Opera, IE, or Normal Edge, you may have problems!<br>
+                                This game was mostly tested in Edge Canary 76 (Edge Insider Build) and Chrome Canary 77</p><br>
+                                
+                                <p>Quick note on versioning:</p>
                                 <p>Version string is in the format "stage" main.major.minor similar to Minecraft<br>
                                 The build number for public releases won't always be in order, as dev builds and release builds use the same build number</p>
-                                <a href="https://discord.gg/nHkGBun">Join the discord for the latest news, updates, and to provide feedback</a>
+                                <a href="https://discord.gg/nHkGBun">Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>
+                                <br><br>
+                                <p>Whats Next?<br>
+                                - upgrades (probably alpha 0.3)<br>
+                                - prestige (probably alpha 0.5 or 0.6)<br>
+                                - online chat (i have no idea)<br></p>
+                                <hr>
                                 <br>
+                                <p>Alpha 0.2.5 - Build 22 - <b>The Smoothing <i>Part 3</i></b><br>
+                                This last part of the smoothing will contain a beta version of upgrades, if you experience any issues, please tell me on discord.<br>
+                                I was going to include beta testing for upgrades, but decided against it, as the smoothing is ui improvements, not upgrades<br>
+                                However, progress on upgrades is currently 👌 and if you really want to try the few upgrades there are currently, open inspect element console, and type <code>loadUpgrades()</code><br>
                                 <br>
+                                + added a splash text, clicking it will instantly change it, but it also changes like every 15 to 30 seconds, i dont remember what is is lol<br>
+                                + more rounded stuff<br>
+                                + buildings now are colored green if you can buy them, red if you cant<br>
+                                + you can now sell buildings<br>
+                                + you can click on the tab headers to open that tab<br>
+                                <br><br></p>
                                 <p>Alpha 0.2.1 - Build 18 - <b>The Smoothing <i>Part 2</i></b><br>
                                 <br>
                                 + more rounded stuff<br>
                                 + all tabs are now visible but collapse, part 3 will make them clickable to expand<br>
                                 ^ upgrades are coming soon, after the smoothing part 3 probably<br><br><br></p>
-                                <p>Alpha 0.2.0 - Build 16 - <b>The Smoothing</b></p>
+                                <p>Alpha 0.2.0 - Build 16 - <b>The Smoothing <i>Part 1</i></b></p>
                                 <p>Saves are going to be reset a lot in near future. Don't get too attached to your saves.</p>
                                 <br>
                                 <p>+ made edges of a bunch of stuff rounded, including buttons, and divs<br>
@@ -94,15 +117,15 @@
                                 * buildings are now revealed after having at least 1 of the building before it<br>
                                 * building layout changed, top row shows name, count, and lbps. putting mouse over building reveals cost and buy buttons<br>
                                 * all existing buildings were pushed up, as noob replaced player, player replaced gamer, etc</p>
-                                <br>
+                                <br><br>
                                 <p>Alpha 0.1.7c - Build 14</p>
                                 <p>Im sorry, but this update breaks existing saves, and I am unable to figure out how to fix this.</p>
                                 <p>I need a better way to convert saves to newer versions, but until then, <b>do not expect your save to be fully stable until release</b>.</p>
                                 <p>In order to play again, you must reset your save, then reload the page. Again, this will issue will be fixed in a future update.</p>
-                                <br>
+                                <br><br>
                                 <p>Alpha 0.1.7b - Build 13</p>
                                 <p>Testing to fix everything because everything broke</p>
-                                <br>
+                                <br><br>
                                 <p>Alpha 0.1.7 - Build 12</p>
                                 <p>Hey. I just added this changelog!</p><br>
                                 <p>Update Notes:<br>
@@ -113,20 +136,19 @@
                                 <br>
                             </div>
                         </div>
-                        <div id="mb-chat-tab" class="container">
-                            <p style="text-align: center; font-size: 20px">-= Chat =-</p>
-                            Coming Soon!
+                        <div id="mb-chat-tab" class="container" onclick="mbSwitchToChat()">
+                            <p style="text-align: center; font-size: 20px">-= Chat =-</p><br>
+                            <textarea type=text id='chat-log' contenteditable="false" disabled>hey</textarea><br><br>
+                            <input type=text id='chat-inp' placeholder="Type a message here!" style="width: 90%"> <button id='chat-button' onclick='chatSendButton()' style='width: 9%' class='fancy-button'>Send</button>
                         </div>
                     </div>
                 </div>
                 <div id="right-bar" class="bar" style="width:25%">
                     Upgrades:<br>
-                    <div id="upgrades" class="container" style="height: auto; width: 100%; float: left;">
-                        
+                    <div id="upgrades" class="container" style="height: auto; display:block">
                     </div><br>
-                    Buildings:
+                    <span>Buildings: <input type="radio" checked id='building-select-buy' onclick="document.getElementById('building-select-sell').checked = false;buildingBuyMode = true;"> Buy || <input type="radio" id='building-select-sell' onclick="document.getElementById('building-select-buy').checked = false;buildingBuyMode=false;"> Sell</span>
                     <div id="buildings" class="container" style="margin-top: 3px">
-                        
                     </div>
                 </div>
             </div>

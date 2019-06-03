@@ -23,25 +23,31 @@ function abbrNum(number) { decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
 
 function getUrlVars() { var vars = {}; var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { vars[key] = value; }); return vars; }
 function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; if(window.location.href.indexOf(parameter) > -1){ urlparameter = getUrlVars()[parameter]; } return urlparameter; }
+//function sleep(ms) { }
 
 // end copied and pasted stuff
 
-var gameVersionNumber = 17;
-var gameVersionString = "Alpha dev-0.2.0";
+var gameVersionNumber = 22;
+var gameVersionString = "Alpha 0.2.5";
 var isLoaded = false;
 var saveTick = 0;
+var splashTick = 250;
+var fastSplashTick = 0;
 var isLoadedTimer = 0;
+var fastSplash = false;
 
 // gamesave
 function gameSave() {
     this.lootboxes = 0;
     this.totalLootboxes = 0;
-    this.lootboxesPerClick = 1;
+    this.lootboxesPerClickAdditive = 1;
+    this.lootboxesPerClickMultiplier = 1;
     this.lootboxesPerSecond = 0;
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
     this.options = {'shortNumbers': 'short', 'tab': 'stats'}
+    this.upgrades = {}
     //this.options['shortNumbers'] = "long"
     this.totalLootboxClicks = 0;
     this.totalLootboxesFromClicks = 0;
@@ -88,7 +94,7 @@ function updateLBPS() {
     var totalLBPS = 0;
     for (var build in window.game.buildings) {
         var tb = window.game.buildings[build];
-        tb.totalPerSec = tb.persec * tb.amount;
+        tb.totalPerSec = ( tb.persec * tb.multiplier ) * tb.amount ;
         totalLBPS = totalLBPS + tb.totalPerSec;
     }
     totalLBPS = totalLBPS * window.game.totalMultiplier;
@@ -109,32 +115,42 @@ function calcLbsNextPrestigeLevel() {
 
 function prestige() {
     window.prestige = calcPrestige()
-    window.game.buildings = buildings;
     window.game.lootboxes = 0;
+    window.game.buildings = buildings;
     window.game.lootboxesPerSecond = 0;
     window.game.lootboxesPerClick = 1;
 
     //window.game.buildingDiscount = 1 * (
 }
 
+function prestigeButton() {
+    if (window.game.lootboxes > 1000000000000) {
+        prestige();
+    }
+}
+
 window.onload = function() {
     //window.game = new gameSave();
     console.log('Loading game...');
     cacheElements();
+    chatCacheElements();
     loadBuildings();
-    //loadUpgrades();
     loadGame();
+    //loadUpgrades();
     var openTab = getUrlParam("tab", "stats");
     document.getElementById("mb-" + openTab + "-button").click()
     isLoaded = true;
+    cheatUI();
+    changeSplash();
     //loadUpdateBuildings();
 }
 
 // funtions
 function clickLootbox() {
-    earnLootboxes(window.game.lootboxesPerClick)
+    lootboxesFromClick = window.game.lootboxesPerClickAdditive * window.game.lootboxesPerClickMultiplier
+    earnLootboxes(lootboxesFromClick);
     window.game.totalLootboxClicks++;
-    window.game.totalLootboxesFromClicks += window.game.lootboxesPerClick;
+    window.game.totalLootboxesFromClicks += lootboxesFromClick;
     //updateUI();
 }
 
@@ -158,6 +174,7 @@ function tick() {
             alert("You have cheated! You will no longer be able to get online bonuses.")
         }
         updateUI();
+        tickUpgrades();
         if (saveTick >= 300) {
             saveGame();
             saveTick = 0;
@@ -173,6 +190,35 @@ function tick() {
     }
 }
 
+function splashCycleFunction() {
+    var splashElement = document.getElementById('header-splash');
+    if (fastSplash == true) {
+        fastSplashTick++;
+        if (fastSplashTick == 1) {
+            splashElement.classList.add('changing');
+        } else if (fastSplashTick ==  3) {
+            changeSplash();
+            splashElement.classList.remove('changing');
+            fastSplash = false;
+            fastSplashTick = 0;
+        }
+    } else {
+        splashTick++;
+        if (splashTick == 300) {
+            splashElement.classList.add('changing');
+        } else if (splashTick == 305) {
+            changeSplash()
+            splashElement.classList.remove('changing');
+            splashTick = 0;
+        }
+    }
+
+}
+
+function splashClick() {
+    fastSplash = true;
+}
+
 function updateUI() {
     //updateUnlocks();
     document.getElementById('lootbox-display').innerHTML = "Lootboxes: " + abbrNum(Math.round(window.game.lootboxes));
@@ -180,7 +226,7 @@ function updateUI() {
     updateBuildings();
     updateLBPS();
     document.getElementById('total-building-display').innerHTML = "Total Buildings: " + abbrNum(window.game.totalBuildings);
-    document.getElementById('lbpc-display').innerHTML = "Lootboxes per Click: " + abbrNum(Math.round(window.game.lootboxesPerClick));
+    document.getElementById('lbpc-display').innerHTML = "Lootboxes per Click: " + abbrNum(Math.round(window.game.lootboxesPerClickAdditive * window.game.lootboxesPerClickMultiplier));
     document.getElementById('total-clicks-display').innerHTML = "Total Lootbox Clicks: " + window.game.totalLootboxClicks;
     document.getElementById('lb-from-clicks').innerHTML = "Total Lootboxes from Clicks: " + abbrNum(Math.round(window.game.totalLootboxesFromClicks));
     document.getElementById('prestige-current').innerHTML = window.game.prestige;
@@ -206,7 +252,8 @@ function resetAll() {
 function addTotalLBs() {
     if (confirmCheat() == true) {
         window.game.totalLootboxes = window.game.totalLootboxes + 1;
-        window.game.totalLootboxes = window.game.totalLootboxes * 10;
+        window.game.totalLootboxes = window.game.totalLootboxes ** 10;
+        cheatUI()
     }
 }
 
@@ -214,6 +261,7 @@ function addCheatedLootboxes(count) {
     if (confirmCheat() == true) {
         window.game.lootboxes = window.game.lootboxes + count;
         window.game.totalLootboxes = window.game.totalLootboxes + count;
+        cheatUI();
     }
 }
 
@@ -222,14 +270,22 @@ function lootboxCheatButton() {
         var inp = document.getElementById('lootbox-cheat-input');
         var lb = parseInt(inp.value);
         addCheatedLootboxes(lb);
+        cheatUI();
     }
 }
 
 function confirmCheat() {
     if (window.game.hasCheated == true) { return true } else {
         confCheat = confirm("Are you sure you want to cheat? You will not be asked again. Cheating can ruin the fun, and will remove you from getting online bonuses.");
-    } if (confCheat == true) { window.game.hasCheated = true;return true } else { return false }
+    } if (confCheat == true) { window.game.hasCheated = true;cheatUI();return true } else { return false }
+}
+
+function cheatUI() {
+    if (window.game.hasCheated == true) {
+        document.getElementById('header-text').innerHTML = "Idle Battle Royale Client <b>CHEATER!!!!!</b>"
+    } 
 }
 
 // Starts the main game loop
-var Timer = window.setInterval(function(){tick()}, 10);
+var Ticker = window.setInterval(function(){tick()}, 10);
+var SplashCycle = window.setInterval(function(){splashCycleFunction()}, 100);

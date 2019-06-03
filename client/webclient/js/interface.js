@@ -22,6 +22,26 @@ function cacheElements() {
     lootboxDisplay       = document.getElementById('lootbox-display');
 }
 
+function changeSplash() {
+    splashes = ['Not made in China!',
+        'Also try <a href="http://orteil.dashnet.org/cookieclicker">Cookie Clicker</a>',
+        'Also try <a href="http://clickerheroes.com">Clicker Heroes</a>',
+        "Don't play Fortnite",
+        'Made in the USA',
+        '<sub>G</sub><sup>A</sup><sub>M</sub><sup>E</sup> <sub>O</sub><sup>V</sup><sub>E</sub><sup>R</sup>',
+        '<sub>O</sub><sup>G</sup><sub>V</sub><sup>A</sup><sub>E</sub><sup>M</sup><sub>R</sub><sup>E</sup>',
+        'Not on Steam! (yet...)',
+        'Also try <a href="http://www.filltheoceans.com/">Fill the Oceans</a>',
+        'Village and Pillage',
+        'Minceraft',
+        'Have a hug!'
+        ];
+    var newSplash = splashes[parseInt(Math.random() * splashes.length)];
+    var splashElement = document.getElementById('header-splash');
+
+    splashElement.innerHTML = "<sup style='color: #232233'>.</sup>" + newSplash + "<sub style='color: #232233'>.</sub>";
+}
+
 function hideAllTabs () {
     cheatsTab.setAttribute('class', 'container');
     cheatsButton.disabled = false;

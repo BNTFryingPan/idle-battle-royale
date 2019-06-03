@@ -4,6 +4,7 @@ var noob = {
     parent: {amount: 1},
     basepersec: 1,
     persec: 1,
+    multiplier: 1,
     basecost: 15,
     amount: 0
 }
@@ -14,6 +15,7 @@ var player = {
     parent: "noob",
     basepersec: 3,
     persec: 3,
+    multiplier: 1,
     basecost: 50,
     amount: 0
 }
@@ -24,6 +26,7 @@ var gamer = {
     parent: "player",
     basepersec: 10,
     persec: 10,
+    multiplier: 1,
     basecost: 150,
     amount: 0
 }
@@ -34,6 +37,7 @@ var nolife = {
     parent: "gamer",
     basepersec: 25,
     persec: 25,
+    multiplier: 1,
     basecost: 325,
     amount: 0
 }
@@ -44,6 +48,7 @@ var epicgamer = {
     parent: "nolife",
     basepersec: 100,
     persec: 100,
+    multiplier: 1,
     basecost: 600,
     amount: 0
 }
@@ -54,6 +59,7 @@ var speedrunner = {
     parent: "epicgamer",
     basepersec: 500,
     persec: 500,
+    multiplier: 1,
     basecost: 2000,
     amount: 0
 }
@@ -64,6 +70,7 @@ var streamer = {
     parent: "speedrunner",
     basepersec: 3000,
     persec: 3000,
+    multiplier: 1,
     basecost: 10000,
     amount: 0
 }
@@ -74,7 +81,19 @@ var modder = {
     parent: "streamer",
     basepersec: 10000,
     persec: 10000,
-    basecost: 25000,
+    multiplier: 1,
+    basecost: 50000,
+    amount: 0
+}
+
+var celery = {
+    name: "Celebrity",
+    intname: "celebrity",
+    parent: "modder",
+    basepersec: 123456,
+    persec: 123456,
+    multiplier: 1,
+    basecost: 1234567,
     amount: 0
 }
 
@@ -89,7 +108,8 @@ var buildings = {
     modder: modder
 }
 
-var priceMultiplier = 1.125
+var priceMultiplier = 1.125;
+var buildingBuyMode = true;
 
 function loadBuildings() {
     var buildingContainer = document.getElementById("buildings");
@@ -102,6 +122,7 @@ function loadBuildings() {
         element.hidden = true;
         elementTopRow = document.createElement("p");
         elementTopRow.setAttribute('id', 'building-' + tb.intname + '-toprow')
+        elementTopRow.setAttribute('class', 'building-toprow')
         elementTopRow.innerHTML = tb.name + " x0 | LBPS: " + tb.basepersec + " [0]" 
         elementBuy1 = document.createElement("button");
         elementBuy1.setAttribute("id", "building-" + tb.intname + "-buy");
@@ -149,32 +170,52 @@ function updateBuildings() {
         tb = buildings[build];
         tbg = window.game.buildings[build];
         window.game.totalBuildings += tbg.amount;
-        price = Math.round(Math.round(tb.basecost * priceMultiplier ** tbg.amount) * window.game.buildingDiscount);
+        price = Math.round(Math.round(tb.basecost * priceMultiplier ** tbg.amount))// * window.game.buildingDiscount);
         //console.log('tb: ' + tb.intname)
-        if ((window.game.totalLootboxes >= (tb.basecost * window.game.buildingDiscount)) || (window.game.buildings[tb.parent].amount >= 1) || (tbg.parent.amount >= 1)) {
-            //console.log(document.getElementById('building-' + tb.intname))
+        if ((window.game.totalLootboxes >= (tb.basecost * window.game.buildingDiscount)) || build == 'noob' || (window.game.buildings[tbg.parent].amount >= 1) || (tbg.parent.amount >= 1)) {
             document.getElementById("building-" + tb.intname).hidden = false;
         } else {
             document.getElementById("building-" + tb.intname).hidden = true;
         }
+
         document.getElementById('building-' + tb.intname + '-cost').innerHTML = "Cost: " + abbrNum(price);
-        document.getElementById('building-' + tb.intname + '-toprow').innerHTML = tb.name + " x" + tbg.amount + ' | LBPS ' + abbrNum(tb.persec) + ' [' + abbrNum(tb.persec*tbg.amount) + ']'
+        document.getElementById('building-' + tb.intname + '-toprow').innerHTML = tb.name + " x" + tbg.amount + ' | LBPS ' + abbrNum(tbg.persec * tbg.multiplier) + ' [' + abbrNum((tbg.persec*tbg.multiplier)*tbg.amount) + ']'
+        if (window.game.lootboxes >= Math.round(Math.round(tbg.basecost * priceMultiplier ** tbg.amount))) {
+            document.getElementById('building-' + tb.intname + '-toprow').style = "color: green"
+        } else {
+            document.getElementById('building-' + tb.intname + '-toprow').style = "color: red"
+        }
         //document.getElementById("building-" + tb.intname + "-amount").innerHTML = tbg.amount;
         //document.getElementById("building-" + tb.intname + "-persec").innerHTML = abbrNum(tb.persec) + " [" + abbrNum(tb.persec*tbg.amount) + "]";
     }
 }
 
 function buyBuilding(build, amount=1) {
-    tb = buildings[build]
+    tb = buildings[build];
+    tbg = window.game.buildings[build];
+    var price = 0
     //console.log(window.game.lootboxes + "/" + tb.basecost)
     for (i = 1; i <= amount; i++) {
-        //console.log('buying ' + i + ' of ' + amount);
-        price = Math.round(Math.round(tb.basecost * priceMultiplier ** window.game.buildings[build].amount) * window.game.buildingDiscount);
-        if (window.game.lootboxes >= price) {
-            window.game.lootboxes = window.game.lootboxes - price;
-            window.game.buildings[build].amount++;
-            window.game.totalBuildings++;
-            updateUI();
-        } else { /*console.log('not enough lbs, ' + window.game.lootboxes + ' of ' + price);*/break }
+        if (buildingBuyMode == true) {
+            price = Math.round(Math.round(tbg.basecost * priceMultiplier ** tbg.amount))// * window.game.buildingDiscount);
+            console.log('buying ' + i + ' of ' + amount + ' for ' + abbrNum(price) + '[' + abbrNum(window.game.lootboxes) + ']');
+            if (window.game.lootboxes >= price) {
+                window.game.lootboxes = window.game.lootboxes - price;
+                window.game.buildings[build].amount++;
+                window.game.totalBuildings++;
+                updateUI();
+            } else { console.log('not enough lbs, ' + window.game.lootboxes + ' of ' + price);break }
+        } else {
+            if (window.game.buildings[build].amount >= 1) { //having negative buildings does some funky stuff, feel free to try it, but it will ruin your save forever
+                value =  Math.floor(Math.round(Math.round(tb.basecost * priceMultiplier ** ( window.game.buildings[build].amount - 1) ) * window.game.buildingDiscount) / 2);
+                window.game.buildings[build].amount--;
+                window.game.totalBuildings--;
+                if ( ( window.game.lootboxes + value ) > window.game.totalLootboxes ) { // this if statement is so if a building price increases, you dont get marked as a cheater for having too many lootboxes if you sell everything
+                    var totalToAdd = ( ( window.game.lootboxes + value ) - window.game.totalLootboxes )
+                    window.game.totalLootboxes += totalToAdd;
+                }
+                window.game.lootboxes += value;
+            }
+        }
     }
 }
