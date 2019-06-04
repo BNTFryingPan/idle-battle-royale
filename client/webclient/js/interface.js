@@ -49,7 +49,7 @@ function changeSplash() {
     var newSplash = ''
     var newSplash = splashes[parseInt(Math.random() * splashes.length)];
     if (currentSplash != '') {
-        console.log(newSplash)
+        //console.log(newSplash)
         while (currentSplash == newSplash) {
             var newSplash = splashes[parseInt(Math.random() * splashes.length)];
         }
@@ -133,4 +133,21 @@ function mbSwitchToChat() {
     hideAllTabs();
     chatTab.setAttribute('class', 'container selected');
     chatButton.disabled = true;
+}
+
+function rollCredits() {
+    return;
+    creditsElement = document.createElement('div');
+    creditsElement.setAttribute('id', 'credits')
+    closeButton = document.createElement('button');
+    closeButton.onclick = 'closeCredits()';
+
+    creditsElement.appendChild(closeButton);
+    document.getElementById('client').hidden = true;
+    document.getElementById('client-border').appendChild(creditsElement);
+}
+
+function closeCredits() {
+    document.getElementById('credits').hidden = true;
+    document.getElementById('client').hidden = false;
 }

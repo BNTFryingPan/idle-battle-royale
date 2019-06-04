@@ -198,13 +198,19 @@ upgrades.push(buildingPrice2);
 upgrades.push(buildingPrice3);
 
 function tickUpgrades() {
-    for (var i = 0; i < upgrades.length; i++) {
-        if (window.game.upgrades[tu.id] != true) {
+    if (isLoaded == true) {
+        for (var i = 0; i < upgrades.length; i++) {
             tu = upgrades[i];
-            if (tu.unlock()) {
-                document.getElementById('upgrade-button-' + tu.id).hidden = false;
-            } else {
-                document.getElementById('upgrade-button-' + tu.id).hidden = true;
+            if (window.game.upgrades[tu.id] != true) {
+                try {
+                    if (tu.unlock()) {
+                        document.getElementById("upgrade-button-" + tu.id).hidden = false;
+                    } else {
+                        document.getElementById('upgrade-button-' + tu.id).hidden = true;
+                    }
+                } catch (error) {
+                    console.log(error + ' during tick of ' + tu.id)
+                }
             }
         }
     }
@@ -231,23 +237,23 @@ function loadUpgrades() {
             window.game.upgrades[tu.id] = false;
             //elementContainer = document.createElement('span');
             //elementContainer.setAttribute('id', "upgrade-" + tu.id);
-            element = document.createElement('button');
-            elementDesc = document.createElement('div');
-            elementDesc.setAttribute('class', 'upgrade-desc');
-            elementDesc.setAttribute('id', 'upgrade-desc-' + tu.id);
+            upgradeButton = document.createElement('button');
+            upgradeDesc = document.createElement('div');
+            upgradeDesc.setAttribute('class', 'upgrade-desc');
+            upgradeDesc.setAttribute('id', 'upgrade-desc-' + tu.id);
             //elementDesc.setAttribute('onmouseover', 'openUpgradeBox(' + tu.id + ')');
             //elementDesc.setAttribute('onmouseout', 'closeUpgradeBox(' + tu.id + ')');
-            elementDesc.innerHTML = tu.name + '<br>' + tu.desc;
-            element.hidden = true;
+            upgradeDesc.innerHTML = tu.name + '<br>' + tu.desc;
+            upgradeButton.hidden = true;
             //elementContainer.hidden = true;
-            element.setAttribute("id", "upgrade-button-" + tu.id);
-            element.setAttribute('class', 'upgrade');
-            element.setAttribute('onclick', "buyUpgrade('" + tu.id + "')");
+            upgradeButton.setAttribute("id", "upgrade-button-" + tu.id);
+            upgradeButton.setAttribute('class', 'upgrade');
+            upgradeButton.setAttribute('onclick', "buyUpgrade('" + tu.id + "')");
             //element.hidden = true
             //elementContainer.appendChild(element);
             //elementContainer.appendChild(elementDesc);
-            upgradeContainer.appendChild(element);
-            upgradeContainer.appendChild(elementDesc);
+            upgradeContainer.appendChild(upgradeButton);
+            upgradeContainer.appendChild(upgradeDesc);
         }
     }
 }

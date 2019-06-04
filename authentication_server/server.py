@@ -79,7 +79,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 registerUser(args[1])
                 response = 'done'
 
-            elif args[0] == 'ping'
+            elif args[0] == 'ping':
                 response = 'pong'
                 responsecode = 200
 
