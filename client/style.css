@@ -313,8 +313,6 @@ a {
     background-color:red;
     border-width: 0px;
     border-radius: 25%;
-    transition: cubic-bezier(0, 0, 1, 1e5);
-    transition-duration: 5000ms;
 }
 
 .reset-button:hover {
