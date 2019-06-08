@@ -1,101 +1,152 @@
+// sorry ortiel but i stole your balancing because its so good lol
+
 var noob = {
     name: "Noob",
     intname: "noob",
     parent: {amount: 1},
-    basepersec: 1,
-    persec: 1,
+    basepersec: 0.1,
+    persec: 0.1,
     multiplier: 1,
     basecost: 15,
-    amount: 0
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
 
 var player = {
     name: "Player",
     intname: "player",
     parent: "noob",
-    basepersec: 3,
-    persec: 3,
+    basepersec: 1,
+    persec: 1,
     multiplier: 1,
-    basecost: 50,
-    amount: 0
+    basecost: 100,
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
 
 var gamer = {
     name: "Gamer",
     intname: "gamer",
     parent: "player",
-    basepersec: 10,
-    persec: 10,
+    basepersec: 8,
+    persec: 8,
     multiplier: 1,
-    basecost: 150,
-    amount: 0
+    basecost: 1100,
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
 
 var nolife = {
     name: "No Lifer",
     intname: "nolife",
     parent: "gamer",
-    basepersec: 25,
-    persec: 25,
+    basepersec: 47,
+    persec: 47,
     multiplier: 1,
-    basecost: 325,
-    amount: 0
+    basecost: 12e3,
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
 
 var epicgamer = {
     name: "Epic Gamer",
     intname: "epicgamer",
     parent: "nolife",
-    basepersec: 100,
-    persec: 100,
+    basepersec: 260,
+    persec: 260,
     multiplier: 1,
-    basecost: 600,
-    amount: 0
+    basecost: 13e4,
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
 
 var speedrunner = {
     name: "Speedrunner", 
     intname: "speedrunner",
     parent: "epicgamer",
-    basepersec: 500,
-    persec: 500,
+    basepersec: 1400,
+    persec: 1400,
     multiplier: 1,
-    basecost: 2000,
-    amount: 0
+    basecost: 14e5,
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
 
 var streamer = {
     name: "Streamer",
     intname: "streamer",
     parent: "speedrunner",
-    basepersec: 3000,
-    persec: 3000,
+    basepersec: 7800,
+    persec: 7800,
     multiplier: 1,
-    basecost: 10000,
-    amount: 0
+    basecost: 2e7,
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
 
 var modder = {
     name: "Modder",
     intname: "modder",
     parent: "streamer",
-    basepersec: 10000,
-    persec: 10000,
+    basepersec: 44e3,
+    persec: 44e3,
     multiplier: 1,
-    basecost: 50000,
-    amount: 0
+    basecost: 33e7,
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
 
 var celery = {
     name: "Celebrity",
-    intname: "celebrity",
+    intname: "celery",
     parent: "modder",
-    basepersec: 123456,
-    persec: 123456,
+    basepersec: 26e5,
+    persec: 26e5,
     multiplier: 1,
-    basecost: 1234567,
-    amount: 0
+    basecost: 51e8,
+    amount: 0,
+    multiplier: 1,
+    onBuy: function() {},
+    onSell: function() {}
 }
+
+var memelord = {
+    name: "Meme Lord",
+    intname: "memelord",
+    parent: "celery",
+    basepersec: 1.6e5,
+    persec: 1.6e5,
+    multiplier: 1,
+    basecost: 71e9,
+    amount: 0,
+    onBuy: function() {},
+    onSell: function() {}
+}
+
+
+
+// 1 tril -> 10 mil
+// 14 tril -> 65 mil
+// 170 tril -> 430 mil
+// 2.1 quad -> 2.9 bil
+// 26 quad -> 21 bil
+// 310 quad -> 150bil
 
 var buildings = {
     noob: noob,
@@ -105,7 +156,9 @@ var buildings = {
     epicgamer: epicgamer,
     speedrunner: speedrunner,
     streamer: streamer,
-    modder: modder
+    modder: modder,
+    celery: celery,
+    memelord: memelord
 }
 
 var priceMultiplier = 1.125;
@@ -144,6 +197,7 @@ function loadBuildings() {
         elementBuy100.innerHTML = "x100";
         elementCost = document.createElement("div");
         elementCost.setAttribute("id", "building-" + tb.intname + "-cost");
+        elementCost.setAttribute('class', 'building-cost')
         elementCost.innerHTML = "Cost: " + tb.basecost;
         element.appendChild(elementTopRow);
         element.appendChild(elementCost);
@@ -181,7 +235,7 @@ function updateBuildings() {
         document.getElementById('building-' + tb.intname + '-cost').innerHTML = "Cost: " + abbrNum(price);
         document.getElementById('building-' + tb.intname + '-toprow').innerHTML = tb.name + " x" + tbg.amount + ' | LBPS ' + abbrNum(tbg.persec * tbg.multiplier) + ' [' + abbrNum((tbg.persec*tbg.multiplier)*tbg.amount) + ']'
         if (window.game.lootboxes >= buildingPrice(build)) {
-            document.getElementById('building-' + tb.intname + '-toprow').style = "color: green"
+            document.getElementById('building-' + tb.intname + '-toprow').style = "color: lime"
         } else {
             document.getElementById('building-' + tb.intname + '-toprow').style = "color: red"
         }
@@ -203,7 +257,8 @@ function buyBuilding(build, amount=1) {
                 window.game.lootboxes = window.game.lootboxes - price;
                 window.game.buildings[build].amount++;
                 window.game.totalBuildings++;
-                updateUI();
+                //updateUI(); // commented out because updating the ui can take time, and it updates the UI 100 times a second
+                try { window.game.buildings[build].onBuy(); } catch (error) { }
             } else { console.log('not enough lbs, ' + window.game.lootboxes + ' of ' + price);break }
         } else {
             if (window.game.buildings[build].amount >= 1) { //having negative buildings does some funky stuff, feel free to try it, but it will ruin your save forever

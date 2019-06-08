@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap');
+
+::-webkit-scrollbar {
+    width: 0.5em
+}
+
+::-webkit-scrollbar:hover {
+    width: 1em
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0000ff;
+    border-radius: 1em
+}
+
+body {
+    background-color: #232233;
+    color: #ffffff;
+    font-family: Ubuntu;
+}
+
+p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+a {
+    color: #8080ff
+}
+
+#header {
+    font-family: Ubuntu;
+    font-size: 25px;
+    padding: 0px;
+    font-weight: bold;
+    color:#8080ff;
+    text-align: center;
+    margin-top: 0px;
+}
+
+#client-border {
+    background-color: #ff8080;
+    border-color: #ee5050;
+    border-style: groove;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+#client {
+    background-color: #232233;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+}
+
+.mb-button {
+    border: none;
+    background-color: #8080ff;
+    color: #232233;
+    border-radius: 10px 10px 0px 0px;
+    padding: 5px;
+    transition-timing-function: cubic-bezier(.2,1.5,.7,.5);
+}
+
+.mb-button:hover:enabled {
+    border-radius: 5px 5px 0px 0px;
+    padding-left: 3%;
+    padding-right: 3%;
+    background-color: #0000ff;
+    color: #bbbbbb;
+}
+
+.mb-button:disabled {
+    border-radius: 4px 4px 0px 0px;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: #6868ff;
+    color: #ffffff;
+}
+
+.bar {
+    padding: 3px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: rgba(100, 80, 125, 0.6);
+}
+
+.container {
+    padding: 3px;
+    background-color: rgba(50, 20, 125, 0.6);
+    border-radius: 15px;
+    margin-bottom: 2px;
+    overflow-y: hidden;
+}
+
+.mb-header {
+    font-size: 20px;
+    text-align: center;
+}
+
+#middle-bar .container {
+    height: 2.55%;
+    overflow-y: hidden;
+    transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition-property: all;
+    transition-duration: 400ms;
+}
+
+#middle-bar .container:hover ~ #middle-bar .container.selected {
+    height: 10%;
+    transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition-property: all;
+    transition-duration: 400ms;
+}
+
+#middle-bar .container:hover { 
+    background-color: rgba(77, 42, 165, 0.89);
+    transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition-property: all;
+    transition-duration: 400ms;
+}
+
+#middle-bar .container.selected {
+    height: 70%;
+    overflow-y: hidden;
+    transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition-property: all;
+    transition-duration: 400ms;
+}
+
+#middle-bar .container.selected:hover {
+    background-color: rgba(50, 20, 125, 0.6);
+    transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition-property: all;
+    transition-duration: 400ms;
+}
+
+#middle-bar .container > * {
+    opacity: 0;
+}
+
+#middle-bar .container.selected > * {
+    opacity: 1;
+}
+
+#middle-bar .container > .mb-header {
+    opacity: 1;
+}
+
+.building {
+    padding: 4px;
+    text-align: center;
+    margin: 2px;
+    background-color: rgba(50, 150, 165, 0.5);
+    border-radius: 10px;
+    height: 1.1em;
+    overflow-y: hidden;
+    transition-timing-function: cubic-bezier(.51,1.19,.78,.73);
+}
+
+.building:hover > .building-cost{
+    opacity: 1;
+}
+
+.building-cost {
+    opacity: 0;
+}
+
+.building:hover {
+    height: 3.8em;
+    background-color: rgba(70, 170, 185, 0.8);
+    overflow-y: scroll;
+    transition-timing-function: cubic-bezier(.31,1.16,.32,1.16);
+}
+
+* {
+    transition: cubic-bezier(.31,1.16,.32,1.16);
+    transition-property: all;
+    transition-duration: 500ms;
+}
+
+#upgrades:hover {
+    background-color: rgba(77, 42, 165, 0.89);
+}
+
+.upgrade {
+    height: 3.55em;
+    width: 3.55em;
+    min-width: 25px;
+    margin:1px;
+    background-color: rgba(50, 150, 165, 0.6);
+    border-radius: 10px;
+    border: none;
+    opacity: 1;
+    overflow-y: hidden;
+}
+
+.upgrade-desc {
+    height: 0em;
+    width: 0em;
+    background-color: rgba(50, 150, 165, 0.8);
+    margin: 0px;
+    padding: 0px;
+    border: solid;
+    border-width: 0px;
+    border-color: black;
+    position: fixed;
+    text-align: center;
+    overflow: hidden;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1);
+    transition-duration: 250ms;
+}
+
+.upgrade:hover + .upgrade-desc/* , .upgrade-desc:hover*/{
+    height: 6em;
+    width: 21.6em;
+    overflow: hidden;
+    border-width: 5px;
+    margin-left: 1px;
+    margin-right: 1px;
+    border-radius: 10px;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1);
+    transition-duration: 250ms;
+}
+
+/*.upgrade-desc:hover {
+    opacity: 0.9;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1);
+    transition-duration: 250ms;
+}*/
+
+.upgrade:hover{
+    background-color: rgba(50, 150, 165, 0.8);
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1);
+    transition-duration: 250ms;
+}
+
+#upgrades {
+    height: 2.9em;
+    overflow: hidden;
+}
+
+#upgrades:hover {
+    height: 9.2em;
+    overflow-y: scroll;
+}
+
+.fancy-button {
+    background-color: #8888ff;
+    border: none;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.fancy-button:hover {
+    border-radius: 5px;
+    color: #888888;
+    background-color: #0000ff;
+}
+
+.building > .fancy-button {
+    opacity: 0;
+}
+
+.building:hover > .fancy-button {
+    opacity: 1;
+}
+
+#notifs {
+    width: 25%;
+    margin-left: 40%;
+    margin-bottom: 5px;
+}
+
+#chat-log {
+    width: 100%;
+    height: 10%;
+    background-color: #232233;
+    color: #8888ff;
+    font-size: 12pt;
+    resize: none;
+}
+
+#header-splash {
+    opacity: 1;
+    transition: ease-in-out;
+    transition-duration: 200ms;
+    transform: rotate(-5deg);
+    position: relative;
+    left: 40em;
+    bottom: 1em;
+}
+
+#header-splash > * {
+    color: inherit;
+}
+
+#header-splash.changing {
+    opacity: 0;
+    transition: ease-in-out;
+    transition-duration: 200ms;
+}
+
+.reset-button {
+    margin: 3px;
+    background-color:red;
+    border-width: 0px;
+    border-radius: 25%;
+    transition: cubic-bezier(0, 0, 1, 1e5);
+    transition-duration: 5000ms;
+}
+
+.reset-button:hover {
+    background-color: orangered;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+    border-color: red;
+    border-radius: 5px;
+}

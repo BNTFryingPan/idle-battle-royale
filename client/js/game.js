@@ -8,18 +8,26 @@ function decode_utf8(s) {return decodeURIComponent(escape(s));}
 //setInputFilter(document.getElementById("lootbox-cheat-input"), function(value) {return /^\d*$/.test(value); });
 
 function abbrNum(number) { decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
+    number = parseFloat(number.toFixed(2))
     //this little bit of code was taken from main.js of cookie clicker 2.019 and slightly modified (removed spaces from first line, and changed var name)
-    var longShort = ['thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion'];
-    var longPrefixes = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'sex', 'septen', 'octo', 'novem'];
+    var longShort = [' thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion', ' sextillion', ' septillion', ' octillion', ' nonillion'];
+    var longPrefixes = [' ', ' un', ' duo', ' tre', ' qattuor', ' quin', ' sex', ' septen', ' octo', ' novem'];
     var longSuffixes = ['decillion', 'vigintillion', 'trigintillion', 'quadragintillion', 'quinquagintillion', 'sexagintillion', 'septuagintillion', 'octogintillion', 'nonagintillion'];
-    var shortShort = ['k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortPrefixes = ['', 'u', 'd', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
-    
+    var shortShort = [' k', ' m', ' b', ' t', ' q', ' Q', ' s', ' S', ' o', ' n'];var shortPrefixes = [' ', ' u', ' d', ' t', ' q', ' Q', ' s', ' S', ' o', ' n'];var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    var shortSci = []
+    for (var i = 3; i <= 90; i++) {
+        shortSci.push("e" + i)
+    }
+
     for (var i in longSuffixes ) { for (var ii in longPrefixes ) {longShort.push( ' '+longPrefixes[ii]+ longSuffixes[i] ); } } 
     for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(' '+shortPrefixes[ii]+shortSuffixes[i]); } } 
     // end code stolen from cookie clicker
-
-    if (window.game.options['shortNumbers'] == "long") { var abbrev = longShort; } else if (window.game.options['shortNumbers'] == "short") { var abbrev = shortShort; } else if (window.game.options['shortNumbers'] == "sci") { return number; } else { window.game.options['shortNumbers'] = "long"; var abbrev = longShort; }
-    for (var i=abbrev.length-1; i>=0; i--) {var size = Math.pow(10,(i+1)*3);if(size <= number) {number = Math.round(number*decPlaces/size)/decPlaces;if((number == 1000) && (i < abbrev.length - 1)) {number = 1;i++;}number += ' ' + abbrev[i]; break;}}return number; }
+    try {
+        if (window.game.options['shortNumbers'] == "long") { var abbrev = longShort; } else if (window.game.options['shortNumbers'] == "short") { var abbrev = shortShort; } else if (window.game.options['shortNumbers'] == "sci") { var abbrev = shortSci; } else { window.game.options['shortNumbers'] = "long"; var abbrev = longShort; }
+    } catch {
+        abbrev = shortShort;
+    }
+    for (var i=abbrev.length-1; i>=0; i--) {var size = Math.pow(10,(i+1)*3);if(size <= number) {number = Math.round(number*decPlaces/size)/decPlaces;if((number == 1000) && (i < abbrev.length - 1)) {number = 1;i++;}number += abbrev[i]; break;}}return number; }
 
 function getUrlVars() { var vars = {}; var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { vars[key] = value; }); return vars; }
 function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; if(window.location.href.indexOf(parameter) > -1){ urlparameter = getUrlVars()[parameter]; } return urlparameter; }
@@ -35,6 +43,7 @@ var splashTick = 250;
 var fastSplashTick = 0;
 var isLoadedTimer = 0;
 var fastSplash = false;
+var showingAllUpgrades = false;
 
 // gamesave
 function gameSave() {
@@ -42,12 +51,16 @@ function gameSave() {
     this.totalLootboxes = 0;
     this.lootboxesPerClickAdditive = 1;
     this.lootboxesPerClickMultiplier = 1;
+    this.lootboxesPerClickCPS = 0;
     this.lootboxesPerSecond = 0;
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
-    this.options = {'shortNumbers': 'short', 'tab': 'stats'}
-    this.upgrades = {}
+    this.options = {'shortNumbers': 'short', 'tab': 'stats'};
+    this.upgrades = {};
+    //this.acheivementsUnlocked = {};
+    this.versionString = gameVersionString;
+    this.buildNumber = gameVersionNumber;
     //this.options['shortNumbers'] = "long"
     this.totalLootboxClicks = 0;
     this.totalLootboxesFromClicks = 0;
@@ -100,6 +113,7 @@ function updateLBPS() {
     totalLBPS = totalLBPS * window.game.totalMultiplier;
     document.getElementById("lbps-display").innerHTML = "LBPS: " + abbrNum(totalLBPS);
     window.game.lootboxesPerSecond = totalLBPS;
+    return totalLBPS
 }
 
 function calcPrestige() {
@@ -149,6 +163,9 @@ window.onload = function() {
 // funtions
 function clickLootbox() {
     lootboxesFromClick = window.game.lootboxesPerClickAdditive * window.game.lootboxesPerClickMultiplier
+    console.log('og click gave ' + lootboxesFromClick)
+    lootboxesFromClick += window.game.lootboxesPerSecond * window.game.lootboxesPerClickCPS
+    console.log('click gave ' + lootboxesFromClick)
     earnLootboxes(lootboxesFromClick);
     window.game.totalLootboxClicks++;
     window.game.totalLootboxesFromClicks += lootboxesFromClick;
@@ -283,6 +300,16 @@ function confirmCheat() {
     } if (confCheat == true) { window.game.hasCheated = true;cheatUI();return true } else { return false }
 }
 
+function unlockAllUpgrades() {
+    if (confirmCheat() == true) {
+        if ( showingAllUpgrades == true ) {
+            showingAllUpgrades = false;
+        } else {
+            showingAllUpgrades = true;
+        }
+    }
+}
+
 function cheatUI() {
     if (window.game.hasCheated == true) {
         document.getElementById('header-text').innerHTML = "Idle Battle Royale Client <b>CHEATER!!!!!</b>"
@@ -291,4 +318,4 @@ function cheatUI() {
 
 // Starts the main game loop
 var Ticker = window.setInterval(function(){tick()}, 10);
-var SplashCycle = window.setInterval(function(){splashCycleFunction()}, 100);
+var SplashCycle = window.setInterval(function(){splashCycleFunction()}, 160);

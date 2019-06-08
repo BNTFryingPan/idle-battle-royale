@@ -44,7 +44,9 @@ function changeSplash() {
         'A darkness lingers',
         'Don\'t forget to <b>SMASH</b> that like button',
         '😢 T-series is winning',
-        'minecraft double smooth stone slab'
+        'minecraft double smooth stone slab',
+        'OHHH Its a spider!',
+        'Creeper... AWWWW MAN!!! so we back in...'
         ];
     var newSplash = ''
     var newSplash = splashes[parseInt(Math.random() * splashes.length)];
@@ -84,6 +86,11 @@ function hideAllTabs () {
 function optionstabUpdateNumberFormat() {
     var newFormat = document.getElementById('option-numformat').value;
     window.game.options['shortNumbers'] = newFormat;
+}
+
+function optionstabUpdateSpeed() {
+    var newSpeed = document.getElementById('option-tickSpeed').value;
+    window.game.options['tickSpeed'] = newSpeed;
 }
 
 //tabs
