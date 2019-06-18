@@ -58,7 +58,7 @@ var clickCPS1 = {
     name: "6 Finger Hand",
     desc: "Cost: 500<br>Clicking gains 1% of your LBPS",
     id: "clickCPS1",
-    unlock: function() {return window.game.lootboxesPerSecond >= 100},
+    unlock: function() {return ( window.game.lootboxesPerClickFinal <= ( .1 * window.game.lootboxesPerSecond ) )},
     cost: function() { return window.game.lootboxes >= 500},
     onBuy: function() {
         window.game.lootboxes -= 500
@@ -152,7 +152,7 @@ upgrades.push(playerPower3);
 
 var gamerPower1 = { 
     name: "Improved Gamers",
-    desc: "Cost: 1500[cost]<br>+2 production from gamers",
+    desc: "Cost: 1500<br>+2 production from gamers",
     id: 'gamerpower1',
     unlock: function() {return window.game.buildings['gamer'].amount >= 10}, //return true if conditions to show upgrade is true
     cost: function() {return window.game.lootboxes >= 1500}, //return true if the user can purchase this upgrade
@@ -164,7 +164,7 @@ var gamerPower1 = {
 
 var gamerPower2 = { 
     name: "Even Better Gamers",
-    desc: "Cost: 2750[cost]<br>Double production from gamers",
+    desc: "Cost: 2750<br>Double production from gamers",
     id: 'gamerpower2',
     unlock: function() {return window.game.buildings['gamer'].amount >= 25}, //return true if conditions to show upgrade is true
     cost: function() {return window.game.lootboxes >= 2750}, //return true if the user can purchase this upgrade
@@ -176,7 +176,7 @@ var gamerPower2 = {
 
 var gamerPower3 = { 
     name: "Almost Epic Gamers",
-    desc: "Cost: 6000[cost]<br>Double production from gamers<br><i>But not quite epic gamers</i>",
+    desc: "Cost: 6000<br>Double production from gamers<br><i>But not quite epic gamers</i>",
     id: 'gamerpower3',
     unlock: function() {return window.game.buildings['gamer'].amount >= 50}, //return true if conditions to show upgrade is true
     cost: function() {return window.game.lootboxes >= 6000}, //return true if the user can purchase this upgrade
@@ -305,12 +305,12 @@ upgrades.push(buildingPrice2);
 upgrades.push(buildingPrice3);
 
 function tickUpgrades() {
-    if (isLoaded == true) {
+    if (int.isLoaded == true) {
         for (var i = 0; i < upgrades.length; i++) {
             tu = upgrades[i];
             if (window.game.upgrades[tu.id] != true) {
                 try {
-                    if (tu.unlock() || showingAllUpgrades) {
+                    if (tu.unlock() || int.showingAllUpgrades) {
                         document.getElementById("upgrade-button-" + tu.id).hidden = false;
                     } else {
                         document.getElementById('upgrade-button-' + tu.id).hidden = true;
@@ -324,31 +324,35 @@ function tickUpgrades() {
 }
 
 function buyUpgrade(id) {
+    var upgradesCont = document.getElementById('upgrades');
+    var upgradesBought = document.getElementById('upgrades-bought');
     for (var i = 0; i < upgrades.length; i++) {
         if (upgrades[i].id == id) {
             if (upgrades[i].cost() == true) {
-                window.game.upgrades[id] = true;
-                window.game.upgradesBought++;
                 var button = document.getElementById('upgrade-button-' + id);
                 var desc = document.getElementById('upgrade-desc-' + id);
-                var upgradesCont = document.getElementById('upgrades');
-                var upgradesBought = document.getElementById('upgrades-bought');
+                window.game.upgrades[id] = true;
+                window.game.upgradesBought++;
                 upgradesCont.removeChild(button);
                 upgradesCont.removeChild(desc);
                 upgradesBought.appendChild(button);
                 upgradesBought.appendChild(desc);
+                console.log(desc)
                 button.onclick = function(){};
                 
                 upgrades[i].onBuy()
-            }
-            break;
+            } else {
+                var a = document.getElementById('upgrade-button-' + id);
+                a.classList.add('upgrade-flash-red');
+                a.classList.remove('upgrade-flash-red');
+            } break;
         }
     }
 }
 
 function loadUpgrades() {
     var upgradeContainer = document.getElementById('upgrades');
-    var upgradeBought = document.getElementById('upgrades-bought');
+    var upgradesBought = document.getElementById('upgrades-bought');
     for (var upgrade in upgrades) {
         tu = upgrades[upgrade];
         upgradeButton = document.createElement('button');
@@ -358,16 +362,16 @@ function loadUpgrades() {
         upgradeDesc.innerHTML = tu.name + '<br>' + tu.desc;
         upgradeButton.setAttribute("id", "upgrade-button-" + tu.id);
         upgradeButton.setAttribute('class', 'upgrade');
-        upgradeButton.setAttribute('onclick', "buyUpgrade('" + tu.id + "')");
         if (window.game.upgrades[tu.id] != true) {
+            upgradeButton.onclick = "buyUpgrade('" + tu.id + "');";
             window.game.upgrades[tu.id] = false;
             upgradeButton.hidden = true;
             upgradeContainer.appendChild(upgradeButton);
             upgradeContainer.appendChild(upgradeDesc);
         } else {
-            upgradeButton.onclick = function(){};
-            upgradeBought.appendChild(upgradeButton);
-            upgradeBought.appendChild(upgradeDesc);
+            upgradeButton.onclick = "console.log('nope')";
+            upgradesBought.appendChild(upgradeButton);
+            upgradesBought.appendChild(upgradeDesc);
         }
     }
 }

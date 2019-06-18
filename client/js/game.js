@@ -3,20 +3,16 @@ function lzw_encode(s) {var dict = {};var data = (s + "").split("");var out = []
 function lzw_decode(s) {var dict = {};var data = (s + "").split("");var currChar = data[0];var oldPhrase = currChar;var out = [currChar];var code = 256;var phrase;for (var i=1; i<data.length; i++) {var currCode = data[i].charCodeAt(0);if (currCode < 256) {phrase = data[i];} else {phrase = dict['_'+currCode] ? dict['_'+currCode] : (oldPhrase + currChar);}out.push(phrase);currChar = phrase.charAt(0);dict['_'+code] = oldPhrase + currChar;code++;oldPhrase = phrase;}return out.join("");}
 function encode_utf8(s) {return unescape(encodeURIComponent(s));}
 function decode_utf8(s) {return decodeURIComponent(escape(s));}
-//more copied and pasted stuff
-//function setInputFilter(textbox, inputFilter) {["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {textbox.addEventListener(event, function() {if (inputFilter(this.value)) {this.oldValue = this.value;this.oldSelectionStart = this.selectionStart;this.oldSelectionEnd = this.selectionEnd;} else if (this.hasOwnProperty("oldValue")) {this.value = this.oldValue;this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);}});});}
-//setInputFilter(document.getElementById("lootbox-cheat-input"), function(value) {return /^\d*$/.test(value); });
-
 function abbrNum(number) { decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
     number = parseFloat(number.toFixed(2))
-    //this little bit of code was taken from main.js of cookie clicker 2.019 and slightly modified (removed spaces from first line, and changed var name)
+    //this little bit of code was taken from main.js of cookie clicker 2.019 and slightly modified
     var longShort = [' thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion', ' sextillion', ' septillion', ' octillion', ' nonillion'];
     var longPrefixes = [' ', ' un', ' duo', ' tre', ' qattuor', ' quin', ' sex', ' septen', ' octo', ' novem'];
     var longSuffixes = ['decillion', 'vigintillion', 'trigintillion', 'quadragintillion', 'quinquagintillion', 'sexagintillion', 'septuagintillion', 'octogintillion', 'nonagintillion'];
-    var shortShort = [' k', ' m', ' b', ' t', ' q', ' Q', ' s', ' S', ' o', ' n'];var shortPrefixes = [' ', ' u', ' d', ' t', ' q', ' Q', ' s', ' S', ' o', ' n'];var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    var shortShort = ['k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortPrefixes = [' ', ' u', ' d', ' t', ' q', ' Q', ' s', ' S', ' o', ' n'];var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
     var shortSci = []
-    for (var i = 3; i <= 90; i++) {
-        shortSci.push("e" + i)
+    for (var i = 3; i <= 304; i+=3) {
+        shortSci.push("e+" + i)
     }
 
     for (var i in longSuffixes ) { for (var ii in longPrefixes ) {longShort.push( ' '+longPrefixes[ii]+ longSuffixes[i] ); } } 
@@ -27,23 +23,45 @@ function abbrNum(number) { decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
     } catch {
         abbrev = shortShort;
     }
-    for (var i=abbrev.length-1; i>=0; i--) {var size = Math.pow(10,(i+1)*3);if(size <= number) {number = Math.round(number*decPlaces/size)/decPlaces;if((number == 1000) && (i < abbrev.length - 1)) {number = 1;i++;}number += abbrev[i]; break;}}return number; }
+    for (var i=abbrev.length-1; i>=0; i--) {
+        var size = Math.pow(10,(i+1)*3);
+        if(size <= number) {
+            number = Math.round(number*decPlaces/size)/decPlaces;
+            if((number == 1000) && (i < abbrev.length - 1)) {
+                number = 1;i++;
+            }
+            number += abbrev[i];
+            break;
+        }
+    }
+    return number;
+}
 
 function getUrlVars() { var vars = {}; var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { vars[key] = value; }); return vars; }
 function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; if(window.location.href.indexOf(parameter) > -1){ urlparameter = getUrlVars()[parameter]; } return urlparameter; }
-//function sleep(ms) { }
-
 // end copied and pasted stuff
 
-var gameVersionNumber = 25;
-var gameVersionString = "Alpha 0.3.0-pre1";
-var isLoaded = false;
-var saveTick = 0;
-var splashTick = 250;
-var fastSplashTick = 0;
-var isLoadedTimer = 0;
-var fastSplash = false;
-var showingAllUpgrades = false;
+function internal() {
+    //internal data that we dont want to save
+    this.buildNumber = 55;
+    this.gameVersionString = "Alpha dev-0.4.3";
+    this.isLoaded = false;
+    this.saveTick = 0;
+    this.splashTick = 250;
+    this.fastSplashTick = 0;
+    this.isLoadedTimer = 0;
+    this.fastSplash = false;
+    this.showingAllUpgrades = false;
+    this.saveDisplay = false;
+    this.saveDisplayTick = 0;
+    this.updateAvailable = false;
+    this.disableMainGame = false;
+    this.changelogOnly = false;
+    this.isChatPopout = false;
+    this.lastSaveBreakingBuild = 50;
+}
+
+var int = new internal()
 
 // gamesave
 function gameSave() {
@@ -56,42 +74,48 @@ function gameSave() {
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
-    this.options = {'shortNumbers': 'short', 'tab': 'stats'};
+    this.options = {'shortNumbers': 'short', 'tab': 'stats', 'saveInterval': 3000};
+    this.sellMultiplier = 0.5
     this.upgrades = {};
     //this.acheivementsUnlocked = {};
-    this.versionString = gameVersionString;
-    this.buildNumber = gameVersionNumber;
-    //this.options['shortNumbers'] = "long"
+    this.gameVersionString = int.gameVersionString;
+    this.buildNumber = int.buildNumber;
     this.totalLootboxClicks = 0;
     this.totalLootboxesFromClicks = 0;
     this.prestige = 0;
     Object.assign(this.buildings, buildings);
-    //for (var build in buildings) {
-    //    this.buildings[build].amount = 0;
-    //}
 }
 
 function saveGame() {
     savestring = JSON.stringify(window.game);
     savestring = lzw_encode(encode_utf8(savestring));
     window.localStorage['SaveName'] = savestring;
-    //console.log('saved game')
+    saveElement = document.getElementById('save-indicator');
+    saveElement.classList.add('game-saved');
+    int.saveDisplay = true;
 }
 
 function loadGame() {
     //console.log('loading game')
-    
+    newFile = false;
     loadstring = window.localStorage.getItem('SaveName');
     //console.log(window.localStorage['SaveName']);
     if (loadstring === null){
         newFile = true;
-    } else {
-        newFile = false;
     }
+
+    if (newFile != true) {
+        try {
+            loadstring = decode_utf8(lzw_decode(loadstring));
+            loadedgame = JSON.parse(loadstring);
+        } catch {
+            newFile = true
+        }
+        
+    }
+
     //console.log(newFile)
-    if (newFile == false) {
-        loadstring = decode_utf8(lzw_decode(loadstring));
-        loadedgame = JSON.parse(loadstring);
+    if (newFile != true) {
         window.game = new gameSave();
         Object.assign(window.game, loadedgame)
     } else {
@@ -99,8 +123,18 @@ function loadGame() {
         window.game.buildings = buildings;
     }
 
-    document.getElementById('option-numformat').value = window.game.options['shortNumbers']
-    document.getElementById('version-display').innerHTML = gameVersionString + " - <i>[" + gameVersionNumber + "]</i>"
+    var verdisplay = window.game.gameVersionString + " - <i>[" + window.game.buildNumber + "]</i>";
+        if (int.updateAvailable) {
+            verdisplay += "<b>Update Available!</b>"
+        }
+        document.getElementById('version-display').innerHTML = verdisplay
+
+    document.getElementById('option-numformat').value = window.game.options['shortNumbers'];
+    document.getElementById('option-saveint').value = window.game.options['saveInterval'].toString();
+    if (window.game.buildNumber < int.gameVersionNumber) {
+        int.updateAvailable = true;
+        alert("Hey! Theres cool new stuff if you reset your save!")
+    }
 }
 
 function updateLBPS() {
@@ -147,28 +181,86 @@ function prestigeButton() {
 window.onload = function() {
     //window.game = new gameSave();
     console.log('Loading game...');
-    cacheElements();
-    chatCacheElements();
-    loadBuildings();
-    loadGame();
-    loadUpgrades();
-    var openTab = getUrlParam("tab", "stats");
-    document.getElementById("mb-" + openTab + "-button").click()
-    isLoaded = true;
-    cheatUI();
+    loadUrlSettings();
+    if (int.disableMainGame != true) {
+        cacheElements();
+        chatCacheElements();
+        loadBuildings();
+        loadGame();
+        loadUpgrades();
+        cheatUI();
+        //loadUpdateBuildings();
+        populateChangelogTab();
+    }
     changeSplash();
-    //loadUpdateBuildings();
+    int.isLoaded = true;
+    //finalizeUrlSettings();
+    if (int.disableMainGame == true) {
+        var verdisplay = int.gameVersionString + " - <i>[" + int.buildNumber + "]</i>";
+        if (int.updateAvailable) {
+            verdisplay += "<b>Update Available!</b>"
+        }
+        document.getElementById('version-display').innerHTML = verdisplay
+    }
+
+    if (int.changelogOnly == true) {
+        document.getElementById('client').innerHTML = changelogContent()
+        document.getElementById('client').classList.add('changelogonly')
+    }
+
+    if (int.isChatPopout == true) {
+        loadChatPopout()
+    }
+    console.log('game loaded')
 }
 
 // funtions
+function loadUrlSettings() {
+    // open tab
+    var openTab = getUrlParam("tab", "stats");
+    cacheTabElements();
+    document.getElementById("mb-" + openTab + "-tab").click()
+
+    // settings
+    var urlSettings = getUrlParam("opt", "null");
+    urlSettings = urlSettings.split(',')
+
+    // mod loader
+    var mod = getUrlParam('mods', "null");
+    mod = mod.split(',')
+
+    var chatPopout = getUrlParam("chatpopout", '0')
+    if (chatPopout == "1") {
+        int.isChatPopout = true;
+        disableMainGameFunc();
+    }
+
+    var fullChangelog = getUrlParam("fcl", "0");
+    if (fullChangelog == "true" || fullChangelog == "1") {
+        int.changelogOnly = true;
+        disableMainGameFunc();
+    }
+    
+    console.log(urlSettings)
+}
+
+function disableMainGameFunc() {
+    int.disableMainGame = true
+    var bars = document.getElementsByClassName('bar')
+    for (var bar in bars) {
+        try {
+            bars[bar].style.display = 'none'
+        } catch { }
+    }
+    document.getElementById('middle-bar-holder').style.display = 'none'
+    document.getElementById('save-area').innerHTML = 'Chat Popout';
+}
+
 function clickLootbox() {
-    lootboxesFromClick = window.game.lootboxesPerClickAdditive * window.game.lootboxesPerClickMultiplier
-    console.log('og click gave ' + lootboxesFromClick)
-    lootboxesFromClick += window.game.lootboxesPerSecond * window.game.lootboxesPerClickCPS
-    console.log('click gave ' + lootboxesFromClick)
-    earnLootboxes(lootboxesFromClick);
+    window.game.lootboxesPerClickFinal = (window.game.lootboxesPerClickAdditive * window.game.lootboxesPerClickMultiplier) + (window.game.lootboxesPerSecond * window.game.lootboxesPerClickCPS)
+    earnLootboxes(window.game.lootboxesPerClickFinal * window.game.totalMultiplier);
     window.game.totalLootboxClicks++;
-    window.game.totalLootboxesFromClicks += lootboxesFromClick;
+    window.game.totalLootboxesFromClicks += window.game.lootboxesPerClickFinal;
     //updateUI();
 }
 
@@ -183,7 +275,7 @@ function earnLootboxes(amount, exludeMultiplier=false) {
 }
 
 function tick() {
-    if (isLoaded == true) {
+    if (int.isLoaded == true && int.disableMainGame != true) {
         earnLootboxes(window.game.lootboxesPerSecond/100, true);
 
         if (window.game.totalLootboxes<window.game.lootboxes) {
@@ -193,50 +285,70 @@ function tick() {
         }
         updateUI();
         tickUpgrades();
-        if (saveTick >= 300) {
+        if (int.saveTick >= window.game.options['saveInterval']) {
             saveGame();
-            saveTick = 0;
+            int.saveTick = 0;
         } else {
-            saveTick++;
+            int.saveTick++;
         }
     } else {
-        isLoadedTimer++;
-        if (isLoadedTimer >= 500) {
-            alert("The game appears to be loading slowly. Try refreshing the page");
-            isLoadedTimer = 0;
+        if (int.disableMainGame != true) {
+            int.isLoadedTimer++;
+            if (int.isLoadedTimer >= 500) {
+                alert("The game appears to be loading slowly. Try refreshing the page");
+                int.isLoadedTimer = 0;
+            }
         }
     }
 }
 
 function splashCycleFunction() {
     var splashElement = document.getElementById('header-splash');
-    if (fastSplash == true) {
-        splashTick = 0;
-        fastSplashTick++;
-        if (fastSplashTick == 1) {
+    splashElement.style.rotate += 1
+    if (splashElement.style.rotate >= 50) {
+        splashElement.style.rotate = -50
+    }
+    if (int.fastSplash == true) {
+        int.splashTick = 0;
+        int.fastSplashTick++;
+        if (int.fastSplashTick == 1) {
             splashElement.classList.add('changing');
-        } else if (fastSplashTick >= 3) {
+        } else if (int.fastSplashTick >= 3) {
             changeSplash();
             splashElement.classList.remove('changing');
-            fastSplash = false;
-            fastSplashTick = 0;
-            splashTick = 0;
+            int.fastSplash = false;
+            int.fastSplashTick = 0;
+            int.splashTick = 0;
         }
     } else {
-        splashTick++;
-        if (splashTick == 300) {
+        int.splashTick++;
+        if (int.splashTick == 300) {
             splashElement.classList.add('changing');
-        } else if (splashTick == 305) {
+        } else if (int.splashTick == 305) {
             changeSplash()
             splashElement.classList.remove('changing');
-            splashTick = 0;
+            int.splashTick = 0;
         }
     }
 
 }
 
+function saveDisplayCycle() {
+    if (int.saveDisplay) {
+        int.saveDisplayTick++;
+        if (int.saveDisplayTick >= 10) {
+            var a = document.getElementById('save-indicator');
+            a.classList.remove('game-saved')
+            int.saveDisplay = false;
+            int.saveDisplayTick = 0;
+        }
+    } else {
+        int.saveDisplayTick = 0;
+    }
+}
+
 function splashClick() {
-    fastSplash = true;
+    int.fastSplash = true;
 }
 
 function updateUI() {
@@ -246,12 +358,12 @@ function updateUI() {
     updateBuildings();
     updateLBPS();
     document.getElementById('total-building-display').innerHTML = "Total Buildings: " + abbrNum(window.game.totalBuildings);
-    document.getElementById('lbpc-display').innerHTML = "Lootboxes per Click: " + abbrNum(Math.round(window.game.lootboxesPerClickAdditive * window.game.lootboxesPerClickMultiplier));
+    document.getElementById('lbpc-display').innerHTML = "Lootboxes per Click: " + abbrNum(Math.round(window.game.lootboxesPerClickFinal));
     document.getElementById('total-clicks-display').innerHTML = "Total Lootbox Clicks: " + window.game.totalLootboxClicks;
     document.getElementById('lb-from-clicks').innerHTML = "Total Lootboxes from Clicks: " + abbrNum(Math.round(window.game.totalLootboxesFromClicks));
     document.getElementById('prestige-current').innerHTML = window.game.prestige;
-    document.getElementById('prestige-lbfnp').innerHTML = abbrNum(Math.ceil(calcLbsNextPrestigeLevel() - window.game.totalLootboxes));
-    document.getElementById('prestige-plian').innerHTML = abbrNum(calcPrestige());
+    document.getElementById('prestige-next-lvl').innerHTML = abbrNum(Math.ceil(calcLbsNextPrestigeLevel() - window.game.totalLootboxes));
+    document.getElementById('prestige-amnt-now').innerHTML = abbrNum(calcPrestige());
     //document.getElementById('building-Player-amount').innerHTML = buildingPlayer.amount.toString();
 }
 
@@ -302,10 +414,10 @@ function confirmCheat() {
 
 function unlockAllUpgrades() {
     if (confirmCheat() == true) {
-        if ( showingAllUpgrades == true ) {
-            showingAllUpgrades = false;
+        if ( int.showingAllUpgrades == true ) {
+            int.showingAllUpgrades = false;
         } else {
-            showingAllUpgrades = true;
+            int.showingAllUpgrades = true;
         }
     }
 }
@@ -317,5 +429,8 @@ function cheatUI() {
 }
 
 // Starts the main game loop
-var Ticker = window.setInterval(function(){tick()}, 10);
+if (int.disableMainGame != true) {
+    var Ticker = window.setInterval(function(){tick()}, 10);
+    var DisplayCycle = window.setInterval(function(){saveDisplayCycle()}, 50);
+}
 var SplashCycle = window.setInterval(function(){splashCycleFunction()}, 160);

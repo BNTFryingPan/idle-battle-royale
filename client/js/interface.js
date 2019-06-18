@@ -1,28 +1,29 @@
 //contains functions that control ui, like tabs in the middle bar
 var currentSplash = "";
 
-
 function cacheElements() {
-    onlineTab            = document.getElementById('mb-online-tab');
-    onlineButton         = document.getElementById('mb-online-button');
-    cheatsTab            = document.getElementById('mb-cheats-tab');
-    cheatsButton         = document.getElementById('mb-cheats-button');
-    achievementsTab      = document.getElementById('mb-ach-tab');
-    achievementsButton   = document.getElementById('mb-ach-button');
-    statsTab             = document.getElementById('mb-stats-tab');
-    statsButton          = document.getElementById('mb-stats-button');
-    legacyTab            = document.getElementById('mb-legacy-tab');
-    legacyButton         = document.getElementById('mb-legacy-button');
-    optionsTab           = document.getElementById('mb-options-tab');
-    optionsButton        = document.getElementById('mb-options-button');
-    changelogTab         = document.getElementById('mb-changelog-tab');
-    changelogButton      = document.getElementById('mb-changelog-button');
-    chatTab              = document.getElementById('mb-chat-tab');
-    chatButton           = document.getElementById('mb-chat-button');
     lootboxPerSecDisplay = document.getElementById('lbps-display');
     lootboxTotalDisplay  = document.getElementById('total-lootbox-display');
     lootboxDisplay       = document.getElementById('lootbox-display');
-    splashElement        = document.getElementById('header-splash');
+}
+
+function cacheTabElements() {
+    onlineTab            = document.getElementById('mb-online-tab');
+    //onlineButton         = document.getElementById('mb-online-button');
+    cheatsTab            = document.getElementById('mb-cheats-tab');
+    //cheatsButton         = document.getElementById('mb-cheats-button');
+    achievementsTab      = document.getElementById('mb-ach-tab');
+    //achievementsButton   = document.getElementById('mb-ach-button');
+    statsTab             = document.getElementById('mb-stats-tab');
+    //statsButton          = document.getElementById('mb-stats-button');
+    legacyTab            = document.getElementById('mb-legacy-tab');
+    //legacyButton         = document.getElementById('mb-legacy-button');
+    optionsTab           = document.getElementById('mb-options-tab');
+    //optionsButton        = document.getElementById('mb-options-button');
+    changelogTab         = document.getElementById('mb-changelog-tab');
+    //changelogButton      = document.getElementById('mb-changelog-button');
+    chatTab              = document.getElementById('mb-chat-tab');
+    //chatButton           = document.getElementById('mb-chat-button');
 }
 
 function changeSplash() {
@@ -45,9 +46,17 @@ function changeSplash() {
         'Don\'t forget to <b>SMASH</b> that like button',
         '😢 T-series is winning',
         'minecraft double smooth stone slab',
-        'OHHH Its a spider!',
-        'Creeper... AWWWW MAN!!! so we back in...'
+        'OHHH Its a RAT!',
+        'Creeper... AWWWW MAN!!! so we back in...',
+        'Now with ray tracing!',
+        'Now a childrens cartoon mobile game!',
+        'Yah Yeet',
+        'E3 2019 was a disappointment',
+        'Bethesda roasted themselves!',
+        'YEEEAAHHHH!!!',
+        'THANK YOU!'
         ];
+    var splashElement = document.getElementById('header-splash');
     var newSplash = ''
     var newSplash = splashes[parseInt(Math.random() * splashes.length)];
     if (currentSplash != '') {
@@ -66,21 +75,21 @@ function changeSplash() {
 
 function hideAllTabs () {
     cheatsTab.setAttribute('class', 'container');
-    cheatsButton.disabled = false;
+    //cheatsButton.disabled = false;
     onlineTab.setAttribute('class', 'container');
-    onlineButton.disabled = false;
+    //onlineButton.disabled = false;
     achievementsTab.setAttribute('class', 'container');
-    achievementsButton.disabled = false;
+    //achievementsButton.disabled = false;
     statsTab.setAttribute('class', 'container');
-    statsButton.disabled = false;
+    //statsButton.disabled = false;
     legacyTab.setAttribute('class', 'container');
-    legacyButton.disabled = false;
+    //legacyButton.disabled = false;
     optionsTab.setAttribute('class', 'container');
-    optionsButton.disabled = false;
+    //optionsButton.disabled = false;
     changelogTab.setAttribute('class', 'container');
-    changelogButton.disabled = false;
+    //changelogButton.disabled = false;
     chatTab.setAttribute('class', 'container');
-    chatButton.disabled = false;
+    //chatButton.disabled = false;
 }
 
 function optionstabUpdateNumberFormat() {
@@ -88,10 +97,15 @@ function optionstabUpdateNumberFormat() {
     window.game.options['shortNumbers'] = newFormat;
 }
 
-function optionstabUpdateSpeed() {
+function optionstabUpdateSaveInterval() {
+    var newInterval = parseInt(document.getElementById('option-saveint').value);
+    window.game.options['saveInterval'] = newInterval;
+}
+
+/*function optionstabUpdateSpeed() {
     var newSpeed = document.getElementById('option-tickSpeed').value;
     window.game.options['tickSpeed'] = newSpeed;
-}
+}*/
 
 //tabs
 function mbSwitchToOnline() {
@@ -103,43 +117,43 @@ function mbSwitchToOnline() {
 function mbSwitchToCheats() {
     hideAllTabs();
     cheatsTab.setAttribute('class', 'container selected');
-    cheatsButton.disabled = true;
+    //cheatsButton.disabled = true;
 }
 
 function mbSwitchToAchievements() {
     hideAllTabs();
     achievementsTab.setAttribute('class', 'container selected');
-    achievementsButton.disabled = true;
+    //achievementsButton.disabled = true;
 }
 
 function mbSwitchToStats() {
     hideAllTabs();
     statsTab.setAttribute('class', 'container selected');
-    statsButton.disabled = true;
+    //statsButton.disabled = true;
 }
 
 function mbSwitchToOptions() {
     hideAllTabs();
     optionsTab.setAttribute('class', 'container selected');
-    optionsButton.disabled = true;
+    //optionsButton.disabled = true;
 }
 
 function mbSwitchToLegacy() {
     hideAllTabs();
     legacyTab.setAttribute('class', 'container selected');
-    legacyButton.disabled = true;
+    //legacyButton.disabled = true;
 }
 
 function mbSwitchToChangelog() {
     hideAllTabs();
     changelogTab.setAttribute('class', 'container selected');
-    changelogButton.disabled = true;
+    //changelogButton.disabled = true;
 }
 
 function mbSwitchToChat() {
     hideAllTabs();
     chatTab.setAttribute('class', 'container selected');
-    chatButton.disabled = true;
+    //chatButton.disabled = true;
 }
 
 function rollCredits() {

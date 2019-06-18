@@ -1,10 +1,14 @@
+// NOTE: This file is NOT the main game file. if you are playing the web version, this file does nothing
+// this file is the main file for the downloadable client
+
+
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-let test
+//let test
 
 function createWindow () {
     // Create the browser window.
@@ -22,7 +26,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('client.html')
+  mainWindow.loadFile('index.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

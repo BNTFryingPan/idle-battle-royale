@@ -57,6 +57,23 @@ a {
     display: flex;
 }
 
+#client.changelogonly {
+    display: block;
+    overflow-y: scroll;
+}
+
+#save-indicator {
+    transition-timing-function: linear;
+    transition-duration: 10000ms;
+    transition-property: all;
+    opacity: 0;
+}
+
+#save-indicator.game-saved {
+    transition-duration: 100ms;
+    opacity: 1;
+}
+
 .mb-button {
     border: none;
     background-color: #8080ff;
@@ -128,7 +145,7 @@ a {
 }
 
 #middle-bar .container.selected {
-    height: 70%;
+    height: 73.5%;
     overflow-y: hidden;
     transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     transition-property: all;
@@ -186,7 +203,7 @@ a {
     transition-duration: 500ms;
 }
 
-#upgrades:hover {
+.upgrade-cont:hover {
     background-color: rgba(77, 42, 165, 0.89);
 }
 
@@ -194,12 +211,15 @@ a {
     height: 3.55em;
     width: 3.55em;
     min-width: 25px;
-    margin:1px;
+    margin: 1px;
+    margin-bottom: 3px;
     background-color: rgba(50, 150, 165, 0.6);
     border-radius: 10px;
     border: none;
     opacity: 1;
     overflow-y: hidden;
+    transition: linear;
+    transition-duration: 100ms
 }
 
 .upgrade-desc {
@@ -226,7 +246,6 @@ a {
     margin-left: 1px;
     margin-right: 1px;
     border-radius: 10px;
-    transition: cubic-bezier(0.175, 0.885, 0.32, 1);
     transition-duration: 250ms;
 }
 
@@ -238,18 +257,22 @@ a {
 
 .upgrade:hover{
     background-color: rgba(50, 150, 165, 0.8);
-    transition: cubic-bezier(0.175, 0.885, 0.32, 1);
+    transition: linear;
     transition-duration: 250ms;
 }
 
-#upgrades {
-    height: 2.9em;
+.upgrade.upgrade-flash-red {
+    background-color: red;
+}
+
+.upgrade-cont {
+    height: 3.1em;
     overflow: hidden;
 }
 
-#upgrades:hover {
-    height: 9.2em;
-    overflow-y: scroll;
+.upgrade-cont:hover {
+    height: 9.5em;
+    overflow-y: hidden;
 }
 
 .fancy-button {
@@ -269,6 +292,14 @@ a {
     opacity: 0;
 }
 
+.building.tooexpensive {
+    opacity: 0.3;
+}
+
+.building.tooexpensive:hover {
+    opacity: 0.65;
+}
+
 .building:hover > .fancy-button {
     opacity: 1;
 }
@@ -281,11 +312,23 @@ a {
 
 #chat-log {
     width: 100%;
-    height: 10%;
+    height: 90%;
     background-color: #232233;
+    border-radius: 5px;
+    overflow-y: scroll;
+    word-wrap: break-word;
     color: #8888ff;
     font-size: 12pt;
     resize: none;
+}
+
+#chat-log.chat-only {
+    background-color: #888888;
+}
+
+#chat-inp {
+    border-radius: 5px;
+    border-width: 0px;
 }
 
 #header-splash {
@@ -294,8 +337,8 @@ a {
     transition-duration: 200ms;
     transform: rotate(-5deg);
     position: relative;
-    left: 40em;
-    bottom: 1em;
+    left: 40%;
+    bottom: .7em;
 }
 
 #header-splash > * {
@@ -320,5 +363,28 @@ a {
     border-bottom-width: 2px;
     border-right-width: 2px;
     border-color: red;
+    border-radius: 5px;
+}
+
+.cl-update {
+    background-color: darkcyan;
+    border-radius: 10px;
+    padding: 2px;
+    padding-top: 0px;
+}
+
+.cl-update:hover {
+    background-color: darkgoldenrod;
+    border-radius: 5px;
+}
+
+.cl-update-notes {
+    background-color: rgb(50, 150, 165, 0.6);
+    border-radius: 10px;
+    padding: 2px;
+}
+
+.cl-next {
+    background-color: darkcyan;
     border-radius: 5px;
 }
