@@ -50,14 +50,15 @@ a {
     padding: 5px;
 }
 
-#client {
+.client {
     background-color: #232233;
     border-radius: 10px;
+    height: 98.5%;
     padding: 5px;
     display: flex;
 }
 
-#client.changelogonly {
+.client.changelogonly {
     display: block;
     overflow-y: scroll;
 }
@@ -268,11 +269,18 @@ a {
 .upgrade-cont {
     height: 3.1em;
     overflow: hidden;
+    display: block;
 }
 
 .upgrade-cont:hover {
     height: 9.5em;
-    overflow-y: hidden;
+    overflow-y: scroll;
+}
+
+.upgrade-cont.full {
+    height: auto;
+    max-height: 60%;
+    overflow-y: scroll;
 }
 
 .fancy-button {
@@ -286,6 +294,10 @@ a {
     border-radius: 5px;
     color: #888888;
     background-color: #0000ff;
+}
+
+.fancy-button:disabled {
+    background-color: red;
 }
 
 .building > .fancy-button {
@@ -320,6 +332,8 @@ a {
     color: #8888ff;
     font-size: 12pt;
     resize: none;
+    position:relative;
+    bottom: 15%;
 }
 
 #chat-log.chat-only {
@@ -329,6 +343,9 @@ a {
 #chat-inp {
     border-radius: 5px;
     border-width: 0px;
+    position: relative;
+    margin-top: 2px;
+    bottom: 15%;
 }
 
 #header-splash {
@@ -387,4 +404,17 @@ a {
 .cl-next {
     background-color: darkcyan;
     border-radius: 5px;
+}
+
+#chat-login-prompt {
+    display: block;
+    background-color: #423e74;
+    border-width: 0px;
+    border-radius: 5px;
+    padding: 5px;
+    width: 95%;
+    position: relative;
+    bottom: -45%;
+    left: 1.5%;
+    z-index: 5;
 }

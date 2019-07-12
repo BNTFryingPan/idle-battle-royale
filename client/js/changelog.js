@@ -1,6 +1,19 @@
 var changelog = {
     "allUpdates": [
         {
+            "header": "Alpha dev-0.4.4 - Build 56 - Chat-pre3",
+            "note": "upgrades is still being pushed back, but more chat updates, also hosting a wss server is hard, also id like someone to try to help work on code",
+            "changes": [
+                "* the default server is actually wss://leotomas.ddns.net:25544 which still wont be up often",
+                "+ a chat login box is now there. if it goes away, and doesnt reappear, type in chat `/showlogin` and press enter",
+                "+ improved chat formatting a little bit maybe",
+                "+ some work on upgrades, added small framework for icons",
+                "+ added removal warning for building price upgrades, as they might be removed",
+                "+ there is a credits screen now, im trying to make it scroll automatically, but pause if you manually scroll it",
+                "+ at some point i made a save indicator at the bottom, but didnt put it in changelog"
+            ]
+        },
+        {
             "header": "Alpha 0.4.3 - Build 55 - Chat-pre2",
             "note": "Upgrades full release has been pushed back in favor of chat, which is now sorta working",
             "changes": [

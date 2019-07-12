@@ -4,7 +4,7 @@ import threading
 # This is the server that will manage running the game for users in a web browser. This may be rather complicated
 # as it will probably require having a second server, for javascript responses
 
-PORT = 25544
+PORT = 80
 #Handler = http.server.SimpleHTTPRequestHandler
 
 class Handler(http.server.SimpleHTTPRequestHandler):

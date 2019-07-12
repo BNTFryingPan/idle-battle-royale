@@ -3,13 +3,20 @@ function lzw_encode(s) {var dict = {};var data = (s + "").split("");var out = []
 function lzw_decode(s) {var dict = {};var data = (s + "").split("");var currChar = data[0];var oldPhrase = currChar;var out = [currChar];var code = 256;var phrase;for (var i=1; i<data.length; i++) {var currCode = data[i].charCodeAt(0);if (currCode < 256) {phrase = data[i];} else {phrase = dict['_'+currCode] ? dict['_'+currCode] : (oldPhrase + currChar);}out.push(phrase);currChar = phrase.charAt(0);dict['_'+code] = oldPhrase + currChar;code++;oldPhrase = phrase;}return out.join("");}
 function encode_utf8(s) {return unescape(encodeURIComponent(s));}
 function decode_utf8(s) {return decodeURIComponent(escape(s));}
-function abbrNum(number) { decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
+function abbrNum(number, notation="opt") { 
+    if (notation == "opt") { notation = window.game.options['shortNumbers']
+    } else if (!notation in ['short', 'long', 'sci']) {
+        console.warn('WARNING: Invalid use of abbrNum(), valid arg2 options are [opt, short, long, sci], not ' + notation + '.')
+        notation = window.game.options['shortNumbers']
+    }
+    decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
     number = parseFloat(number.toFixed(2))
     //this little bit of code was taken from main.js of cookie clicker 2.019 and slightly modified
     var longShort = [' thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion', ' sextillion', ' septillion', ' octillion', ' nonillion'];
     var longPrefixes = [' ', ' un', ' duo', ' tre', ' qattuor', ' quin', ' sex', ' septen', ' octo', ' novem'];
     var longSuffixes = ['decillion', 'vigintillion', 'trigintillion', 'quadragintillion', 'quinquagintillion', 'sexagintillion', 'septuagintillion', 'octogintillion', 'nonagintillion'];
     var shortShort = ['k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortPrefixes = [' ', ' u', ' d', ' t', ' q', ' Q', ' s', ' S', ' o', ' n'];var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    // scientific notation part here wasnt from cookie clicker
     var shortSci = []
     for (var i = 3; i <= 304; i+=3) {
         shortSci.push("e+" + i)
@@ -19,7 +26,7 @@ function abbrNum(number) { decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
     for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(' '+shortPrefixes[ii]+shortSuffixes[i]); } } 
     // end code stolen from cookie clicker
     try {
-        if (window.game.options['shortNumbers'] == "long") { var abbrev = longShort; } else if (window.game.options['shortNumbers'] == "short") { var abbrev = shortShort; } else if (window.game.options['shortNumbers'] == "sci") { var abbrev = shortSci; } else { window.game.options['shortNumbers'] = "long"; var abbrev = longShort; }
+        if (notation == "long") { var abbrev = longShort; } else if (notation == "short") { var abbrev = shortShort; } else if (notation == "sci") { var abbrev = shortSci; } else { var abbrev = longShort; }
     } catch {
         abbrev = shortShort;
     }
@@ -43,8 +50,8 @@ function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; 
 
 function internal() {
     //internal data that we dont want to save
-    this.buildNumber = 55;
-    this.gameVersionString = "Alpha dev-0.4.3";
+    this.buildNumber = 56;
+    this.gameVersionString = "Alpha dev-0.4.4";
     this.isLoaded = false;
     this.saveTick = 0;
     this.splashTick = 250;
@@ -191,6 +198,7 @@ window.onload = function() {
         cheatUI();
         //loadUpdateBuildings();
         populateChangelogTab();
+        loadChatInputEnterThing();
     }
     changeSplash();
     int.isLoaded = true;
@@ -246,13 +254,7 @@ function loadUrlSettings() {
 
 function disableMainGameFunc() {
     int.disableMainGame = true
-    var bars = document.getElementsByClassName('bar')
-    for (var bar in bars) {
-        try {
-            bars[bar].style.display = 'none'
-        } catch { }
-    }
-    document.getElementById('middle-bar-holder').style.display = 'none'
+    hideGame()
     document.getElementById('save-area').innerHTML = 'Chat Popout';
 }
 
@@ -375,7 +377,8 @@ function resetAll() {
     if (confirmResponse) {
         localStorage.removeItem('SaveName');
         loadGame();
-        alert("Your save has been reset")
+        //grantAchievement('resetGame')
+        alert("Your save has been reset. Please refresh the page!")
     } else {
         alert("Reset canceled. Nothing Changed")
     }

@@ -111,7 +111,7 @@ function optionstabUpdateSaveInterval() {
 function mbSwitchToOnline() {
     hideAllTabs();
     onlineTab.setAttribute('class', 'container selected');
-    onlineButton.disabled = true;
+    //onlineButton.disabled = true;
 }
 
 function mbSwitchToCheats() {
@@ -156,19 +156,138 @@ function mbSwitchToChat() {
     //chatButton.disabled = true;
 }
 
+function hideGame() {
+    var bars = document.getElementsByClassName('bar')
+    for (var bar in bars) {
+        try {
+            bars[bar].style.display = 'none'
+        } catch { }
+    }
+    //document.getElementById('middle-bar-holder').style.display = 'none'
+}
+
+function showGame() {
+    var bars = document.getElementsByClassName('bar')
+    for (var bar in bars) {
+        try {
+            bars[bar].style.display = 'block'
+        } catch { }
+    }
+    //document.getElementById('middle-bar-holder').style.display = 'initial'
+}
+
+creditsText = `
+
+
+-=-=-=-=-=-=-=- Idle Battle Royale -=-=-=-=-=-=-=-
+the game with the worst name!
+and its a meme!
+
+-= Created By =-
+TheDerpyMemeSquad
+
+-= Game Design =-
+Leotomas
+GloopBloop
+Titan_Unlimited
+
+-= Server Hosting =-
+Leotomas
+
+large gap for testing
+jk
+
+-= Programming =-
+Leotomas
+
+-= UI =-
+Leotomas
+
+-= Special Thanks =-
+Titan_Unlimited
+Random people on StackOverflow
+Anyone playtesting
+A bunch of people at school
+
+And most importantly...
+YOU!
+Thanks for playing!`
+
+creditsOpen = false
+creditsKeepScrollingIn = 500
+creditsPauseAutoscroll = false
+creditsAutoscrolled = true
+
+function scrollCredits(manual) {
+    if (manual) {
+        creditsPauseAutoscroll = true
+        creditsKeepScrollingIn = 500
+    } else {
+        creditsAutoscrolled = true
+        document.getElementById('credits').scrollBy(0, 0.5)
+        creditsAutoscrolled = false
+    }
+}
+
 function rollCredits() {
-    return;
+    CreditsScroll = window.setInterval(function(){autoscrollCredits(), 20})
+    hideGame();
+    creditsOpen = true
     creditsElement = document.createElement('div');
     creditsElement.setAttribute('id', 'credits')
-    closeButton = document.createElement('button');
-    closeButton.onclick = 'closeCredits()';
-
-    creditsElement.appendChild(closeButton);
-    document.getElementById('client').hidden = true;
+    creditsElement.classList.add('client')
+    creditsElement.style = 'display:block;overflow-y:scroll'
+    creditsElement.addEventListener('scroll', function(){
+        console.log(blab)
+        console.log('credits was scrolled ' + creditsAutoscrolled)
+        if (creditsAutoscrolled != true){
+            //scrollCredits(true)
+            //console.log('manually')
+        }
+    })
+    //creditsElement.addEventListener()
+    creditsP = document.createElement('p')
+    creditsFormattedList = creditsText.split(`
+`)
+    for (let index = 0; index < creditsFormattedList.length; index++) {
+        creditsP.innerHTML += creditsFormattedList[index] + "<br>";
+        
+    }
+    
+    creditsP.style = 'display:block;color:white;text-align:center;width=100%'
+    document.getElementById('client').style.display = 'none';
+    document.getElementById('save-button').onclick = function(){closeCredits()}
+    document.getElementById('save-button').innerHTML = "Close Credits"
     document.getElementById('client-border').appendChild(creditsElement);
+    creditsElement.appendChild(creditsP)
 }
 
 function closeCredits() {
-    document.getElementById('credits').hidden = true;
-    document.getElementById('client').hidden = false;
+    CreditsScroll = null
+    creditsOpen = false
+    document.getElementById('credits').remove()
+    document.getElementById('client').style.display = 'flex';
+    document.getElementById('save-button').onclick = function(){saveGame()}
+    document.getElementById('save-button').innerHTML = "save"
+    showGame();
+}
+
+function autoscrollCredits() {
+    if (creditsOpen == true) {
+        creditsAutoscrolled = false
+        if (creditsPauseAutoscroll == true) {
+            creditsKeepScrollingIn = 500
+            creditsPauseAutoscroll = false
+        } else {
+            if (creditsKeepScrollingIn <= 0) {
+                //console.log('autoscrolling')
+                //document.getElementById('credits').scrollBy(0, 1)
+                scrollCredits(false)
+                //creditsAutoscrolled = false
+                //creditsPauseAutoscroll = false
+            } else {
+                creditsKeepScrollingIn -= 1
+            }
+        }
+    }
 }

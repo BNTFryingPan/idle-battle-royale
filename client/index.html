@@ -8,12 +8,13 @@
     <head>
         <title>Idle Battle Royale Client</title>
         <link rel="stylesheet" type="text/css" href="./style.css">
-        <script src="./js/game.js"></script>
-        <script src="./js/upgrades.js"></script>
-        <script src="./js/buildings.js"></script>
-        <script src="./js/interface.js"></script>
-        <script src="./js/online/chat.js"></script>
-        <script src="./js/changelog.js"></script>
+        <object data='./js/credits.txt' id='credits-text' hidden></object>
+        <script  src="./js/game.js"></script>
+        <script  src="./js/upgrades.js"></script>
+        <script  src="./js/buildings.js"></script>
+        <script  src="./js/interface.js"></script>
+        <script  src="./js/online/chat.js"></script>
+        <script  src="./js/changelog.js"></script>
     </head>
 
     <body>
@@ -22,7 +23,7 @@
         </div>
         <p id='header-splash' onclick='splashClick()' style='color: #40d0e0; text-align: center;width: 25em'>Loading...</p>
         <div id="client-border" style="height: 90%">
-            <div id="client" style="height: 98.5%" hidden>
+            <div id="client" class='client' hidden>
                 <div id="left-bar" class="bar" style="width:30%">
                     <div id="main-left" class="container">
                         <p style="text-align: center" id="lootbox-display">Lootboxes: 0</p>
@@ -31,7 +32,7 @@
                         <p style="text-align: center; font-size: 20px"><button onclick="clickLootbox()" class="fancy-button">Open Lootbox</button></p>
                     </div>
                 </div>
-                <div id="middle-bar-holder" style="width:45%;overflow-y:scroll">
+                <!--<div id="middle-bar-holder" style="width:45%;overflow-y:scroll">-->
                     <!--<div id='middle-bar-buttons' style="display:flex;justify-content: space-evenly;flex-wrap: nowrap">
                         <button class='mb-button' id="mb-online-button" onclick="mbSwitchToOnline()">Online</button>
                         <button class='mb-button' id="mb-cheats-button" onclick="mbSwitchToCheats()">Cheats</button>
@@ -43,7 +44,7 @@
                         <button class='mb-button' id="mb-chat-button" onclick="mbSwitchToChat()">Chat</button>
                         <button class='mb-button' id="mb-hideall-button" onclick="hideAllTabs()"><b style="color:red">X</b></button>
                     </div>-->
-                    <div id="middle-bar" class="bar">
+                    <div id="middle-bar" class="bar" style="width:45%;overflow-y:scroll">
                         <div id="mb-online-tab" class="container" onclick="mbSwitchToOnline()">
                             <p class='mb-header'>-= Online =-</p>
                             <span>Coming Soon!</span>
@@ -55,13 +56,14 @@
                         </div>
                         <div id="mb-stats-tab" class="container selected" onclick="mbSwitchToStats()">
                             <p class='mb-header'>-= Stats =-</p>
+                            <button class='fancy-button' onclick='rollCredits()'>Credits</button><br>
                             <p id="total-lootbox-display">Total Lootboxes: 0</p>
                             <p id="total-building-display">Total Buildings: 0</p>
                             <p id="lbpc-display">Lootboxes per Click: 1</p>
                             <p id="total-clicks-display">Total Lootbox Clicks: 0</p>
                             <p id="lb-from-clicks">Total Lootboxes from Clicks: 0</p>
                             <hr><span>Purchased Upgrades:</span>
-                            <div id='upgrades-bought' class='container upgrade-cont' style="height: auto; display:block; background-color: rgba(0,0,0,0.3)"></div>
+                            <div id='upgrades-bought' class='container upgrade-cont full' style="height: auto; background-color: rgba(0,0,0,0.3)"></div>
                         </div>
                         <div id="mb-options-tab" class="container" onclick="mbSwitchToOptions()"> 
                             <p class='mb-header'>-= Options =-</p>
@@ -93,15 +95,15 @@
                         <div id='mb-changelog-tab' class="container" onclick="mbSwitchToChangelog()">
                             <p class='mb-header' style="overflow-y: hidden">-= Changelog =-</p>
                             <div id="changelog-content" style="overflow-y: scroll; height: 94%; border-style:solid; border-color: black; border-width: 5px; border-radius: 10px">
-                                <!--<button class='fancy-button' onclick='rollCredits()'>Credits</button><br>-->
                             </div>
                         </div>
                         <div id="mb-chat-tab" class="container" onclick="mbSwitchToChat()">
                             <p class="mb-header" style="text-align: center; font-size: 20px">-= Chat =-</p>
-                            <div id='chat-log' contenteditable="false"><b>Type /connect [address] [username] to connect to chat</b></div><br>
-                            <input type='text' id='chat-input' placeholder="Type a message here!" style="width: 90%"> <button id='chat-button' onclick='sendChatMessage()' style='width: 9%' class='fancy-button'>Send</button>
+                            <div id='chat-login-prompt'><div style='display:flex'><div style='text-align: right; width: 20%'><div>Server Address</div> <div style='margin-top:5px'>Username</div></div><div style='margin-left: 1%;width:88%'><input type='text' id='clp-address' style='width:99%' placeholder='Server Address'><br><input type='text' style='width:99%;margin-top:2px' id='clp-user' placeholder='Username'></div></div><div style="text-align: center;width:100%;margin-top:3px"><button class='fancy-button' onclick='loginToChatWithForm()'>Login</button></div></div>
+                            <div id='chat-log' contenteditable="false"><b>Type /connect [address] [username] to connect to chat</b></div>
+                            <div id='chat-inp'><input type='text' id='chat-input' placeholder="Type a message here!" style="width: 90%"> <button id='chat-button' onclick='sendChatMessage()' style='width: 9%' class='fancy-button' disabled>Send</button></div>
                         </div>
-                    </div>
+                    <!--</div>-->
                 </div>
                 <div id="right-bar" class="bar" style="width:25%">
                     Upgrades:<br>

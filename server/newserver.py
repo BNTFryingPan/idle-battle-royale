@@ -125,6 +125,7 @@ class gameServer(object):
             pass
         elif type(chatmsg) == type({}):
             if chatmsg["type"] == "chat":
+                print('chat: ' + chatmsg['username'] + "> " + chatmsg['message'])
                 self.broadcast("chatmsg $" + '{"content":"' + chatmsg["username"] + '> ' + chatmsg["message"] + '"}')
 
     def _startServer(self):
