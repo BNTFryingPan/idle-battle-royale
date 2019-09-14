@@ -1,5 +1,6 @@
 //contains functions that control ui, like tabs in the middle bar
 var currentSplash = "";
+var activeNotifs = [];
 
 function cacheElements() {
     lootboxPerSecDisplay = document.getElementById('lbps-display');
@@ -26,15 +27,54 @@ function cacheTabElements() {
     //chatButton           = document.getElementById('mb-chat-button');
 }
 
+function getFirstOpenNotifNumber() {
+    var lastNotifNum = 0
+    for (var notifNum in activeNotifs) {
+        if (notifNum != lastNotifNum+1) {
+            return notifNum;
+        }
+    }
+    return activeNotifs.length;
+    
+}
+
+function notify(header, text, duration=15) {
+    notifDiv = document.getElementById('notif-div')
+    notifDiv.innerHTML = "<div id='notif-" + activeNotifs + "' class='notif-body'><b class='notif-header'>" + header + "</b><br><span class='notif-text'>" + text + "</span></div><br>" + notifDiv.innerHTML
+    var thisNumber = getFirstOpenNotifNumber()
+    activeNotifs.push(thisNumber)
+    //thisNotif = document.createElement('div')
+    console.log('created notif and added, waiting to remove')
+    var timer = 0
+    window.setInterval (function(){
+        if (timer >= duration) {
+            removeNotification(thisNumber)
+        }
+        timer++;
+        window.clearInterval(this);
+    }, 1000)
+
+}
+
+function removeNotification(number) {
+    console.log('removed notif')
+    document.getElementById('notif-' + number.toString());
+    activeNotifs.remove(number);
+    //activeNotifs.
+}
+
+
+
 function changeSplash() {
-    splashes = ['Not made in China!',
+    splashes = [
+        'Not made in China!',
         'Also try <a href="http://orteil.dashnet.org/cookieclicker">Cookie Clicker</a>',
         'Also try <a href="http://clickerheroes.com">Clicker Heroes</a>',
         "Don't play Fortnite",
         'Made in the USA',
         '<sub>G</sub><sup>A</sup><sub>M</sub><sup>E</sup> <sub>O</sub><sup>V</sup><sub>E</sub><sup>R</sup>',
         '<sub>O</sub><sup>G</sup><sub>V</sub><sup>A</sup><sub>E</sub><sup>M</sup><sub>R</sub><sup>E</sup>',
-        'Not on Steam! (yet...)',
+        'Not on Steam! (yet...... (if ever.....))',
         'Also try <a href="http://www.filltheoceans.com/">Fill the Oceans</a>',
         'Also try <a href="http://decisionproblem.com/paperclips/index2.html">Universal Paperclips</a>',
         'Village and Pillage',
@@ -54,13 +94,16 @@ function changeSplash() {
         'E3 2019 was a disappointment',
         'Bethesda roasted themselves!',
         'YEEEAAHHHH!!!',
-        'THANK YOU!'
+        'THANK YOU!',
+        "OOOOOOOOOORRRRRRRRRRRRRRBBBBBBBBBBBBBBBB!",
+        "The Nintendo Light Switch",
+        "Epic Gamer Time",
+        "🅱ruh Moment"
         ];
     var splashElement = document.getElementById('header-splash');
     var newSplash = ''
     var newSplash = splashes[parseInt(Math.random() * splashes.length)];
     if (currentSplash != '') {
-        //console.log(newSplash)
         while (currentSplash == newSplash) {
             var newSplash = splashes[parseInt(Math.random() * splashes.length)];
         }
@@ -70,7 +113,7 @@ function changeSplash() {
     currentSplash = newSplash
     // adding invisibile sub and sup text allows me to make splashes with sub and sup text without changing the height of the line
     // i tried a zero-width character, but it just showed up as a ~ (tilda tilde whatever, i like to call it the relative indicator because minecraft)
-    splashElement.innerHTML = "<sup style='color: #232233'>.</sup>" + newSplash + "<sub style='color: #232233'>.</sub>";
+    splashElement.innerHTML = "<sup class='splash-fix'>.</sup>" + newSplash + "<sub style='class='splash-fix'>.</sub>";
 }
 
 function hideAllTabs () {
@@ -92,6 +135,11 @@ function hideAllTabs () {
     //chatButton.disabled = false;
 }
 
+function upgradesToggleHideExpensive() {
+    var hide = document.getElementById("upgrades-hide-box").checked;
+    int.hideExpensiveUpgrades = hide;
+}
+
 function optionstabUpdateNumberFormat() {
     var newFormat = document.getElementById('option-numformat').value;
     window.game.options['shortNumbers'] = newFormat;
@@ -100,6 +148,11 @@ function optionstabUpdateNumberFormat() {
 function optionstabUpdateSaveInterval() {
     var newInterval = parseInt(document.getElementById('option-saveint').value);
     window.game.options['saveInterval'] = newInterval;
+}
+
+function optionsTabUpdateUIUpdateRate() {
+    var newRate = parseInt(document.getElementById("option-uirate").value);
+    window.game.options['uiRefreshRate'] = newRate;
 }
 
 /*function optionstabUpdateSpeed() {

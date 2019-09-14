@@ -271,16 +271,16 @@ function updateBuildings() {
             document.getElementById('building-' + tb.intname + '-buy100').innerHTML = "x100"
             document.getElementById('building-' + tb.intname + '-buy100').title = buildingPrice(build, true, 100)
 
-            if (tbg.amount >= 10) {
+            if (tbg.amount >= 1) {
                 document.getElementById('building-' + tb.intname + '-buy10').hidden = false
-                if (tbg.amount >= 100) {
+                if (tbg.amount >= 10) {
                     document.getElementById('building-' + tb.intname + '-buy100').hidden = false
                 } else {
                     document.getElementById('building-' + tb.intname + '-buy100').hidden = true
                 }
             } else {
+                document.getElementById('building-' + tb.intname + '-buy1').hidden = true
                 document.getElementById('building-' + tb.intname + '-buy10').hidden = true
-                document.getElementById('building-' + tb.intname + '-buy100').hidden = true
             }
         }
     }
@@ -294,21 +294,21 @@ function buyBuilding(build, amount=1) {
     for (i = 1; i <= amount; i++) {
         if (buildingBuyMode == true) {
             price = buildingPrice(build)
-            console.log('buying ' + i + ' of ' + amount + ' for ' + abbrNum(price) + '[' + abbrNum(window.game.lootboxes) + ']');
+            //console.log('buying ' + i + ' of ' + amount + ' for ' + abbrNum(price) + '[' + abbrNum(window.game.lootboxes) + ']');
             if (window.game.lootboxes >= price) {
                 window.game.lootboxes = window.game.lootboxes - price;
                 window.game.buildings[build].amount++;
                 window.game.totalBuildings++;
-                //updateUI(); // commented out because updating the ui can take time, and it updates the UI 100 times a second
+                //updateUI(); // commented out because updating the ui can take time, and it updates the UI 100 times a second already
                 try { window.game.buildings[build].onBuy(); } catch (error) { }
-            } else { console.log('not enough lbs, ' + window.game.lootboxes + ' of ' + price);break }
+            } else { /*console.log('not enough lbs, ' + window.game.lootboxes + ' of ' + price);*/break }
         } else {
             if (window.game.buildings[build].amount >= 1) { //having negative buildings does some funky stuff, feel free to try it, but it will ruin your save forever
                 value =  Math.floor(Math.round(Math.round(tb.basecost * priceMultiplier ** ( window.game.buildings[build].amount - 1) ) * window.game.buildingDiscount) / 2);
                 window.game.buildings[build].amount--;
                 window.game.totalBuildings--;
                 if ( ( window.game.lootboxes + value ) > window.game.totalLootboxes ) { // this if statement is so if a building price increases, you dont get marked as a cheater for having too many lootboxes if you sell everything
-                    var totalToAdd = ( ( window.game.lootboxes + value ) - window.game.totalLootboxes )
+                    var totalToAdd = ( ( window.game.lootboxes + value ) - window.game.totalLootboxes ) // here we calculate how many extra lootboxes youd have by selling this amount
                     window.game.totalLootboxes += totalToAdd;
                 }
                 window.game.lootboxes += value;
@@ -319,7 +319,7 @@ function buyBuilding(build, amount=1) {
 
 function buildingPrice(build, sell=false, amount=1) {
     tbg = window.game.buildings[build];
-    var price = 0
+    var price = 0 //TODO: figure out why with building price discount, first few buildings can cost 0
     if (sell == true) {
         if ( tbg.amount == 0 ) {
             return 0;

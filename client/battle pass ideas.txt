@@ -1,0 +1,30 @@
+this is the worst place i could possibly dump ideas, but i had too
+
+levels:
+every 1 level: static bonus like other idle games (normal) (+1 coin)
+every 5 levels: starting bonus: +1 click power (keeps above bonus +2 coins)
+every 10 levels: starting bonus: click power +4 (keeps above bonus +3 coins)
+every 100 levels: starting bonus: lbps multiplier between +0.25 and 0.05 (keeps above bonus +4 coins)
+every 1000 levels: starting bonus: +1 starting noob (keeps above bonus +5 coins)
+every 10000 levels: starting bonus: click power multiplier +0.25 (keeps above bonus +6 coins)
+every 100000 levels: starting bonus: lbps multiplier +1? (keeps all but 25 level bonus +7 coins)
+
+Next Level: 500:
++5 click power
++1 starting noob
++0.25 click multiplier
++1 total lbps multiplier
+
+Next Level: 50:
++5 click power
++1 starting noob
++0.25 total lbps multiplier
+
+seasons: bonuses to levels mostly
+every 1 level: click power bonus 5% (of click power)
+every 4 levels: lbps multiplier bonus 5%
+every 15 levels: starting building multiplier
+100 levels
+
+
+true seasons: real world time, not sure what should be in this yet

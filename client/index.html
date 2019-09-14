@@ -15,14 +15,15 @@
         <script  src="./js/interface.js"></script>
         <script  src="./js/online/chat.js"></script>
         <script  src="./js/changelog.js"></script>
+        <script  src="./js/cheatconsole.js"></script>
     </head>
 
     <body>
         <div id="header">
             <span id='header-text'>Idle Battle Royale Client</span><br>
         </div>
-        <p id='header-splash' onclick='splashClick()' style='color: #40d0e0; text-align: center;width: 25em'>Loading...</p>
-        <div id="client-border" style="height: 90%">
+        <p id='header-splash' onclick='splashClick()'>Loading...</p>
+        <div id="client-border">
             <div id="client" class='client' hidden>
                 <div id="left-bar" class="bar" style="width:30%">
                     <div id="main-left" class="container">
@@ -51,8 +52,14 @@
                         </div>
                         <div id="mb-cheats-tab" class="container" onclick="mbSwitchToCheats()">
                             <p class='mb-header'>-= Cheats =-</p>
-                            <button onclick="addTotalLBs()">Increase total lootboxes</button> <button onclick="unlockAllUpgrades()">Reveal all upgrades</button>
-                            <input id="lootbox-cheat-input" type="text" placeholder="Lootboxes to add" style="margin-top: 2px"> <button onclick="lootboxCheatButton()">Add</button>
+                            <div>
+                                <button onclick="addTotalLBs()">Increase total lootboxes</button> <button onclick="unlockAllUpgrades()">Reveal all upgrades</button>
+                                <input id="lootbox-cheat-input" type="text" placeholder="Lootboxes to add" style="margin-top: 2px"> <button onclick="lootboxCheatButton()">Add</button><br>
+                            </div><br>
+                            <div>
+                                <div id='debug-console-log' class='log-output'></div>
+                                <div class='input-bar'><input type='text' id='cheat-console-input' placeholder="Type a cheat here!" style="width: 90%"> <button id='cheat-console-button' onclick='executeCheatCommand()' style='width: 9%' class='fancy-button'>Execute</button></div>
+                            </div>
                         </div>
                         <div id="mb-stats-tab" class="container selected" onclick="mbSwitchToStats()">
                             <p class='mb-header'>-= Stats =-</p>
@@ -67,18 +74,39 @@
                         </div>
                         <div id="mb-options-tab" class="container" onclick="mbSwitchToOptions()"> 
                             <p class='mb-header'>-= Options =-</p>
-                            <select onchange="optionstabUpdateNumberFormat()" id="option-numformat">
-                                <option value="long">Long Number Notation (5 thousand)</option>
-                                <option value="short">Short Number Notation (5k)</option>
-                                <option value="sci">Scientific Notation (5e3)</option>
-                            </select>
-                            <select onchange='optionstabUpdateSaveInterval()' id='option-saveint'>
-                                <option value='1500'>15 seconds</option>
-                                <option value='3000'>30 seconds (default)</option>
-                                <option value='6000'>1 minute</option>
-                                <option value='18000'>3 minutes</option>
-                            </select>
-                            <br><span style="display: none">Note that at very very high numbers (above 1e400) you may see scientific notation even if this isnt set to scientific notation.</span>
+                            <div style='display: flex'>
+                                <div style='width: 49%; text-align: right'>
+                                    Number Notation (Example of 5000):<br>
+                                    Save Interval:<br>
+                                    UI Refresh Rate:
+                                </div>
+                                <div style='width: 2%'></div>
+                                <div style='text-align: left; width: 49%'>
+                                    <select onchange="optionstabUpdateNumberFormat()" id="option-numformat">
+                                        <option value="long">Long Number Notation (5 thousand)</option>
+                                        <option value="short">Short Number Notation (5k)</option>
+                                        <option value="sci">Scientific Notation (5e3)</option>
+                                        <option value="raw">Raw Number Notaion (5000)</option>
+                                    </select>
+                                    <br> 
+                                    <select onchange='optionstabUpdateSaveInterval()' id='option-saveint'>
+                                        <option value='1500'>15 seconds</option>
+                                        <option value='3000'>30 seconds (default)</option>
+                                        <option value='6000'>1 minute</option>
+                                        <option value='18000'>3 minutes</option>
+                                    </select>
+                                    <br> 
+                                    <select onchange='optionsTabUpdateUIUpdateRate()' id='option-uirate'>
+                                        <option value='2'>2/second (debug)</option>
+                                        <option value='30'>30/second</option>
+                                        <option value='60'>60/second</option>
+                                        <option value='100'>100/second (default)</option>
+                                        <option value='120'>120/second</option>
+                                        <option value='240'>240/second</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br><span">Note that at very very high numbers (above 1e400) you may see scientific notation even if your settings are set to long or short notation.</span>
                             <br><button onclick="resetAll()" class="reset-button">Reset <b>ALL</b> progress</button><br>
                         </div>
                         <div id="mb-legacy-tab" class="container" onclick="mbSwitchToLegacy()">
@@ -87,10 +115,30 @@
                             <br><span>Prestige Level if you Ascend now:</span> <span id="prestige-amnt-now">0</span><br>
                             <span>Lootboxes Required for next Prestige Level:</span> <span id="prestige-next-lvl">0</span><br>
                             <span>Current Prestige Level:</span> <span id="prestige-current">0</span><br>
+                            testing thingy wip layout:<br>
+                            note, i made this in the car, because i was bored, i havent made any progress on the actual workings of prestige
+                            =========================<br><br>
+                            <div id='battle-pass-container'>
+                                <span>Battle Pass</span>
+                                <table style='border-radius: 10px;background-color:black;width:99%;height:10%'>
+                                    <caption>Battle Pass</caption>
+                                    <tr>
+                                        <th>Level</th>
+                                        <th>Rewards</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>asdf</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                         <div id="mb-ach-tab" class="container" onclick="mbSwitchToAchievements()">
                             <p class='mb-header'>-= Achievements =-</p>
                             <span>Coming Soon!</span>
+                            <div id='ach-container'>
+                                4Head
+                            </div>
                         </div>
                         <div id='mb-changelog-tab' class="container" onclick="mbSwitchToChangelog()">
                             <p class='mb-header' style="overflow-y: hidden">-= Changelog =-</p>
@@ -100,19 +148,27 @@
                         <div id="mb-chat-tab" class="container" onclick="mbSwitchToChat()">
                             <p class="mb-header" style="text-align: center; font-size: 20px">-= Chat =-</p>
                             <div id='chat-login-prompt'><div style='display:flex'><div style='text-align: right; width: 20%'><div>Server Address</div> <div style='margin-top:5px'>Username</div></div><div style='margin-left: 1%;width:88%'><input type='text' id='clp-address' style='width:99%' placeholder='Server Address'><br><input type='text' style='width:99%;margin-top:2px' id='clp-user' placeholder='Username'></div></div><div style="text-align: center;width:100%;margin-top:3px"><button class='fancy-button' onclick='loginToChatWithForm()'>Login</button></div></div>
-                            <div id='chat-log' contenteditable="false"><b>Type /connect [address] [username] to connect to chat</b></div>
-                            <div id='chat-inp'><input type='text' id='chat-input' placeholder="Type a message here!" style="width: 90%"> <button id='chat-button' onclick='sendChatMessage()' style='width: 9%' class='fancy-button' disabled>Send</button></div>
+                            <div id='chat-log' class='log-output'><b>Type /connect [address] [username] to connect to chat</b></div>
+                            <div class='input-bar'><input type='text' id='chat-input' placeholder="Type a message here!" style="width: 90%"> <button id='chat-button' onclick='sendChatMessage()' style='width: 9%' class='fancy-button'>Send</button></div>
                         </div>
                     <!--</div>-->
                 </div>
                 <div id="right-bar" class="bar" style="width:25%">
-                    Upgrades:<br>
+                    <span>Upgrades: <input type="checkbox" id="upgrades-hide-box" onchange='upgradesToggleHideExpensive()'> Hide Unaffordable Upgrades<br></span>
                     <div id="upgrades" class="container upgrade-cont" style="display:block">
+                        <span id="upgrades-hidden-notice" hidden>
+                            Note: You can only see upgrades you can afford! Click the box above to show all upgrades.
+                        </span>
                     </div><hr>
                     <span>Buildings: <input type="radio" checked id='building-select-buy' onclick="document.getElementById('building-select-sell').checked = false;buildingBuyMode = true;"> Buy || <input type="radio" id='building-select-sell' onclick="document.getElementById('building-select-buy').checked = false;buildingBuyMode=false;"> Sell</span>
                     <div id="buildings" class="container" style="margin-top: 3px">
                     </div>
                 </div>
+                
+            </div>
+            <div id="notif-div">
+                <!--This is an example notification-->
+                <!--<div class='notif-body'><b class='notif-header'>Notif Header</b><br><span class='notif-text'>test notif</span></div>-->
             </div>
         </div>
         <div>

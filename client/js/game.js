@@ -5,8 +5,8 @@ function encode_utf8(s) {return unescape(encodeURIComponent(s));}
 function decode_utf8(s) {return decodeURIComponent(escape(s));}
 function abbrNum(number, notation="opt") { 
     if (notation == "opt") { notation = window.game.options['shortNumbers']
-    } else if (!notation in ['short', 'long', 'sci']) {
-        console.warn('WARNING: Invalid use of abbrNum(), valid arg2 options are [opt, short, long, sci], not ' + notation + '.')
+    } else if (!notation in ['short', 'long', 'sci', 'raw']) {
+        console.warn('WARNING: Invalid use of abbrNum(), valid arg2 options are [opt, short, long, sci, raw], not ' + notation + '. Reverting to default of short')
         notation = window.game.options['shortNumbers']
     }
     decPlaces = 3; decPlaces = Math.pow(10,decPlaces);
@@ -26,6 +26,7 @@ function abbrNum(number, notation="opt") {
     for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(' '+shortPrefixes[ii]+shortSuffixes[i]); } } 
     // end code stolen from cookie clicker
     try {
+        if (notation == "raw") { return number.toString() }
         if (notation == "long") { var abbrev = longShort; } else if (notation == "short") { var abbrev = shortShort; } else if (notation == "sci") { var abbrev = shortSci; } else { var abbrev = longShort; }
     } catch {
         abbrev = shortShort;
@@ -44,14 +45,29 @@ function abbrNum(number, notation="opt") {
     return number;
 }
 
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+function getCurrentTime() {
+    var d = new Date();
+    var h = addZero(d.getHours());
+    var m = addZero(d.getMinutes());
+    var s = addZero(d.getSeconds());
+    return h + ":" + m + ":" + s;
+}
+
 function getUrlVars() { var vars = {}; var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { vars[key] = value; }); return vars; }
 function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; if(window.location.href.indexOf(parameter) > -1){ urlparameter = getUrlVars()[parameter]; } return urlparameter; }
 // end copied and pasted stuff
 
 function internal() {
     //internal data that we dont want to save
-    this.buildNumber = 56;
-    this.gameVersionString = "Alpha dev-0.4.4";
+    this.buildNumber = 58;
+    this.gameVersionString = "Alpha dev-0.4.6";
     this.isLoaded = false;
     this.saveTick = 0;
     this.splashTick = 250;
@@ -66,6 +82,8 @@ function internal() {
     this.changelogOnly = false;
     this.isChatPopout = false;
     this.lastSaveBreakingBuild = 50;
+    this.uiUpdateRate = 100;
+    this.hideExpensiveUpgrades = false;
 }
 
 var int = new internal()
@@ -81,7 +99,7 @@ function gameSave() {
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
-    this.options = {'shortNumbers': 'short', 'tab': 'stats', 'saveInterval': 3000};
+    this.options = {'shortNumbers': 'short', 'tab': 'stats', 'saveInterval': 3000, "uiRefreshRate":100};
     this.sellMultiplier = 0.5
     this.upgrades = {};
     //this.acheivementsUnlocked = {};
@@ -138,9 +156,11 @@ function loadGame() {
 
     document.getElementById('option-numformat').value = window.game.options['shortNumbers'];
     document.getElementById('option-saveint').value = window.game.options['saveInterval'].toString();
+    document.getElementById('option-uirate').value = window.game.options['uiRefreshRate'].toString();
+    int.uiUpdateRate = window.game.options['uiRefreshRate'];
     if (window.game.buildNumber < int.gameVersionNumber) {
         int.updateAvailable = true;
-        alert("Hey! Theres cool new stuff if you reset your save!")
+        //notify("Update!", "Hey! Theres cool new stuff if you reset your save!")
     }
 }
 
@@ -199,6 +219,7 @@ window.onload = function() {
         //loadUpdateBuildings();
         populateChangelogTab();
         loadChatInputEnterThing();
+        loadChatInputEnterThingForCheats();
     }
     changeSplash();
     int.isLoaded = true;
@@ -219,7 +240,7 @@ window.onload = function() {
     if (int.isChatPopout == true) {
         loadChatPopout()
     }
-    console.log('game loaded')
+    console.log('Game loaded')
 }
 
 // funtions
@@ -249,7 +270,7 @@ function loadUrlSettings() {
         disableMainGameFunc();
     }
     
-    console.log(urlSettings)
+    //console.log(urlSettings)
 }
 
 function disableMainGameFunc() {
@@ -283,9 +304,8 @@ function tick() {
         if (window.game.totalLootboxes<window.game.lootboxes) {
             window.game.hasCheated = true;
             window.game.totalLootboxes = window.game.lootboxes;
-            alert("You have cheated! You will no longer be able to get online bonuses.")
+            //notify("Cheater!", "You have cheated! You will no longer be able to get online bonuses.")
         }
-        updateUI();
         tickUpgrades();
         if (int.saveTick >= window.game.options['saveInterval']) {
             saveGame();
@@ -297,7 +317,7 @@ function tick() {
         if (int.disableMainGame != true) {
             int.isLoadedTimer++;
             if (int.isLoadedTimer >= 500) {
-                alert("The game appears to be loading slowly. Try refreshing the page");
+                //notify("Loading...", "The game appears to be loading slowly. Try refreshing the page");
                 int.isLoadedTimer = 0;
             }
         }
@@ -378,9 +398,10 @@ function resetAll() {
         localStorage.removeItem('SaveName');
         loadGame();
         //grantAchievement('resetGame')
+        saveGame()
         alert("Your save has been reset. Please refresh the page!")
     } else {
-        alert("Reset canceled. Nothing Changed")
+        //notify("Reset", "Reset canceled. Nothing Changed")
     }
 }
 
@@ -428,6 +449,7 @@ function unlockAllUpgrades() {
 function cheatUI() {
     if (window.game.hasCheated == true) {
         document.getElementById('header-text').innerHTML = "Idle Battle Royale Client <b>CHEATER!!!!!</b>"
+        document.getElementById('header-splash').classList.add('cheater')
     } 
 }
 
@@ -435,5 +457,6 @@ function cheatUI() {
 if (int.disableMainGame != true) {
     var Ticker = window.setInterval(function(){tick()}, 10);
     var DisplayCycle = window.setInterval(function(){saveDisplayCycle()}, 50);
+    var UpdateUILoop = window.setInterval(function(){updateUI();}, int.uiUpdateRate)
 }
 var SplashCycle = window.setInterval(function(){splashCycleFunction()}, 160);

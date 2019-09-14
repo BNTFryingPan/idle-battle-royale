@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap');
 
 ::-webkit-scrollbar {
-    width: 0.5em
+    width: 0.3em
 }
 
 ::-webkit-scrollbar:hover {
@@ -48,6 +48,7 @@ a {
     border-style: groove;
     border-radius: 10px;
     padding: 5px;
+    height: 50em;
 }
 
 .client {
@@ -75,6 +76,8 @@ a {
     opacity: 1;
 }
 
+
+/* //commented out because this is unused now
 .mb-button {
     border: none;
     background-color: #8080ff;
@@ -98,7 +101,7 @@ a {
     padding-right: 5%;
     background-color: #6868ff;
     color: #ffffff;
-}
+}*/
 
 .bar {
     padding: 3px;
@@ -124,7 +127,7 @@ a {
 }
 
 #middle-bar .container {
-    height: 2.55%;
+    height: 1.5em;
     overflow-y: hidden;
     transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     transition-property: all;
@@ -146,7 +149,7 @@ a {
 }
 
 #middle-bar .container.selected {
-    height: 73.5%;
+    height: 34.3em;
     overflow-y: hidden;
     transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     transition-property: all;
@@ -178,21 +181,25 @@ a {
     margin: 2px;
     background-color: rgba(50, 150, 165, 0.5);
     border-radius: 10px;
-    height: 1.1em;
+    height: 1.2em;
     overflow-y: hidden;
     transition-timing-function: cubic-bezier(.51,1.19,.78,.73);
 }
 
-.building:hover > .building-cost{
-    opacity: 1;
-}
-
-.building-cost {
+.building > * {
     opacity: 0;
 }
 
+.building > .building-toprow {
+    opacity: 1; 
+}
+
+.building:hover > * {
+    opacity: 1;
+}
+
 .building:hover {
-    height: 3.8em;
+    height: 4em;
     background-color: rgba(70, 170, 185, 0.8);
     overflow-y: scroll;
     transition-timing-function: cubic-bezier(.31,1.16,.32,1.16);
@@ -316,13 +323,32 @@ a {
     opacity: 1;
 }
 
-#notifs {
+#notif-div {
     width: 25%;
-    margin-left: 40%;
     margin-bottom: 5px;
+    position: absolute;
+    align-self: center;
+    bottom: 5%;
+    left: 2%;
+    transform: rotate(180deg)
 }
 
-#chat-log {
+.notif-body {
+    padding: 1%;
+    background-color: #423e74;
+    border-radius: 10px;
+    transform: rotate(180deg)
+}
+
+.notif-text {
+    transform: rotate(180deg)
+}
+
+.notif-header {
+    font-size: 110%;
+}
+
+.log-output {
     width: 100%;
     height: 90%;
     background-color: #232233;
@@ -336,11 +362,27 @@ a {
     bottom: 15%;
 }
 
-#chat-log.chat-only {
+#debug-console-log {
+    height: 28em;
+}
+
+.time {
+    font-size: 0.75em;
+}
+
+.log-output > div {
+    background-color: #232323;
+}
+
+.log-output > div:nth-child(odd) {
+    background-color: #555555;
+}
+
+.log-output.chat-only {
     background-color: #888888;
 }
 
-#chat-inp {
+.input-bar {
     border-radius: 5px;
     border-width: 0px;
     position: relative;
@@ -349,6 +391,9 @@ a {
 }
 
 #header-splash {
+    color: #40d0e0;
+    text-align: center;
+    width: 25em;
     opacity: 1;
     transition: ease-in-out;
     transition-duration: 200ms;
@@ -356,6 +401,14 @@ a {
     position: relative;
     left: 40%;
     bottom: .7em;
+}
+
+.splash-fix {
+    opacity: 0;
+}
+
+#header-splash.cheater {
+    left: 50%;
 }
 
 #header-splash > * {

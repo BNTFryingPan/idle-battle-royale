@@ -1,1 +1,1 @@
-websocketd.exe --ssl --sslcert sslcert --sslkey sslkey --port 25544 py ./wsdclient.py
+websocketd.exe --ssl --sslcert sslcert --sslkey sslkey --port 25544 py .\wsdclient.py

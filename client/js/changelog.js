@@ -1,6 +1,36 @@
 var changelog = {
     "allUpdates": [
         {
+            "header": "Alpha dev-0.4.6 - Build 58 - Upgrades-pre9",
+            "note": "if you are in the discord, you may know i announced that the upgrades update will include some scaling improvements. This update is mostly focused on that, and adding the debug console in the cheats tab",
+            "changes": [
+                '+ added a log similar to the chatbox in the cheats tab, this is a cheat console where you will be able to, you know, cheat',
+                '+ currently in the debug console there are 3 commands, add, set, and showallupgrades.',
+                '* showallupgrades will replaces the "reveal all upgrades" button above the console',
+                '* add and set will allow you to add and set numbers like lootboxes, total lootboxes, building counts, and multipliers',
+                '* currently, the syntax for add and set is "[add|set] lootboxes <number>", and you can only change lootboxes',
+                '* i will be adding more stuff soon probably'
+            ]
+        },
+        {
+            "header": "Alpha dev-0.4.5 - Build 57 - Upgrades-pre8",
+            "note": "ive pushed back on chat, and decided that i might release chat and upgrades at the same time, but idk<br>note: im looking for more bugs to squash, so please do report bugs",
+            "changes": [
+                "extra note: you can fork the project and make changes and ill check out your changes",
+                "* working on extensive documentation in comments for future mod support documentation. not sure when i will actually make real mod api docs",
+                "+ added a thing to the changelog that can automatically replace certian text with certian other text, useful for linking discord by just typing discord in [ and ]. will use for more stuff in the future",
+                "+ added a cheat/debug console rather than clickable boxes, however it doesnt work yet, and im not sure what will be in it. if you have ideas, put it in the [discord]",
+                "+ added a toggle above upgrades to only show upgrades you can afford",
+                "+ added some stuff to get notifications working, notifs will be used to tell you when theres an update, when you get an achivement, and other stuff",
+                "+ added some WIP layout stuff for prestige",
+                "+ added a proper project guide to GitHub Projects, you can look at it at <a href='https://github.com/LeotomasMC/idle-battle-royale/projects/1'>by clicking here</a>.",
+                "+ added 3 teir upgrades to speedrunners",
+                "+ added a new option to change UI update rate",
+                "* changed layout of the options tab a bit",
+                "* updated changelog header warning to indicate edge canary update to chrome 77 from chrome 76"
+            ]
+        },
+        {
             "header": "Alpha dev-0.4.4 - Build 56 - Chat-pre3",
             "note": "upgrades is still being pushed back, but more chat updates, also hosting a wss server is hard, also id like someone to try to help work on code",
             "changes": [
@@ -41,7 +71,7 @@ var changelog = {
                 "+ added a few more upgrades",
                 "+ added new building, memelord",
                 "* copied cookie clickers balancing for building price and lbps, early game felt too fast",
-                "as usual, join the discord for the latest news on stuff"
+                "as usual, join the [discord] for the latest news on stuff"
             ]
         },
         {
@@ -89,7 +119,7 @@ var changelog = {
         },
         {
             "header": "Alpha 0.2.5 - Build 22 - <b>The Smoothing <i>Part 3</i></b>",
-            "note": "<i style=\"color: gray\">This last part of the smoothing will contain a beta version of upgrades, if you experience any issues, please tell me on discord.</i><br>I was going to include beta testing for upgrades, but decided against it, as the smoothing is ui improvements, not upgrades.<br>However, progress on upgrades is currently :ok_hand: and if you really want to try the few upgrades there are currently, open inspect element console, and type <code>loadUpgrades()</code>",
+            "note": "<i style=\"color: gray\">This last part of the smoothing will contain a beta version of upgrades, if you experience any issues, please tell me on [discord].</i><br>I was going to include beta testing for upgrades, but decided against it, as the smoothing is ui improvements, not upgrades.<br>However, progress on upgrades is currently :ok_hand: and if you really want to try the few upgrades there are currently, open inspect element console, and type <code>loadUpgrades()</code>",
             "changes": [
                 "+ added a splah text, clicking it will instantly change it, but it also changes like every 15 to 30 seconds, i dont remember it is lol",
                 "+ more rounded stuff",
@@ -138,14 +168,18 @@ var changelog = {
         }
     ],
     "next": [
-        "- prestige (probably alpha 0.5 or 0.6)",
+        "- prestige - ascend (probably alpha 0.7 or 0.8)",
+        "- prestige - trancend (probably beta)",
         "- acheivements (probably beta something)",
         "- online chat (THIS UPDATE PROBABLY)",
-        "- clickables like golden cookies (maybe alpha 0.7ish)"
+        "- clickables like golden cookies (maybe alpha 0.7ish)",
+        "- online play (beta probably)",
+        "- theming - (probably 0.6)",
+        "- some kind of mod support with an API for making new stuff"
     ],
     "header": [
         "<p style='text-align: center;color: red;'>If you play on FireFox, Opera, IE, or Normal Edge, you may have problems!</p>",
-        "<p style='text-align: center;color: red;'>This game was mostly tested in <a href='https://microsoftedgeinsider.com'>Edge Canary 76 (Edge Insider Build)</a> and <a href='https://www.google.com/chrome/canary/'>Chrome Canary 77</a></p>",
+        "<p style='text-align: center;color: red;'>This game was mostly tested in <a href='https://microsoftedgeinsider.com'>Edge Canary 77 (Edge Insider Build)</a> and <a href='https://www.google.com/chrome/canary/'>Chrome Canary 77</a></p>",
         "<br><a href='https://discord.gg/nHkGBun'>Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>"
     ]
 }
@@ -159,7 +193,7 @@ function changelogHeader() {
 }
 
 function changelogNext() {
-    ret = "<div class='cl-next'><h3 style='margin-bottom:0px'>Whats Next?</h3>"
+    ret = "<div class='cl-next'><h3 style='margin-bottom:0px'>Planned Features:</h3>"
     for (var next in changelog["next"]) {
         ret += changelog["next"][next] + "<br>"
     }
@@ -191,6 +225,9 @@ function changelogContent() {
         ret += "</div>"
         ret += "<br>"
     }
+    //replaces preset strings with other preset strings
+    ret = ret.replace("[discord]", "<a href='https://discord.gg/nHkGBun'>discord</a>")
+
     return ret
 }
 
