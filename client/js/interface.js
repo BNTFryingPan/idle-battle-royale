@@ -113,7 +113,7 @@ function changeSplash() {
     currentSplash = newSplash
     // adding invisibile sub and sup text allows me to make splashes with sub and sup text without changing the height of the line
     // i tried a zero-width character, but it just showed up as a ~ (tilda tilde whatever, i like to call it the relative indicator because minecraft)
-    splashElement.innerHTML = "<sup class='splash-fix'>.</sup>" + newSplash + "<sub style='class='splash-fix'>.</sub>";
+    splashElement.innerHTML = "<sup class='splash-fix'>.</sup>" + newSplash + "<sub class='splash-fix'>.</sub>";
 }
 
 function hideAllTabs () {
