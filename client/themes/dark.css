@@ -1,0 +1,162 @@
+body {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+a {
+    color: #8080ff
+}
+
+#header {
+    color:#8080ff;
+}
+
+#client-border {
+    background-color: #fff;
+    border-color: #000;
+}
+
+.client {
+    background-color: #232323;
+}
+
+/* //commented out because this is unused now (keeping in theme file, just incase)
+.mb-button {
+    background-color: #8080ff;
+    color: #232233;
+}
+
+.mb-button:hover:enabled {
+    background-color: #0000ff;
+    color: #bbbbbb;
+}
+
+.mb-button:disabled {
+    background-color: #6868ff;
+    color: #ffffff;
+}*/
+
+.bar {
+    background-color: rgba(100, 100, 100, 0.6);
+}
+
+.container {
+    background-color: rgba(25, 25, 25, 0.6);
+}
+
+#middle-bar .container:hover { 
+    background-color: rgba(50, 50, 50, 1);
+}
+
+#middle-bar .container.selected:hover {
+    background-color: rgba(25, 25, 25, 0.6);
+}
+
+.building {
+    background-color: rgba(10, 10, 10, 0.7);
+}
+
+.building:hover {
+    background-color: rgba(20, 20, 20, 0.8);
+}
+
+.upgrade-cont:hover {
+    background-color: rgba(30, 30, 30, 0.9);
+}
+
+.upgrade {
+    background-color: rgba(90, 90, 90, 1);
+}
+
+.upgrade-desc {
+    background-color: rgba(50, 50, 50, 0.8);
+    color: #fff;
+    border-color: #000;
+}
+
+.upgrade:hover{
+    background-color: rgba(80, 80, 80, 0.8);
+}
+
+.upgrade.upgrade-flash-red, .upgrade.upgrade-flash-red:hover {
+    background-color: red;
+}
+
+.fancy-button {
+    background-color: #888888;
+}
+
+.fancy-button:hover {
+    color: #888888;
+    background-color: #000000;
+}
+
+.fancy-button:disabled {
+    background-color: #999;
+}
+
+.notif-body {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.notif-dismiss-button {
+    background-color: red;
+}
+
+.notif-dismiss-button:hover {
+    background-color: orangered;
+}
+
+.log-output {
+    background-color: #222222;
+    color: #aaa;
+}
+
+.log-output > div {
+    background-color: #222;
+}
+
+.log-output > div:nth-child(even) {
+    background-color: #444;
+}
+
+.log-output.chat-only {
+    background-color: #888888;
+}
+
+#header-splash {
+    color: #999;
+}
+
+#header-splash > * {
+    color: inherit;
+}
+
+.reset-button {
+    background-color:red;
+}
+
+.reset-button:hover {
+    background-color: orangered;
+    border-color: red;
+}
+
+.cl-update {
+    background-color: #000;
+}
+
+.cl-update:hover {
+    background-color: #444;
+}
+
+.cl-update-notes {
+    background-color: rgb(50, 50, 50, 0.6);
+}
+
+.cl-next {
+    background-color: #333;
+}
+
+#chat-login-prompt {
+    background-color: #444444;
+}

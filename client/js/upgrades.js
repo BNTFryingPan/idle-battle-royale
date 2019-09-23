@@ -386,15 +386,18 @@ function tickUpgrades() {
             if (window.game.upgrades[tu.id] != true) {
                 try {
                     var tub = document.getElementById("upgrade-button-" + tu.id)
+                    var tubd = document.getElementById('upgrade-dis-' + tu.id)
                     //console.log(tub.style)
                     if (tu.unlock() || int.showingAllUpgrades) {
                         tub.hidden = false;
                         if (tu.cost(window.game.lootboxes)) {
-                            tub.style.color = 'lime'
-                            tub.innerHTML = 'v'
+                            tub.classList.remove('expensive')
+                            tub.classList.add   ('buyable')
+                            //tubd.innerHTML = 'v'
                         } else {
-                            tub.style.color = 'red'
-                            tub.innerHTML = 'X'
+                            tub.classList.add   ('expensive');
+                            tub.classList.remove('buyable')
+                            //tubd.innerHTML = 'X'
                             if (int.hideExpensiveUpgrades && !int.showingAllUpgrades) {
                                 tub.hidden = true;
                             }
@@ -428,14 +431,14 @@ function buyUpgrade(id) {
             if (tu.cost(window.game.lootboxes) == true) {
                 console.log('can afford')
                 var button = document.getElementById('upgrade-button-' + id);
-                var desc = document.getElementById('upgrade-desc-' + id);
+                //var desc = document.getElementById('upgrade-desc-' + id);
                 window.game.upgrades[tu.id] = true;
                 window.game.upgradesBought++;
                 console.log('moving button')
                 upgradesCont.removeChild(button);
-                upgradesCont.removeChild(desc);
+                //upgradesCont.removeChild(desc);
                 upgradesBought.appendChild(button);
-                upgradesBought.appendChild(desc);
+                //upgradesBought.appendChild(desc);
                 //console.log(desc)
                 button.onclick = function(){};
                 
@@ -457,6 +460,8 @@ function loadUpgrades() {
         var tu = upgrades[upgrade];
         var upgradeButton = document.createElement('button');
         var upgradeDesc = document.createElement('div');
+        var upgradeDisplay = document.createElement('span');
+        upgradeDisplay.setAttribute('id', 'upgrade-dis-' + tu.id)
         upgradeDesc.setAttribute('class', 'upgrade-desc');
         upgradeDesc.setAttribute('id', 'upgrade-desc-' + tu.id);
         upgradeDesc.innerHTML = tu.name + '<br>' + tu.desc;
@@ -466,8 +471,9 @@ function loadUpgrades() {
         if (window.game.upgrades[tu.id] == true) {
             //console.log('loaded upgrade ' + tu.id + ' as already bought')
             upgradeButton.onclick = function(){console.log('already purchased!')};
+            upgradeButton.appendChild(upgradeDisplay);
+            upgradeButton.appendChild(upgradeDesc);
             upgradesBought.appendChild(upgradeButton);
-            upgradesBought.appendChild(upgradeDesc);
         } else {
             //console.log('loaded upgrade ' + tu.id + ' as unpurchased')
             //console.log('loaded ' + tu.id + ' button function')
@@ -477,8 +483,9 @@ function loadUpgrades() {
             //console.log(upgradeButton.onclick)
             window.game.upgrades[tu.id] = false;
             upgradeButton.hidden = true;
+            upgradeButton.appendChild(upgradeDisplay);
+            upgradeButton.appendChild(upgradeDesc);
             upgradeContainer.appendChild(upgradeButton);
-            upgradeContainer.appendChild(upgradeDesc);
         }
     }
 }

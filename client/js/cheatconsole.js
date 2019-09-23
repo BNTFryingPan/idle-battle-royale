@@ -37,28 +37,36 @@ function log(text) {
 }
 
 function executeCheatCommand() {
-    if (cmd == "") {return}
-    if (!confirmCheat()) {return}
+    if (cmd == '') {return}
+    if (!confirmCheat()) {log("You have chosen to not enable cheat mode");log("You can still turn it on later if you wish");return}
     var inputPrompt = document.getElementById('cheat-console-input')
     var cmd = inputPrompt.value;
     lastCheatCommand = inputPrompt.value;
     inputPrompt.value = ""
     var args = cmd.split(' ')
 
-    log(cmd)
+    log("> " + cmd)
 
     if (cmd.startsWith('set ')) {
         if (args[1] == 'lootboxes') {
             var count = parseInt(args[2])
             window.game.lootboxes = count
             log('set lootbox count to ' + count)
+        } else if (args[1] == 'totallootboxes') {
+            var count = parseInt(args[2])
+            window.game.totalLootboxes = count
+            log('set total lootbox count to ' + count)
         } 
     } else if (cmd.startsWith('add ')) {
         if (args[1] == 'lootboxes') {
             var count = parseInt(args[2])
             window.game.lootboxes += count
             log('added ' + count + ' lootboxes to count')
-        }
+        } else if (args[1] == 'totallootboxes') {
+            var count = parseInt(args[2])
+            window.game.totalLootboxes = count
+            log('added ' + count + ' to total lootbox count')
+        } 
     } else if (cmd.startsWith('showallupgrades')) {
         unlockAllUpgrades()
         log('now showing all upgrades in list')

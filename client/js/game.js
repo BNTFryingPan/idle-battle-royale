@@ -15,15 +15,15 @@ function abbrNum(number, notation="opt") {
     var longShort = [' thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion', ' sextillion', ' septillion', ' octillion', ' nonillion'];
     var longPrefixes = [' ', ' un', ' duo', ' tre', ' qattuor', ' quin', ' sex', ' septen', ' octo', ' novem'];
     var longSuffixes = ['decillion', 'vigintillion', 'trigintillion', 'quadragintillion', 'quinquagintillion', 'sexagintillion', 'septuagintillion', 'octogintillion', 'nonagintillion'];
-    var shortShort = ['k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortPrefixes = [' ', ' u', ' d', ' t', ' q', ' Q', ' s', ' S', ' o', ' n'];var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
+    var shortShort = ['k', 'm', 'b', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortPrefixes = ['', 'u', 'd', 't', 'q', 'Q', 's', 'S', 'o', 'n'];var shortSuffixes = ['d', 'v', 't', 'q', 'Q', 's', 'S', 'o', 'n'];
     // scientific notation part here wasnt from cookie clicker
     var shortSci = []
     for (var i = 3; i <= 304; i+=3) {
         shortSci.push("e+" + i)
     }
 
-    for (var i in longSuffixes ) { for (var ii in longPrefixes ) {longShort.push( ' '+longPrefixes[ii]+ longSuffixes[i] ); } } 
-    for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(' '+shortPrefixes[ii]+shortSuffixes[i]); } } 
+    for (var i in longSuffixes ) { for (var ii in longPrefixes ) {longShort.push(' '+longPrefixes[ii]+ longSuffixes[i] ); } } 
+    for (var i in shortSuffixes) { for (var ii in shortPrefixes) {shortShort.push(''+shortPrefixes[ii]+shortSuffixes[i]); } } 
     // end code stolen from cookie clicker
     try {
         if (notation == "raw") { return number.toString() }
@@ -84,6 +84,8 @@ function internal() {
     this.lastSaveBreakingBuild = 50;
     this.uiUpdateRate = 100;
     this.hideExpensiveUpgrades = false;
+    this.disableSelectOptions = false;
+    this.notifCount = 0;
 }
 
 var int = new internal()
@@ -99,7 +101,7 @@ function gameSave() {
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
-    this.options = {'shortNumbers': 'short', 'tab': 'stats', 'saveInterval': 3000, "uiRefreshRate":100};
+    this.options = {'shortNumbers': 'short', 'tab': 'stats', 'saveInterval': 3000, "uiRefreshRate":100, 'autoCloseNotifs':true};
     this.sellMultiplier = 0.5
     this.upgrades = {};
     //this.acheivementsUnlocked = {};
@@ -154,10 +156,13 @@ function loadGame() {
         }
         document.getElementById('version-display').innerHTML = verdisplay
 
-    document.getElementById('option-numformat').value = window.game.options['shortNumbers'];
-    document.getElementById('option-saveint').value = window.game.options['saveInterval'].toString();
-    document.getElementById('option-uirate').value = window.game.options['uiRefreshRate'].toString();
-    int.uiUpdateRate = window.game.options['uiRefreshRate'];
+    if (!int.disableSelectOptions) {
+        document.getElementById('option-numformat').value = window.game.options['shortNumbers'];
+        document.getElementById('option-saveint').value = window.game.options['saveInterval'].toString();
+        document.getElementById('option-uirate').value = window.game.options['uiRefreshRate'].toString();
+        document.getElementById('option-timeoutnotifs').checked = window.game.options['autoCloseNotifs'];
+        int.uiUpdateRate = window.game.options['uiRefreshRate'];
+    }
     if (window.game.buildNumber < int.gameVersionNumber) {
         int.updateAvailable = true;
         //notify("Update!", "Hey! Theres cool new stuff if you reset your save!")
@@ -220,6 +225,7 @@ window.onload = function() {
         populateChangelogTab();
         loadChatInputEnterThing();
         loadChatInputEnterThingForCheats();
+
     }
     changeSplash();
     int.isLoaded = true;
@@ -270,6 +276,19 @@ function loadUrlSettings() {
         disableMainGameFunc();
     }
     
+    var wallpaperEngine = getUrlParam("wpe", "0");
+    if (wallpaperEngine == "1" || wallpaperEngine == "true") {
+        document.getElementById('header').style.display = 'none';
+        document.getElementById('header-splash').style.display = 'none';
+        document.getElementById('mb-chat-tab').style.display = 'none';
+        document.getElementById('mb-cheats-tab').style.display = 'none';
+        document.getElementById('mb-online-tab').innerHTML = "<span style='text-align: center; opacity: 1'>Online disabled in Wallpaper Engine</span>";
+        document.getElementById('mb-online-tab').style.height = "1.5em"
+        document.getElementById('options-area').innerHTML = "Options in WPE coming soon (they dont work!)"
+        int.disableSelectOptions = true;
+        var foot = document.getElementById('footer')
+        foot.innerHTML = "<b>-= </b>Idle Battle Royale Client<b> =-= </b>Wallpaper Engine<b> =</b>" + foot.innerHTML
+    }
     //console.log(urlSettings)
 }
 
@@ -377,6 +396,7 @@ function updateUI() {
     //updateUnlocks();
     document.getElementById('lootbox-display').innerHTML = "Lootboxes: " + abbrNum(Math.round(window.game.lootboxes));
     document.getElementById('total-lootbox-display').innerHTML = "Total Lootboxes: " + abbrNum(Math.ceil(window.game.totalLootboxes));
+    document.getElementById('notif-count').innerHTML = int.notifCount;
     updateBuildings();
     updateLBPS();
     document.getElementById('total-building-display').innerHTML = "Total Buildings: " + abbrNum(window.game.totalBuildings);

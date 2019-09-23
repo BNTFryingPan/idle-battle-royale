@@ -1,6 +1,36 @@
 var changelog = {
     "allUpdates": [
         {
+            "header": "Alpha 0.4.9 - Build 62 - Themes-pre1 - [9/22]",
+            "note": "i was experimenting with theming, and found that it was really easy so i just did it.",
+            "changes": [
+                "+ added, oh idk, <b>THEMES</b>.",
+                "+ weve got the og classic theme that i now see is kinda ugly but i liked it at the time, so i just left is as the default",
+                "+ theres a new dark theme, i might make it the default in the future, but idk",
+                "* theres a beta light theme which is technically no theme, so it looks really bad. you cant even see some stuff, but oh well, its too bright for me to really care.",
+                "^ im going to add custom theming soon, not quite sure how exactly im going to implement it. will probably be a raw css file in a url parameter",
+                "^ theme update will be 0.5, and will have classic, dark, light, and custom theme, and will save the theme in your save (it doesnt yet, btw)",
+                "have a nice day"
+            ]
+        },
+        {
+            "header": "Alpha dev-0.4.7 - Build 59 - Upgrades Sorta Release",
+            "note": "im stopping the upgrades-pre# because i finished the upgrades system, its just a matter of adding all of them",
+            "changes": [
+                '+ added total lootbox count to add and set in debug console with "totallootboxes"',
+                '+ added a list of the first few notations under the lootbox count',
+                '+ added a wallpaper engine mode, accessed by adding "?wpe=1" to the end of the URL',
+                '+ made the bar under the client with some info be a footer at the bottom of the screen no matter where you scroll',
+                '+ added notifications, but they arent used yet, if you want to test them, open the js console, and type "notify(<header>, <text>, [time in seconds])"',
+                '^ theres a test notif that doesnt go away',
+                '* the font should default to arial instead of your browsers default (usually times new roman by default), but if your online it will still use Ubuntu',
+                '* theres an option to disable the notifs going away automatically',
+                '* changed the font in the cheat console and chat log to Ubuntu mono (if it cant, it should use courier new)',
+                '* improved scaling of the client border and middle tabs',
+                "* After next major update (0.5) i will add a beta branch, i cant do it now, because i dont have the code for the last release"
+            ]
+        },
+        {
             "header": "Alpha dev-0.4.6 - Build 58 - Upgrades-pre9",
             "note": "if you are in the discord, you may know i announced that the upgrades update will include some scaling improvements. This update is mostly focused on that, and adding the debug console in the cheats tab",
             "changes": [

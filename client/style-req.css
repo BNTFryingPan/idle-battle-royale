@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap');
 
 ::-webkit-scrollbar {
     width: 0.3em
@@ -18,8 +19,6 @@
 }
 
 body {
-    background-color: #232233;
-    color: #ffffff;
     font-family: Ubuntu;
 }
 
@@ -28,31 +27,23 @@ p {
     margin-bottom: 0px;
 }
 
-a {
-    color: #8080ff
-}
-
 #header {
     font-family: Ubuntu;
     font-size: 25px;
     padding: 0px;
     font-weight: bold;
-    color:#8080ff;
     text-align: center;
     margin-top: 0px;
 }
 
 #client-border {
-    background-color: #ff8080;
-    border-color: #ee5050;
     border-style: groove;
     border-radius: 10px;
     padding: 5px;
-    height: 50em;
+    height: 86%;
 }
 
 .client {
-    background-color: #232233;
     border-radius: 10px;
     height: 98.5%;
     padding: 5px;
@@ -110,12 +101,10 @@ a {
     border-radius: 10px;
     overflow-y: scroll;
     overflow-x: hidden;
-    background-color: rgba(100, 80, 125, 0.6);
 }
 
 .container {
     padding: 3px;
-    background-color: rgba(50, 20, 125, 0.6);
     border-radius: 15px;
     margin-bottom: 2px;
     overflow-y: hidden;
@@ -124,6 +113,14 @@ a {
 .mb-header {
     font-size: 20px;
     text-align: center;
+}
+
+#middle-bar .container > * {
+    opacity: 0;
+}
+
+#middle-bar .container .upgrade-cont > * {
+    opacity: 1;
 }
 
 #middle-bar .container {
@@ -141,15 +138,14 @@ a {
     transition-duration: 400ms;
 }
 
-#middle-bar .container:hover { 
-    background-color: rgba(77, 42, 165, 0.89);
+#middle-bar .container:hover {
     transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     transition-property: all;
     transition-duration: 400ms;
 }
 
 #middle-bar .container.selected {
-    height: 34.3em;
+    height: 57%;
     overflow-y: hidden;
     transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     transition-property: all;
@@ -157,14 +153,9 @@ a {
 }
 
 #middle-bar .container.selected:hover {
-    background-color: rgba(50, 20, 125, 0.6);
     transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     transition-property: all;
     transition-duration: 400ms;
-}
-
-#middle-bar .container > * {
-    opacity: 0;
 }
 
 #middle-bar .container.selected > * {
@@ -179,7 +170,6 @@ a {
     padding: 4px;
     text-align: center;
     margin: 2px;
-    background-color: rgba(50, 150, 165, 0.5);
     border-radius: 10px;
     height: 1.2em;
     overflow-y: hidden;
@@ -200,7 +190,6 @@ a {
 
 .building:hover {
     height: 4em;
-    background-color: rgba(70, 170, 185, 0.8);
     overflow-y: scroll;
     transition-timing-function: cubic-bezier(.31,1.16,.32,1.16);
 }
@@ -211,21 +200,16 @@ a {
     transition-duration: 500ms;
 }
 
-.upgrade-cont:hover {
-    background-color: rgba(77, 42, 165, 0.89);
-}
-
 .upgrade {
     height: 3.55em;
     width: 3.55em;
     min-width: 25px;
     margin: 1px;
     margin-bottom: 3px;
-    background-color: rgba(50, 150, 165, 0.6);
     border-radius: 10px;
     border: none;
     opacity: 1;
-    overflow-y: hidden;
+    overflow: visible;
     transition: linear;
     transition-duration: 100ms
 }
@@ -233,26 +217,22 @@ a {
 .upgrade-desc {
     height: 0em;
     width: 0em;
-    background-color: rgba(50, 150, 165, 0.8);
-    margin: 0px;
-    padding: 0px;
     border: solid;
     border-width: 0px;
-    border-color: black;
-    position: fixed;
+    position: absolute;
+    top: 1px;
     text-align: center;
     overflow: hidden;
     transition: cubic-bezier(0.175, 0.885, 0.32, 1);
     transition-duration: 250ms;
 }
 
-.upgrade:hover + .upgrade-desc/* , .upgrade-desc:hover*/{
+.upgrade:hover > .upgrade-desc/* , .upgrade-desc:hover*/{
     height: 6em;
     width: 21.6em;
+    position: absolute;
     overflow: hidden;
     border-width: 5px;
-    margin-left: 1px;
-    margin-right: 1px;
     border-radius: 10px;
     transition-duration: 250ms;
 }
@@ -264,13 +244,13 @@ a {
 }*/
 
 .upgrade:hover{
-    background-color: rgba(50, 150, 165, 0.8);
     transition: linear;
     transition-duration: 250ms;
 }
 
-.upgrade.upgrade-flash-red {
+.upgrade.upgrade-flash-red, .upgrade.upgrade-flash-red:hover {
     background-color: red;
+    transition-duration: 50ms;
 }
 
 .upgrade-cont {
@@ -291,7 +271,6 @@ a {
 }
 
 .fancy-button {
-    background-color: #8888ff;
     border: none;
     padding: 4px;
     border-radius: 10px;
@@ -299,12 +278,6 @@ a {
 
 .fancy-button:hover {
     border-radius: 5px;
-    color: #888888;
-    background-color: #0000ff;
-}
-
-.fancy-button:disabled {
-    background-color: red;
 }
 
 .building > .fancy-button {
@@ -325,8 +298,7 @@ a {
 
 #notif-div {
     width: 25%;
-    margin-bottom: 5px;
-    position: absolute;
+    position: fixed;
     align-self: center;
     bottom: 5%;
     left: 2%;
@@ -335,7 +307,6 @@ a {
 
 .notif-body {
     padding: 1%;
-    background-color: #423e74;
     border-radius: 10px;
     transform: rotate(180deg)
 }
@@ -348,22 +319,30 @@ a {
     font-size: 110%;
 }
 
+.notif-dismiss-button {
+    border-radius: 50%;
+    border-width: 0;
+}
+
+.notif-dismiss-button:hover {
+    border-radius: 25%;
+}
+
 .log-output {
     width: 100%;
     height: 90%;
-    background-color: #232233;
     border-radius: 5px;
     overflow-y: scroll;
     word-wrap: break-word;
-    color: #8888ff;
     font-size: 12pt;
     resize: none;
     position:relative;
     bottom: 15%;
+    font-family: Ubuntu, Ubuntu, monospace;
 }
 
 #debug-console-log {
-    height: 28em;
+    height: 80%;
 }
 
 .time {
@@ -371,15 +350,7 @@ a {
 }
 
 .log-output > div {
-    background-color: #232323;
-}
-
-.log-output > div:nth-child(odd) {
-    background-color: #555555;
-}
-
-.log-output.chat-only {
-    background-color: #888888;
+    font-family: Ubuntu, Ubuntu, monospace;
 }
 
 .input-bar {
@@ -391,7 +362,6 @@ a {
 }
 
 #header-splash {
-    color: #40d0e0;
     text-align: center;
     width: 25em;
     opacity: 1;
@@ -423,45 +393,37 @@ a {
 
 .reset-button {
     margin: 3px;
-    background-color:red;
     border-width: 0px;
     border-radius: 25%;
 }
 
 .reset-button:hover {
-    background-color: orangered;
     border-bottom-width: 2px;
     border-right-width: 2px;
-    border-color: red;
     border-radius: 5px;
 }
 
 .cl-update {
-    background-color: darkcyan;
     border-radius: 10px;
     padding: 2px;
     padding-top: 0px;
 }
 
 .cl-update:hover {
-    background-color: darkgoldenrod;
     border-radius: 5px;
 }
 
 .cl-update-notes {
-    background-color: rgb(50, 150, 165, 0.6);
     border-radius: 10px;
     padding: 2px;
 }
 
 .cl-next {
-    background-color: darkcyan;
     border-radius: 5px;
 }
 
 #chat-login-prompt {
     display: block;
-    background-color: #423e74;
     border-width: 0px;
     border-radius: 5px;
     padding: 5px;
@@ -470,4 +432,11 @@ a {
     bottom: -45%;
     left: 1.5%;
     z-index: 5;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width: 100%
 }

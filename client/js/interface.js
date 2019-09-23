@@ -37,29 +37,44 @@ function getFirstOpenNotifNumber() {
     return activeNotifs.length;
     
 }
+/*
+<div class='notif-body'>
+    <button class='notif-dismiss-button' style='position: absolute; right: -5px; top: -5px'>X</button>
+    <b class='notif-header'>Notif Header</b>
+    <br>
+    <span class='notif-text'>test notif</span>
+</div>
+*/
 
 function notify(header, text, duration=15) {
     notifDiv = document.getElementById('notif-div')
-    notifDiv.innerHTML = "<div id='notif-" + activeNotifs + "' class='notif-body'><b class='notif-header'>" + header + "</b><br><span class='notif-text'>" + text + "</span></div><br>" + notifDiv.innerHTML
     var thisNumber = getFirstOpenNotifNumber()
     activeNotifs.push(thisNumber)
+    notifDiv.innerHTML = "<div id='notif-" + thisNumber + "' class='notif-body'><button class='notif-dismiss-button' style='position: absolute; right: -5px; top: -5px' onclick='removeNotification(" + thisNumber + ")'>X</button><b class='notif-header'>" + header + "</b><br><span class='notif-text'>" + text + "</span></div><br id='notif-break-" + thisNumber + "'>" + notifDiv.innerHTML
     //thisNotif = document.createElement('div')
-    console.log('created notif and added, waiting to remove')
+    //console.log('created notif and added, waiting to remove')
     var timer = 0
-    window.setInterval (function(){
+    var notifTimer = setInterval (function(){
         if (timer >= duration) {
             removeNotification(thisNumber)
+            clearInterval(notifTimer);
         }
         timer++;
-        window.clearInterval(this);
-    }, 1000)
-
+    }, 1000);
+    int.notifCount++;
 }
 
 function removeNotification(number) {
-    console.log('removed notif')
-    document.getElementById('notif-' + number.toString());
-    activeNotifs.remove(number);
+    try {
+        document.getElementById('notif-' + number).remove();
+        document.getElementById('notif-break-' + number).remove();
+        //console.log('removed notif')
+        var rem = activeNotifs.splice(number, 1);
+        int.notifCount--;
+    } catch {
+        console.log('error removing notification')
+    }
+    
     //activeNotifs.
 }
 
@@ -140,12 +155,12 @@ function upgradesToggleHideExpensive() {
     int.hideExpensiveUpgrades = hide;
 }
 
-function optionstabUpdateNumberFormat() {
+function optionsTabUpdateNumberFormat() {
     var newFormat = document.getElementById('option-numformat').value;
     window.game.options['shortNumbers'] = newFormat;
 }
 
-function optionstabUpdateSaveInterval() {
+function optionsTabUpdateSaveInterval() {
     var newInterval = parseInt(document.getElementById('option-saveint').value);
     window.game.options['saveInterval'] = newInterval;
 }
@@ -153,6 +168,11 @@ function optionstabUpdateSaveInterval() {
 function optionsTabUpdateUIUpdateRate() {
     var newRate = parseInt(document.getElementById("option-uirate").value);
     window.game.options['uiRefreshRate'] = newRate;
+}
+
+function optionsTabUpdateTimeoutNotifs() {
+    var timeoutNotifs = document.getElementById("option-uirate").checked;
+    window.game.options['autoCloseNotifs'] = timeoutNotifs;
 }
 
 /*function optionstabUpdateSpeed() {
