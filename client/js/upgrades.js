@@ -467,12 +467,14 @@ function loadUpgrades() {
         upgradeDesc.innerHTML = tu.name + '<br>' + tu.desc;
         upgradeButton.setAttribute("id", "upgrade-button-" + tu.id);
         upgradeButton.setAttribute('class', 'upgrade');
+        upgradeButton.setAttribute('onmousemove', 'setToolTip("' + tu.desc +'")')
+        upgradeButton.setAttribute('onmouseout', 'hideToolTip()')
         //console.log(window.game.upgrades[tu.id])
         if (window.game.upgrades[tu.id] == true) {
             //console.log('loaded upgrade ' + tu.id + ' as already bought')
             upgradeButton.onclick = function(){console.log('already purchased!')};
             upgradeButton.appendChild(upgradeDisplay);
-            upgradeButton.appendChild(upgradeDesc);
+            //upgradeButton.appendChild(upgradeDesc);
             upgradesBought.appendChild(upgradeButton);
         } else {
             //console.log('loaded upgrade ' + tu.id + ' as unpurchased')
@@ -484,7 +486,7 @@ function loadUpgrades() {
             window.game.upgrades[tu.id] = false;
             upgradeButton.hidden = true;
             upgradeButton.appendChild(upgradeDisplay);
-            upgradeButton.appendChild(upgradeDesc);
+            //supgradeButton.appendChild(upgradeDesc);
             upgradeContainer.appendChild(upgradeButton);
         }
     }

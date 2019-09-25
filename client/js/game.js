@@ -66,8 +66,8 @@ function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; 
 
 function internal() {
     //internal data that we dont want to save
-    this.buildNumber = 58;
-    this.gameVersionString = "Alpha dev-0.4.6";
+    this.buildNumber = 65;
+    this.gameVersionString = "Alpha dev-0.5";
     this.isLoaded = false;
     this.saveTick = 0;
     this.splashTick = 250;
@@ -122,10 +122,25 @@ function saveGame() {
     int.saveDisplay = true;
 }
 
-function loadGame() {
+function putGamesaveInExportBox() {
+    box = document.getElementById('export-box');
+    box.value = JSON.stringify(window.game);
+}
+
+function loadGamesaveFromExportBox() {
+    box = document.getElementById('export-box');
+    loadGame(box.value)
+}
+
+function loadGame(saveString = null) {
     //console.log('loading game')
     newFile = false;
-    loadstring = window.localStorage.getItem('SaveName');
+    if (saveString == null) {
+        loadstring = window.localStorage.getItem('SaveName');
+    } else {
+        loadstring = saveString;
+    }
+    
     //console.log(window.localStorage['SaveName']);
     if (loadstring === null){
         newFile = true;
@@ -156,13 +171,6 @@ function loadGame() {
         }
         document.getElementById('version-display').innerHTML = verdisplay
 
-    if (!int.disableSelectOptions) {
-        document.getElementById('option-numformat').value = window.game.options['shortNumbers'];
-        document.getElementById('option-saveint').value = window.game.options['saveInterval'].toString();
-        document.getElementById('option-uirate').value = window.game.options['uiRefreshRate'].toString();
-        document.getElementById('option-timeoutnotifs').checked = window.game.options['autoCloseNotifs'];
-        int.uiUpdateRate = window.game.options['uiRefreshRate'];
-    }
     if (window.game.buildNumber < int.gameVersionNumber) {
         int.updateAvailable = true;
         //notify("Update!", "Hey! Theres cool new stuff if you reset your save!")
@@ -220,12 +228,22 @@ window.onload = function() {
         loadBuildings();
         loadGame();
         loadUpgrades();
+        loadAchievements()
         cheatUI();
         //loadUpdateBuildings();
         populateChangelogTab();
         loadChatInputEnterThing();
         loadChatInputEnterThingForCheats();
 
+        if (!int.disableSelectOptions) {
+            document.getElementById('option-numformat').value = window.game.options['shortNumbers'];
+            document.getElementById('option-saveint').value = window.game.options['saveInterval'].toString();
+            document.getElementById('option-uirate').value = window.game.options['uiRefreshRate'].toString();
+            document.getElementById('option-timeoutnotifs').checked = window.game.options['autoCloseNotifs'];
+            loadThemeSelector();
+            loadThemeFromSave();
+            int.uiUpdateRate = window.game.options['uiRefreshRate'];
+        }
     }
     changeSplash();
     int.isLoaded = true;
@@ -480,3 +498,19 @@ if (int.disableMainGame != true) {
     var UpdateUILoop = window.setInterval(function(){updateUI();}, int.uiUpdateRate)
 }
 var SplashCycle = window.setInterval(function(){splashCycleFunction()}, 160);
+
+window.onmousemove = function (e) {
+    var x = e.clientX,
+        y = e.clientY;
+    document.getElementById('tooltip').style.top = (y+5) + 'px';
+    document.getElementById('tooltip').style.left = (x+5) + 'px';
+};
+
+function setToolTip(text) {
+    document.getElementById('tooltip').hidden = false
+    document.getElementById('tooltip-header').innerHTML = text
+}
+
+function hideToolTip() {
+    document.getElementById('tooltip').hidden = true
+}

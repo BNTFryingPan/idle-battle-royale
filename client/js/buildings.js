@@ -181,19 +181,19 @@ function loadBuildings() {
         elementBuy1.setAttribute("id", "building-" + tb.intname + "-buy1");
         //elementBuy1.setAttribute('style', "border-radius: 2px; border: none; padding: 3px")
         elementBuy1.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 1)");
-        elementBuy1.setAttribute("class", "fancy-button")
+        elementBuy1.setAttribute("class", "fancy-button buy-1")
         elementBuy1.innerHTML = "Buy 1 " + tb.name;
         elementBuy10 = document.createElement("button");
         elementBuy10.setAttribute("id", "building-" + tb.intname + "-buy10");
         //elementBuy10.setAttribute("style", "margin-left: 3px; border-radius: 2px; border: none; padding: 3px")
         elementBuy10.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 10)");
-        elementBuy10.setAttribute("class", "fancy-button")
+        elementBuy10.setAttribute("class", "fancy-button buy-10")
         elementBuy10.innerHTML = "x10";
         elementBuy100 = document.createElement("button");
         elementBuy100.setAttribute("id", "building-" + tb.intname + "-buy100");
         //elementBuy100.setAttribute("style", "margin-left: 3px; border-radius: 2px; border: none; padding: 3px")
         elementBuy100.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 100)");
-        elementBuy100.setAttribute("class", "fancy-button")
+        elementBuy100.setAttribute("class", "fancy-button buy-100")
         elementBuy100.innerHTML = "x100";
         elementCost = document.createElement("div");
         elementCost.setAttribute("id", "building-" + tb.intname + "-cost");
@@ -235,13 +235,11 @@ function updateBuildings() {
         document.getElementById('building-' + tb.intname + '-cost').innerHTML = "Cost: " + abbrNum(price);
         document.getElementById('building-' + tb.intname + '-toprow').innerHTML = tb.name + " x" + tbg.amount + ' | LBPS ' + abbrNum(tbg.persec * tbg.multiplier) + ' [' + abbrNum((tbg.persec*tbg.multiplier)*tbg.amount) + ']'
         if (window.game.lootboxes >= buildingPrice(build, false, 1)) {
-            document.getElementById('building-' + tb.intname + '-toprow').style = "color: lime"
-            document.getElementById('building-' + tb.intname + '-buy1').style = ""
-            document.getElementById('building-' + tb.intname).classList.remove('tooexpensive');
+            document.getElementById('building-' + tb.intname).classList.add('affordable')
+            document.getElementById('building-' + tb.intname).classList.remove('expensive');
         } else {
-            document.getElementById('building-' + tb.intname + '-toprow').style = "color: red"
-            document.getElementById('building-' + tb.intname + '-buy1').style = "background-color: red"
-            document.getElementById('building-' + tb.intname).classList.add('tooexpensive');
+            document.getElementById('building-' + tb.intname).classList.remove('affordable')
+            document.getElementById('building-' + tb.intname).classList.add('expensive');
         }
 
         if (buildingBuyMode == true) {
@@ -252,15 +250,15 @@ function updateBuildings() {
             document.getElementById('building-' + tb.intname + '-buy100').title = buildingPrice(build, false, 100)
 
             if (window.game.lootboxes >= buildingPrice(build, false, 10)) {
-                document.getElementById('building-' + tb.intname + '-buy10').style = ""
+                document.getElementById('building-' + tb.intname + '-buy10').classList.remove('expensive')
             } else {
-                document.getElementById('building-' + tb.intname + '-buy10').style = "background-color: red"
+                document.getElementById('building-' + tb.intname + '-buy10').classList.add('expensive')
             }
 
             if (window.game.lootboxes >= buildingPrice(build, false, 100)) {
-                document.getElementById('building-' + tb.intname + '-buy100').style = ""
+                document.getElementById('building-' + tb.intname + '-buy100').classList.remove('expensive')
             } else {
-                document.getElementById('building-' + tb.intname + '-buy100').style = "background-color: red"
+                document.getElementById('building-' + tb.intname + '-buy100').classList.add('expensive')
             }
         } else {
             document.getElementById('building-' + tb.intname + '-buy1').innerHTML = "Sell 1 " + tb.name
@@ -279,8 +277,8 @@ function updateBuildings() {
                     document.getElementById('building-' + tb.intname + '-buy100').hidden = true
                 }
             } else {
-                document.getElementById('building-' + tb.intname + '-buy1').hidden = true
                 document.getElementById('building-' + tb.intname + '-buy10').hidden = true
+                document.getElementById('building-' + tb.intname + '-buy100').hidden = true
             }
         }
     }

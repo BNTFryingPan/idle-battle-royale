@@ -1,6 +1,21 @@
 var changelog = {
     "allUpdates": [
         {
+            "header": "Alpha 0.5.0 - Build 65 - Themeing Update - [9/25]",
+            "note": "hey, finally a 'minor' update. according to semantic versioning (which i dont really follow) its major.minor.patch",
+            "changes": [
+                "+ more important than themes, we now have a (still WIP) import and export. really easy to cheat with but whatever",
+                "+ light theme looks *ok*, not great, but *ok*",
+                "+ dark theme is dark",
+                "+ theres a custom theme option. if you know css, great, you can make a theme. i dont have anything for you if you dont know",
+                "+ oh yeah, a few updates ago i fixed the stats tab purchased upgrades list",
+                "+ theres now a proper tooltip thing that follows your cursor. im going to make more stuff use it, because it is useful for information",
+                "= * right now only upgrades and the splash use it, because i needed to test them.",
+                "major note: next update (0.6) will probably focus on modding and cleaning up existing code to run a bit better and be a lot neater, so dont expect too many features until 0.7",
+                "i might throw in a suprise though 4Head"
+            ]
+        },
+        {
             "header": "Alpha 0.4.9 - Build 62 - Themes-pre1 - [9/22]",
             "note": "i was experimenting with theming, and found that it was really easy so i just did it.",
             "changes": [
@@ -204,12 +219,11 @@ var changelog = {
         "- online chat (THIS UPDATE PROBABLY)",
         "- clickables like golden cookies (maybe alpha 0.7ish)",
         "- online play (beta probably)",
-        "- theming - (probably 0.6)",
         "- some kind of mod support with an API for making new stuff"
     ],
     "header": [
         "<p style='text-align: center;color: red;'>If you play on FireFox, Opera, IE, or Normal Edge, you may have problems!</p>",
-        "<p style='text-align: center;color: red;'>This game was mostly tested in <a href='https://microsoftedgeinsider.com'>Edge Canary 77 (Edge Insider Build)</a> and <a href='https://www.google.com/chrome/canary/'>Chrome Canary 77</a></p>",
+        "<p style='text-align: center;color: red;'>This game was mostly tested in <a href='https://microsoftedgeinsider.com'>Edge Canary 79 (Edge Insider Build)</a> and <a href='https://www.google.com/chrome/canary/'>Chrome Canary 79</a></p>",
         "<br><a href='https://discord.gg/nHkGBun'>Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>"
     ]
 }

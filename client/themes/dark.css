@@ -68,7 +68,7 @@ a {
     background-color: rgba(90, 90, 90, 1);
 }
 
-.upgrade-desc {
+#tooltip {
     background-color: rgba(50, 50, 50, 0.8);
     color: #fff;
     border-color: #000;

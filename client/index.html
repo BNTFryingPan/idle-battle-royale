@@ -9,9 +9,12 @@
         <title>Idle Battle Royale Client</title>
         <link rel="stylesheet" type="text/css" href="./style-req.css">
         <link rel="stylesheet" type="text/css" href="./themes/classic.css" id='theme'>
+        <link rel="stylesheet" type="text/css" href="./style-req.css" id='custom-theme'>
+        <style id='theme-changer'></style>
         <object data='./js/credits.txt' id='credits-text' hidden></object>
         <script  src="./js/game.js"></script>
         <script  src="./js/upgrades.js"></script>
+        <script  src="./js/achievements.js"></script>
         <script  src="./js/buildings.js"></script>
         <script  src="./js/interface.js"></script>
         <script  src="./js/online/chat.js"></script>
@@ -21,10 +24,13 @@
     </head>
 
     <body id='main-body'>
+        <div id='tooltip'>
+            <span id='tooltip-header'>hey</span>
+        </div>
         <div id="header">
             <span id='header-text'>Idle Battle Royale Client</span><br>
         </div>
-        <p id='header-splash' onclick='splashClick()'>Loading...</p>
+        <p id='header-splash' onclick='splashClick()' onmousemove='setToolTip("click to change!")' onmouseout="hideToolTip()">Loading...</p>
         <div id="client-border">
             <div id="client" class='client' hidden>
                 <div id="left-bar" class="bar" style="width:30%">
@@ -126,11 +132,12 @@
                             <br><span>Note that at very very high numbers (above 1e400, 1e21 with raw) you may see scientific notation even if your settings are not set to scientific notation.</span>
                             <br><button onclick="resetAll()" class="reset-button">Reset <b>ALL</b> progress</button><br>
                             <span>Theme: </span>
-                            <select onchange='updateThemeFromSelector()' id='option-theme'>
-                                <option value='classic'>Classic (Default)</option>
-                                <option value='dark'>Dark</option>
-                                <option value='light'>Light (wip)</option>
-                            </select>
+                            <select onchange='updateThemeFromSelector()' id='option-theme'></select><br>
+                            <span>Custom Theme URL: </span><input type="url" id='custom-theme-location'> <button onclick='updateCustomTheme()'>Set</button><br>
+                            <span>Import and Export</span> <button onclick="putGamesaveInExportBox()">Export</button> <button onclick="loadGamesaveFromExportBox()">Import</button><br>
+                            <div id='imp-export'>
+                                <textarea id='export-box'></textarea>
+                            </div>
                         </div>
                         <div id="mb-legacy-tab" class="container" onclick="mbSwitchToLegacy()">
                             <p class='mb-header'>-= Legacy =-</p>
@@ -191,13 +198,13 @@
             </div>
         </div>
         <div id="notif-div" style='position: fixed'>
-            <!--This is an example notification-->
+            <!--This is an example notification- ->
             <div class='notif-body'>
                 <button class='notif-dismiss-button' style='position: absolute; right: -5px; top: -5px'>X</button>
                 <b class='notif-header'>Notif Header</b>
                 <br>
                 <span class='notif-text'>test notif</span>
-            </div>
+            </div>-->
         </div>
         <span id='notif-count' style='position: fixed; top:0;right:0'>0</span>
         <div id='footer'><b>-= </b><a href="https://github.com/leotomasmc/idle-battle-royale">source</a> <b>=-=</b> <a href="https://discord.gg/nHkGBun">discord</a> <b>=-=</b> <span id='save-area'><button id="save-button" onclick="saveGame()" class='fancy-button'>save</button></span> <b>=-=</b> <span id="version-display" style="text-align: right">Loading...</span> <b>=-</b><span id='save-indicator'><b>=</b> Game Saved!<b>=-</b></span></div>

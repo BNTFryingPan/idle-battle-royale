@@ -60,6 +60,18 @@ a {
     background-color: rgba(70, 170, 185, 0.8);
 }
 
+.building.expensive > .building-toprow {
+    color: red;
+}
+
+.building.affordable > .building-toprow {
+    color: lime;
+}
+
+.building.affordable > .expensive {
+    background-color: red;
+}
+
 .upgrade-cont:hover {
     background-color: rgba(77, 42, 165, 0.89);
 }
@@ -68,8 +80,8 @@ a {
     background-color: rgba(50, 150, 165, 0.6);
 }
 
-.upgrade-desc {
-    background-color: rgba(50, 150, 165, 0.8);
+#tooltip {
+    background-color: rgba(50, 150, 165, 1);
 }
 
 .upgrade:hover{
@@ -161,4 +173,8 @@ a {
 
 #footer {
     background-color: rgba(77, 42, 165, 0.5);
+}
+
+#tooltip {
+    background-color: #333;
 }

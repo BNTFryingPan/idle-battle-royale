@@ -146,7 +146,7 @@ p {
 
 #middle-bar .container.selected {
     height: 57%;
-    overflow-y: hidden;
+    overflow-y: scroll;
     transition: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     transition-property: all;
     transition-duration: 400ms;
@@ -194,12 +194,6 @@ p {
     transition-timing-function: cubic-bezier(.31,1.16,.32,1.16);
 }
 
-* {
-    transition: cubic-bezier(.31,1.16,.32,1.16);
-    transition-property: all;
-    transition-duration: 500ms;
-}
-
 .upgrade {
     height: 3.55em;
     width: 3.55em;
@@ -214,23 +208,22 @@ p {
     transition-duration: 100ms
 }
 
-.upgrade-desc {
+.upgrade-desc{
     height: 0em;
     width: 0em;
     border: solid;
     border-width: 0px;
     position: absolute;
-    top: 1px;
+    transform: translate(-100%, 0);
     text-align: center;
     overflow: hidden;
     transition: cubic-bezier(0.175, 0.885, 0.32, 1);
     transition-duration: 250ms;
 }
 
-.upgrade:hover > .upgrade-desc/* , .upgrade-desc:hover*/{
+.upgrade:hover > .upgrade-desc{
     height: 6em;
     width: 21.6em;
-    position: absolute;
     overflow: hidden;
     border-width: 5px;
     border-radius: 10px;
@@ -284,11 +277,11 @@ p {
     opacity: 0;
 }
 
-.building.tooexpensive {
+.building.expensive {
     opacity: 0.3;
 }
 
-.building.tooexpensive:hover {
+.building.expensive:hover {
     opacity: 0.65;
 }
 
@@ -439,4 +432,25 @@ p {
     bottom: 0;
     left:0;
     width: 100%
+}
+
+#tooltip {
+    position: fixed;
+    opacity: 1;
+    border: solid;
+    position: absolute;
+    transform: translate(-100%, 0);
+    text-align: center;
+    overflow: hidden;
+    height: 6em;
+    width: 21.6em;
+    border-width: 5px;
+    border-radius: 10px;
+    transition-duration: 0ms;
+}
+
+* {
+    transition: cubic-bezier(.31,1.16,.32,1.16);
+    transition-property: all;
+    transition-duration: 500ms;
 }

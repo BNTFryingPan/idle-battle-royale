@@ -41,13 +41,15 @@ function loadAchievements() {
     var achContainer = document.getElementById('ach-container')
     for (var ach in achs) {
         var ta = achs[ach];
-        var achIcon = document.createElement('button');
-        var achDesc = document.createElement('div');
-        achDesc.setAttribute('class', 'ach-desc');
-        achDesc.setAttribute('id', 'ach-desc-' + ta.id);
-        achDesc.innerHTML = ta.name + '<br>' + ta.desc;
+        var achIcon = document.createElement('div');
+        //var achDesc = document.createElement('div');
+        //achDesc.setAttribute('class', 'ach-desc');
+        //achDesc.setAttribute('id', 'ach-desc-' + ta.id);
+        //achDesc.innerHTML = ta.name + '<br>' + ta.desc;
         achIcon.setAttribute("id", "ach-icon-" + ta.id);
-        achIcon.setAttribute('class', 'ach');
+        achIcon.setAttribute('class', 'upgrade');
+        achIcon.setAttribute('onmouseover', 'setToolTip("' + ach.desc + '")')
+        achContainer.appendChild(achIcon)
     }
 }
 
