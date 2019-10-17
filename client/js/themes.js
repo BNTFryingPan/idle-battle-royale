@@ -17,8 +17,6 @@ var themes = [
     }
 ]
 
-var useCustomTheme = false;
-
 function setTheme(themeLocation) {
     if (themeLocation == null) {
         notify('Error!', "Game set null theme", 10);
@@ -27,7 +25,7 @@ function setTheme(themeLocation) {
     }
     document.getElementById('theme-changer').innerHTML = "*{transition-duration: 0ms !important;}"
     document.getElementById('theme').href = themeLocation
-    document.getElementById('custom-theme').href = null
+    document.getElementById('custom-theme').href = "./style-req.css"
     var i = 0
     var clear = window.setInterval(function(){
         if (i > 2) {
@@ -61,20 +59,20 @@ function updateThemeFromSelector() {
     var newTheme = document.getElementById('option-theme').value
 
     if (newTheme == "%custom%") {
-        useCustomTheme = true;
+        int.useCustomTheme = true;
         notify('custom theme enabled', 'use the new thing to set theme location')
         console.log('setting saved theme to custom')
         window.game.options['theme'] = 'custom'
         updateCustomTheme()
     } else {
-        useCustomTheme = false;
+        int.useCustomTheme = false;
         setLocalTheme(newTheme)
         window.game.options['theme'] = document.getElementById('option-theme').value
     }
 }
 
 function updateCustomTheme() {
-    if (useCustomTheme) {
+    if (int.useCustomTheme) {
         console.log('setting custom theme')
         setCustomTheme(document.getElementById('custom-theme-location').value)
         window.game.options['customTheme'] = document.getElementById('custom-theme-location').value
@@ -85,9 +83,9 @@ function updateCustomTheme() {
 
 function loadThemeFromSave() {
     document.getElementById('option-theme').value = window.game.options['theme'];
-    document.getElementById('custom-theme-location').value = window.game.options['customTheme']
     if (window.game.options['theme'] == 'custom') {
-        useCustomTheme = true
+        int.useCustomTheme = true
+        document.getElementById('custom-theme-location').value = window.game.options['customTheme']
         console.log('loading custom theme')
         setCustomTheme(window.game.options['customTheme'])
     } else {

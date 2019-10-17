@@ -19,3 +19,6 @@ Leotomas
 -= Special Thanks =-
 Titan_Unlimited
 A bunch of people at school
+
+this file probably wont be updated until i made it actually take from this file
+for true credits, look at `creditsText` defined in `interface.js`

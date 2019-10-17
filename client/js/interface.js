@@ -47,7 +47,7 @@ function getFirstOpenNotifNumber() {
 */
 
 function notify(header, text, duration=15) {
-    notifDiv = document.getElementById('notif-div')
+    var notifDiv = document.getElementById('notif-div')
     var thisNumber = getFirstOpenNotifNumber()
     activeNotifs.push(thisNumber)
     notifDiv.innerHTML = "<div id='notif-" + thisNumber + "' class='notif-body'><button class='notif-dismiss-button' style='position: absolute; right: -5px; top: -5px' onclick='removeNotification(" + thisNumber + ")'>X</button><b class='notif-header'>" + header + "</b><br><span class='notif-text'>" + text + "</span></div><br id='notif-break-" + thisNumber + "'>" + notifDiv.innerHTML
@@ -113,7 +113,13 @@ function changeSplash() {
         "OOOOOOOOOORRRRRRRRRRRRRRBBBBBBBBBBBBBBBB!",
         "The Nintendo Light Switch",
         "Epic Gamer Time",
-        "🅱ruh Moment"
+        "🅱ruh Moment",
+        "uh oh... stinky",
+        "you are a boomer",
+        "ok boomer",
+        "youve been gnomed",
+        "im a gnome",
+        ""
         ];
     var splashElement = document.getElementById('header-splash');
     var newSplash = ''
@@ -167,7 +173,10 @@ function optionsTabUpdateSaveInterval() {
 
 function optionsTabUpdateUIUpdateRate() {
     var newRate = parseInt(document.getElementById("option-uirate").value);
+    var trueRate = parseInt(1000/newRate)
     window.game.options['uiRefreshRate'] = newRate;
+    window.clearInterval(UpdateUILoop);
+    UpdateUILoop = window.setInterval(function(){updateUI();}, trueRate)
 }
 
 function optionsTabUpdateTimeoutNotifs() {
@@ -311,7 +320,7 @@ function rollCredits() {
     creditsElement.classList.add('client')
     creditsElement.style = 'display:block;overflow-y:scroll'
     creditsElement.addEventListener('scroll', function(){
-        console.log(blab)
+        //console.log(blab)
         console.log('credits was scrolled ' + creditsAutoscrolled)
         if (creditsAutoscrolled != true){
             //scrollCredits(true)

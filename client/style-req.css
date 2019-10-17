@@ -360,7 +360,6 @@ p {
     opacity: 1;
     transition: ease-in-out;
     transition-duration: 200ms;
-    transform: rotate(-5deg);
     position: relative;
     left: 40%;
     bottom: .7em;
@@ -436,21 +435,50 @@ p {
 
 #tooltip {
     position: fixed;
-    opacity: 1;
-    border: solid;
-    position: absolute;
+    opacity: 0;
     transform: translate(-100%, 0);
     text-align: center;
     overflow: hidden;
-    height: 6em;
-    width: 21.6em;
     border-width: 5px;
     border-radius: 10px;
-    transition-duration: 0ms;
+    padding-bottom: 5px;
+    border: solid;
+    height: auto;
+    width: 21.6em;
+    transition-timing-function: linear;
+    transition-duration: 200ms;
+    transition-property: opacity;
+}
+
+#tooltip.visible {
+    opacity: 1;
+    transition-duration: 100ms;
+    transition-delay: 50ms;
 }
 
 * {
-    transition: cubic-bezier(.31,1.16,.32,1.16);
+    transition-timing-function: cubic-bezier(.31,1.16,.32,1.16);
     transition-property: all;
     transition-duration: 500ms;
+}
+
+.popup {
+    background-color: #fff;
+    color: #000;
+    position: absolute;
+    align-self: center;
+    text-align: center;
+    left: 50%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+#popup-title {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+#popup-content {
+
 }

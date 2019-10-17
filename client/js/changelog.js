@@ -1,7 +1,40 @@
 var changelog = {
     "allUpdates": [
         {
-            "header": "Alpha 0.5.0 - Build 65 - Themeing Update - [9/25]",
+            "header": "TB> Alpha 0.5.3 - Build 71 - [10/11/2019]",
+            "versionInfo": {
+                "branch": "test",
+                "date": "10/11/2019",
+                "build": 71,
+                "verString": "Alpha 0.5.3",
+                "verName": null
+            },
+            "note": "still making progress on sorting out all the code. also remembered about some upgrades features i never implemented but wanted to",
+            "changes": [
+                "+ working on changing the changelog generator a bit. it will automatically format the header string based on build info",
+                "+ added a wip popup notif to replace js alert() calls used for cheats messages, and will be used for other prompts in the future",
+                "+ idk what else"
+            ]
+        },
+        {
+            "header": "TB> Alpha 0.5.2 - Build 70 - [10/9/2019]",
+            "note": "im not sure how im going to format test branch version numbers yet. you tell me",
+            "changes": [
+                "+ working on possible support for easy custom themes by changing accent colors and stuff.",
+                "+ added some placeholder buildings, so there are 16 total, with a few place holders"
+            ]
+        },
+        {
+            "header": "Alpha 0.5.1 - Build 68 - [10/1/19]",
+            "note": "you mightve heard that 0.6 dev will happen in a [test-branch]. and you would be correct. but ill still put test branch changelogs in the 'stable' build",
+            "changes": [
+                "+ revamped the save and load system. not quite save breaking proof yet, but that will happen soon<sup>tm</sup>",
+                "+ moved some stuff between files, the upgrade loader is now in its own file, an the building loader and future ach loader will also be in their own files",
+                "+ also moved some library code to its own library file."
+            ]
+        },
+        {
+            "header": "Alpha 0.5.0 - Build 65 - Themeing Update - [9/25/19]",
             "note": "hey, finally a 'minor' update. according to semantic versioning (which i dont really follow) its major.minor.patch",
             "changes": [
                 "+ more important than themes, we now have a (still WIP) import and export. really easy to cheat with but whatever",
@@ -16,7 +49,7 @@ var changelog = {
             ]
         },
         {
-            "header": "Alpha 0.4.9 - Build 62 - Themes-pre1 - [9/22]",
+            "header": "Alpha 0.4.9 - Build 62 - Themes-pre1 - [9/22/19]",
             "note": "i was experimenting with theming, and found that it was really easy so i just did it.",
             "changes": [
                 "+ added, oh idk, <b>THEMES</b>.",
@@ -216,7 +249,7 @@ var changelog = {
         "- prestige - ascend (probably alpha 0.7 or 0.8)",
         "- prestige - trancend (probably beta)",
         "- acheivements (probably beta something)",
-        "- online chat (THIS UPDATE PROBABLY)",
+        "- online chat (SOON MAYBE IDK THERES A LOT OF ISSUES AHHH)",
         "- clickables like golden cookies (maybe alpha 0.7ish)",
         "- online play (beta probably)",
         "- some kind of mod support with an API for making new stuff"
@@ -224,7 +257,8 @@ var changelog = {
     "header": [
         "<p style='text-align: center;color: red;'>If you play on FireFox, Opera, IE, or Normal Edge, you may have problems!</p>",
         "<p style='text-align: center;color: red;'>This game was mostly tested in <a href='https://microsoftedgeinsider.com'>Edge Canary 79 (Edge Insider Build)</a> and <a href='https://www.google.com/chrome/canary/'>Chrome Canary 79</a></p>",
-        "<br><a href='https://discord.gg/nHkGBun'>Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>"
+        "<br><a href='https://discord.gg/nHkGBun'>Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>",
+        "<p>Hey, theres a [test-branch] now!"
     ]
 }
 
@@ -242,6 +276,32 @@ function changelogNext() {
         ret += changelog["next"][next] + "<br>"
     }
     return ret + "</div>"
+}
+
+/*
+"versionInfo": {
+                "branch": "test",
+                "date": "10/11/2019",
+                "build": 71,
+                "verString": "Alpha 0.5.3",
+                "verName": null
+            },
+            */
+function formatChangelogHeader(data) {
+    ret = ""
+
+    if (data['branch'] == "test") {
+        ret += "TB> "
+    }
+
+    ret += data['verString']
+
+    if (data['verName'] != null) {
+        ret += " - " + data['verName']
+    }
+
+    ret += "build " + data['build'].toString() + " - "
+    ret += data['date']
 }
 
 function changelogContent() {
@@ -271,6 +331,7 @@ function changelogContent() {
     }
     //replaces preset strings with other preset strings
     ret = ret.replace("[discord]", "<a href='https://discord.gg/nHkGBun'>discord</a>")
+    ret = ret.replace("[test-branch]", "<a href='https://thederpymemesquad.github.io/ibr-beta/client/index.html'>test branch</a>")
 
     return ret
 }
