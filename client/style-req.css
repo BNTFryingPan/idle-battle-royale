@@ -415,7 +415,7 @@ p {
 
 #tooltip {
     position: fixed;
-    opacity: 0.1;
+    opacity: 0.5;
     transform: translate(-100%, 0);
     text-align: center;
     overflow: hidden;

@@ -121,7 +121,8 @@ function changeSplash() {
         "im a gnome",
         "now with a lack of sound",
         "this is a splash",
-        "greetings boomer"
+        "greetings boomer",
+        "Now with 0% more battling!" //When battle royale mode gets added, change to 100%
         ];
     var splashElement = document.getElementById('header-splash');
     var newSplash = ''
