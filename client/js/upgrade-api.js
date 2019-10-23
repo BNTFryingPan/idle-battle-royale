@@ -5,7 +5,7 @@ function tickUpgrades() {
             if (window.game.upgrades[tu.id] != true) {
                 try {
                     var tub = document.getElementById("upgrade-button-" + tu.id)
-                    var tubd = document.getElementById('upgrade-dis-' + tu.id)
+                    //var tubd = document.getElementById('upgrade-dis-' + tu.id)
                     //console.log(tub.style)
                     if (tu.unlock() || int.showingAllUpgrades) {
                         tub.hidden = false;
@@ -74,27 +74,30 @@ function loadNewUpgrade(upgradeData) {
     var upgradesBought = document.getElementById('upgrades-bought');
 
     var upgradeButton = document.createElement('button');
-    var upgradeDisplay = document.createElement('span');
-    upgradeDisplay.setAttribute('id', 'upgrade-dis-' + tu.id)
+    //var upgradeDisplay = document.createElement('span');
+    //upgradeDisplay.setAttribute('id', 'upgrade-dis-' + tu.id)
     upgradeButton.setAttribute("id", "upgrade-button-" + tu.id);
     upgradeButton.setAttribute('class', 'upgrade');
     upgradeButton.setAttribute('data-tt', "<b>" + tu.name + "</b><br>" + tu.desc)
+
+    upgradeButton.style.backgroundImage = "url(" + tu.icon + ")"
+
     if (window.game.upgrades[tu.id] == true) {
         upgradeButton.onclick = function(){console.log('already purchased!')};
-        upgradeButton.appendChild(upgradeDisplay);
+        //upgradeButton.appendChild(upgradeDisplay);
         upgradesBought.appendChild(upgradeButton);
     } else {
         var tf = new Function('buyUpgrade("' + tu.id + '")')
         upgradeButton.onclick = tf;
         window.game.upgrades[tu.id] = false;
         upgradeButton.hidden = true;
-        upgradeButton.appendChild(upgradeDisplay);
+        //upgradeButton.appendChild(upgradeDisplay);
         upgradeContainer.appendChild(upgradeButton);
     }
 }
 
 function loadUpgrades() {
-    for (var upgrade in upgrades) {
+    for (var upgrade in upgrades) { 
         var tu = upgrades[upgrade];
         loadNewUpgrade(tu);
     }

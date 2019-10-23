@@ -1,7 +1,6 @@
 var changelog = {
     "allUpdates": [
         {
-            "header": "TB> Alpha 0.5.3 - Build 71 - [10/11/2019]",
             "versionInfo": {
                 "branch": "test",
                 "date": "10/11/2019",
@@ -292,6 +291,10 @@ function formatChangelogHeader(data) {
 
     if (data['branch'] == "test") {
         ret += "TB> "
+    } else if (data['branch'] == "release") {
+        ret += "Release> "
+    } else {
+        ret += data['branch'] + "> "
     }
 
     ret += data['verString']
@@ -300,8 +303,11 @@ function formatChangelogHeader(data) {
         ret += " - " + data['verName']
     }
 
-    ret += "build " + data['build'].toString() + " - "
-    ret += data['date']
+    ret += " - Build " + data['build'].toString() + " - "
+    ret += "[" + data['date'] + "]"
+
+    ret = "<h3 style='margin-bottom:0px'>" + ret + "</h3>"
+    return ret;
 }
 
 function changelogContent() {
@@ -309,7 +315,11 @@ function changelogContent() {
     for (var update in changelog['allUpdates']) {
         tu = changelog["allUpdates"][update]
         ret += "<div class='cl-update'>"
-        ret += "<h3 style='margin-bottom:0px'>" + tu.header + "</h3>"
+        if (tu['versionInfo'] != null) {
+            ret += formatChangelogHeader(tu['versionInfo'])
+        } else {
+            ret += "<h3 style='margin-bottom:0px'>" + tu.header + "</h3>"
+        }
         if (tu.note != "") {
             ret += tu.note + "<br>"
             if (tu.changes.length > 0) {

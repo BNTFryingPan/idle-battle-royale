@@ -12,6 +12,10 @@ Titan_Unlimited
 
 -= Programming =-
 Leotomas
+GloopBloop
+
+-= Sound Design =-
+Nobody yet, because the is no sound you boomer
 
 -= UI =-
 Leotomas

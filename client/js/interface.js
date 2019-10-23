@@ -119,7 +119,9 @@ function changeSplash() {
         "ok boomer",
         "youve been gnomed",
         "im a gnome",
-        ""
+        "now with a lack of sound",
+        "this is a splash",
+        "greetings boomer"
         ];
     var splashElement = document.getElementById('header-splash');
     var newSplash = ''
@@ -281,6 +283,7 @@ jk
 
 -= Programming =-
 Leotomas
+GloopBloop
 
 -= UI =-
 Leotomas

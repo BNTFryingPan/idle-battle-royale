@@ -1,4 +1,16 @@
+/*
+This file will help you make your own Idle Battle Royale themes.
+Currently, assuming you havent made any changes yet, is just the classic theme
+however, you can change almost all the colors of the UI.
+*/
+
 body {
+    /*
+    These colors are just basic HEX colors, you can google it and it will probably give you a color picker to pick a color
+    You can do that, and paste the 6 digit color code here. make sure you still have the '#' though
+
+    background-color is the background color of something, and color is the text color
+    */
     background-color: #232233;
     color: #ffffff;
 }
@@ -13,6 +25,7 @@ a {
 
 #client-border {
     background-color: #ff8080;
+    /*here, border-color is a color that forms the border of something*/
     border-color: #ee5050;
 }
 
@@ -21,6 +34,7 @@ a {
 }
 
 .bar {
+    /* this color is a bit more complicated, its R G B and A (opacity)*/
     background-color: rgba(100, 80, 125, 0.6);
 }
 
