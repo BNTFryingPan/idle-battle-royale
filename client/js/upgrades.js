@@ -1,24 +1,28 @@
 var upgrades = [];
 
 var baseUpgrade = { 
-    name: "Upgrade Name",
-    desc: "Cost: [cost]<br>Description of effect[<br><i>lore</i>]",
-    id: 'upgradeId',
-    icon: 'upgradeIconID.png',
-    icon2: null,
-    toggleCount: 0,
+    name: "Upgrade Name", // the display name of the upgrade that is displayed to the user
+    desc: "Cost: [cost]<br>Description of effect[<br><i>lore</i>]", // the content of the description box of the upgrade
+    id: 'upgradeId', // the id of the upgrade. do not duplicate this with another. [best done with namespaces, vanilla will use ibr:]
+    icon: 'upgradeIconID.png', // icon for repeat or teir upgrades, and false state for toggle upgrades
+    icon2: null, // the icont for the true state of a toggle upgrade
+    toggleCount: 0, // amount of times a repeatable or toggle upgrade was used
     startState: false, // in a teir upgrade, icon2, toggleCount, startState, and currentState are ignored, and dont need to be included
-    currentState: false,
+                        // start state sets the starting state (for example, if you wanted a toggle to turn an event off, you could start on true as the event is active, or you could enable an event by starting false)
+    currentState: false, // in a toggle upgrade, the state currently
     type: "teir", //upgrades without the type flag default to teir
     //types:
     // teir - a teired upgrade that upgrades something
     // toggle - an upgrade that acts as a toggle, will save toggle count, and current state (true/false), and can be set to start on true or false
     // toggle upgrades can have a second icon, the first icon (icon) is the false state, and the second (icon2) is the true state
     // repeatable - an upgrade than can be bought multiple times. saves purchase count, which can be used to multiply the price however you wish
+    // please note that currently only teir has been actually implemented, so the others dont actually have functionality yet
     unlock: function() {return false}, //return true if conditions to show upgrade is true
     cost: function(lbs) {return false}, //return true if the user can purchase this upgrade with the given lbs
     onBuy: function() {
         return; //you dont need to return anything, just put the effect of the purchasing the upgrade here
+        //note that the game will check this.cost() every tick, so dont actually take from lootboxes in cost.
+        //you should remove lootboxes here, in onBuy();
     }
 }
 
@@ -345,7 +349,7 @@ var buildingPrice1 = {
     cost: function(lbs){return lbs >= 5e6},
     onBuy: function(){
         window.game.lootboxes = window.game.lootboxes - 5e6;
-        window.game.buildingDiscount -= window.game.buildingDiscount * 0.75;
+        window.game.buildingDiscount *= 0.75;
     }
 }
 
@@ -358,7 +362,7 @@ var buildingPrice2 = {
     cost: function(lbs){return lbs >= 25e6},
     onBuy: function(){
         window.game.lootboxes = window.game.lootboxes - 25e6;
-        window.game.buildingDiscount -= window.game.buildingDiscount * 0.75;
+        window.game.buildingDiscount *= 0.75;
     }
 }
 
@@ -371,7 +375,7 @@ var buildingPrice3 = {
     cost: function(lbs){return lbs >= 552e3},
     onBuy: function(){
         window.game.lootboxes = window.game.lootboxes - 552e3;
-        window.game.buildingDiscount -= window.game.buildingDiscount * 0.75;
+        window.game.buildingDiscount *= 0.75;
     }
 }
 
@@ -379,123 +383,17 @@ upgrades.push(buildingPrice1);
 upgrades.push(buildingPrice2);
 upgrades.push(buildingPrice3);
 
-function tickUpgrades() {
-    if (int.isLoaded == true) {
-        for (var i = 0; i < upgrades.length; i++) {
-            tu = upgrades[i];
-            if (window.game.upgrades[tu.id] != true) {
-                try {
-                    var tub = document.getElementById("upgrade-button-" + tu.id)
-                    var tubd = document.getElementById('upgrade-dis-' + tu.id)
-                    //console.log(tub.style)
-                    if (tu.unlock() || int.showingAllUpgrades) {
-                        tub.hidden = false;
-                        if (tu.cost(window.game.lootboxes)) {
-                            tub.classList.remove('expensive')
-                            tub.classList.add   ('buyable')
-                            //tubd.innerHTML = 'v'
-                        } else {
-                            tub.classList.add   ('expensive');
-                            tub.classList.remove('buyable')
-                            //tubd.innerHTML = 'X'
-                            if (int.hideExpensiveUpgrades && !int.showingAllUpgrades) {
-                                tub.hidden = true;
-                            }
-                        }
-                    } else {
-                        tub.hidden = true;
-                    }
-                } catch (error) {
-                    console.log(error + ' during tick of ' + tu.id)
-                    notify("An error has occured (tick error)! Check the log for details.")
-                }
-            } else {
-                var tub = document.getElementById("upgrade-button-" + tu.id)
-                tub.hidden = false
-                //tub.style.display = 'block'
-                //console.log(tub.style)
-            }
-        }
+var noob_momsCard = {
+    name: "Mom's Credit Card",
+    desc: "Cost: " + abbrNum(1e10, 'short') + "<br>The noobs will steal their parents credit card and buy 1000 times more lootboxes",
+    id: "noob_momsCard",
+    icon: "n_card.png",
+    unlock: function(){return window.game.lootboxesPerSecond >= 1e10},
+    cost: function(lbs){return lbs >= 5e10},
+    onBuy: function(){
+        window.game.lootboxes = window.game.lootboxes - 5e10;
+        window.game.buildings['noob'].persec *= 1000
     }
 }
 
-function buyUpgrade(id) {
-    console.log('trying to buy upgrade with id ' + id)
-    var upgradesCont = document.getElementById('upgrades');
-    var upgradesBought = document.getElementById('upgrades-bought');
-    for (var upgrade in upgrades) {
-        var tu = upgrades[upgrade];
-        if (tu.id == id) {
-            console.log('found upgrade!')
-            console.log('cost function: ' + tu.cost)
-            if (tu.cost(window.game.lootboxes) == true) {
-                console.log('can afford')
-                var button = document.getElementById('upgrade-button-' + id);
-                //var desc = document.getElementById('upgrade-desc-' + id);
-                window.game.upgrades[tu.id] = true;
-                window.game.upgradesBought++;
-                console.log('moving button')
-                upgradesCont.removeChild(button);
-                //upgradesCont.removeChild(desc);
-                upgradesBought.appendChild(button);
-                //upgradesBought.appendChild(desc);
-                //console.log(desc)
-                button.onclick = function(){};
-                
-                tu.onBuy()
-            } else {
-                var a = document.getElementById('upgrade-button-' + id);
-                a.classList.add('upgrade-flash-red');
-                a.classList.remove('upgrade-flash-red');
-            } break;
-        }
-    }
-}
-
-function loadUpgrades() {
-    var upgradeContainer = document.getElementById('upgrades');
-    var upgradesBought = document.getElementById('upgrades-bought');
-    for (var upgrade in upgrades) {
-        //console.log('loading upgrade ' + upgrades[upgrade].id)
-        var tu = upgrades[upgrade];
-        var upgradeButton = document.createElement('button');
-        var upgradeDesc = document.createElement('div');
-        var upgradeDisplay = document.createElement('span');
-        upgradeDisplay.setAttribute('id', 'upgrade-dis-' + tu.id)
-        upgradeDesc.setAttribute('class', 'upgrade-desc');
-        upgradeDesc.setAttribute('id', 'upgrade-desc-' + tu.id);
-        upgradeDesc.innerHTML = tu.name + '<br>' + tu.desc;
-        upgradeButton.setAttribute("id", "upgrade-button-" + tu.id);
-        upgradeButton.setAttribute('class', 'upgrade');
-        upgradeButton.setAttribute('onmousemove', 'setToolTip("' + tu.desc +'")')
-        upgradeButton.setAttribute('onmouseout', 'hideToolTip()')
-        //console.log(window.game.upgrades[tu.id])
-        if (window.game.upgrades[tu.id] == true) {
-            //console.log('loaded upgrade ' + tu.id + ' as already bought')
-            upgradeButton.onclick = function(){console.log('already purchased!')};
-            upgradeButton.appendChild(upgradeDisplay);
-            //upgradeButton.appendChild(upgradeDesc);
-            upgradesBought.appendChild(upgradeButton);
-        } else {
-            //console.log('loaded upgrade ' + tu.id + ' as unpurchased')
-            //console.log('loaded ' + tu.id + ' button function')
-            //upgradeButton.onclick = function(){buyUpgrade()};
-            var tf = new Function('buyUpgrade("' + tu.id + '")')
-            upgradeButton.onclick = tf;
-            //console.log(upgradeButton.onclick)
-            window.game.upgrades[tu.id] = false;
-            upgradeButton.hidden = true;
-            upgradeButton.appendChild(upgradeDisplay);
-            //supgradeButton.appendChild(upgradeDesc);
-            upgradeContainer.appendChild(upgradeButton);
-        }
-    }
-}
-
-/*function openUpgradeBox(id) {
-    document.getElementById('upgrade-desc-' + id).enabled = true;
-}
-
-function closeUpgradeBox(id) {
-    document.getElementById('upgrade-desc-' + id).enabled = false;
-}*/
+upgrades.push(noob_momsCard)

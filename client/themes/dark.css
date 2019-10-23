@@ -1,6 +1,12 @@
+:root {
+    --dark-color-1: rgba(25, 25, 25, 0.6);
+    --light-color-1: #fff;
+    --borders-dark: #000;
+}
+
 body {
     background-color: #222222;
-    color: #ffffff;
+    color: var(--light-color-1);
 }
 
 a {
@@ -12,8 +18,8 @@ a {
 }
 
 #client-border {
-    background-color: #fff;
-    border-color: #000;
+    background-color: var(--light-color-1);
+    border-color: var(--borders-dark);
 }
 
 .client {
@@ -41,7 +47,7 @@ a {
 }
 
 .container {
-    background-color: rgba(25, 25, 25, 0.6);
+    background-color: var(--dark-color-1);
 }
 
 #middle-bar .container:hover { 
@@ -49,7 +55,7 @@ a {
 }
 
 #middle-bar .container.selected:hover {
-    background-color: rgba(25, 25, 25, 0.6);
+    background-color: var(--dark-color-1);
 }
 
 .building {
@@ -70,8 +76,8 @@ a {
 
 #tooltip {
     background-color: rgba(50, 50, 50, 0.8);
-    color: #fff;
-    border-color: #000;
+    color: var(--light-color-1);
+    border-color: var(--borders-dark);
 }
 
 .upgrade:hover{
@@ -145,9 +151,9 @@ a {
     background-color: #000;
 }
 
-.cl-update:hover {
+/*.cl-update:hover {
     background-color: #444;
-}
+}*/
 
 .cl-update-notes {
     background-color: rgb(50, 50, 50, 0.6);

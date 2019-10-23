@@ -92,6 +92,10 @@ a {
     background-color: red;
 }
 
+.upgrade.expensive {
+    opacity: 0.6;
+}
+
 .fancy-button {
     background-color: #8888ff;
 }

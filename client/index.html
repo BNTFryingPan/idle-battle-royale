@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="./style-req.css" id='custom-theme'>
         <style id='theme-changer'></style>
         <object data='./js/credits.txt' id='credits-text' hidden></object>
+        <script  src="./js/library.js"></script>
         <script  src="./js/game.js"></script>
         <script  src="./js/upgrades.js"></script>
         <script  src="./js/achievements.js"></script>
@@ -20,23 +21,32 @@
         <script  src="./js/online/chat.js"></script>
         <script  src="./js/changelog.js"></script>
         <script  src="./js/cheatconsole.js"></script>
+        <script  src="./js/clickables.js"></script>
         <script  src="./js/themes.js"></script>
+        <script  src="./js/upgrade-api.js"></script>
+        <script  src="./js/building-api.js"></script>
+        <script  src="./js/save-manager.js"></script>
     </head>
 
     <body id='main-body'>
-        <div id='tooltip'>
+        <div id='tooltip' class="" style='z-index: 100;'>
             <span id='tooltip-header'>hey</span>
         </div>
         <div id="header">
             <span id='header-text'>Idle Battle Royale Client</span><br>
         </div>
-        <p id='header-splash' onclick='splashClick()' onmousemove='setToolTip("click to change!")' onmouseout="hideToolTip()">Loading...</p>
+        <p id='header-splash' onclick='splashClick()' data-tt="Click to change!">Loading...</p>
         <div id="client-border">
+            <div id='clickable' style='position: fixed' onclick="spawnClickable()">asdf</div>
             <div id="client" class='client' hidden>
+                <div id="popup" class="popup">
+                    <div id='popup-title' style="text-align: center;">Title</div>
+                    <div id='popup-content'>Content<br><br>more content</div>
+                </div>
                 <div id="left-bar" class="bar" style="width:30%">
                     <div id="main-left" class="container">
-                        <p style="text-align: center" id="lootbox-display">Lootboxes: 0</p>
-                        <p style="text-align: center" id="lbps-display">LBPS: 0</p>
+                        <p style="text-align: center" id="lootbox-display" data-tt="You can change notation in Options!s">Lootboxes: 0</p>
+                        <p style="text-align: center" id="lbps-display" data-tt="<b>L</b>oot<b>b</b>oxes <b>p</b>er <b>S</b>econd">LBPS: 0</p>
                         <br>
                         <p style="text-align: center; font-size: 20px"><button onclick="clickLootbox()" class="fancy-button">Open Lootbox</button></p>
                     </div>
@@ -56,6 +66,10 @@
                         1ud - 1 undecillion - 1e+36
 
                     </div>
+                    <div id="help-area" class="container">
+                        <p class='mb-header'>-= Help =-</p>
+                        <p style="display: none">yeet</p>
+                    </div>
                 </div>
                 <!--<div id="middle-bar-holder" style="width:45%;overflow-y:scroll">-->
                     <!--<div id='middle-bar-buttons' style="display:flex;justify-content: space-evenly;flex-wrap: nowrap">
@@ -71,18 +85,18 @@
                     </div>-->
                     <div id="middle-bar" class="bar" style="width:45%;overflow-y:scroll">
                         <div id="mb-online-tab" class="container" onclick="mbSwitchToOnline()">
-                            <p class='mb-header'>-= Online =-</p>
+                            <p class='mb-header' data-tt="Play online and get extra bonuses!">-= Online =-</p>
                             <span>Coming Soon!</span>
                         </div>
                         <div id="mb-cheats-tab" class="container" onclick="mbSwitchToCheats()">
-                            <p class='mb-header'>-= Cheats =-</p>
+                            <p class='mb-header' data-tt="<b>MOSTLY DEBUG STUFF</b><br>You can give yourself lootboxes or whatever here">-= Cheats =-</p>
                             <div>
                                 <div id='debug-console-log' class='log-output'></div>
                                 <div class='input-bar'><input type='text' id='cheat-console-input' placeholder="Type a cheat here!" style="width: 85%"> <button id='cheat-console-button' onclick='executeCheatCommand()' style='width: 4.5em' class='fancy-button'>Execute</button></div>
                             </div>
                         </div>
                         <div id="mb-stats-tab" class="container selected" onclick="mbSwitchToStats()">
-                            <p class='mb-header'>-= Stats =-</p>
+                            <p class='mb-header' data-tt="Check your progress and statistics">-= Stats =-</p>
                             <button class='fancy-button' onclick='rollCredits()'>Credits</button><br>
                             <p id="total-lootbox-display">Total Lootboxes: 0</p>
                             <p id="total-building-display">Total Buildings: 0</p>
@@ -93,7 +107,7 @@
                             <div id='upgrades-bought' class='container upgrade-cont full' style="height: auto; background-color: rgba(0,0,0,0.3)"></div>
                         </div>
                         <div id="mb-options-tab" class="container" onclick="mbSwitchToOptions()"> 
-                            <p class='mb-header'>-= Options =-</p>
+                            <p class='mb-header' data-tt="Change how the game looks or runs">-= Options =-</p>
                             <div id='options-area' style='display: flex'>
                                 <div style='width: 49%; text-align: right'>
                                     Number Notation (Example of 5000):<br>
@@ -140,7 +154,7 @@
                             </div>
                         </div>
                         <div id="mb-legacy-tab" class="container" onclick="mbSwitchToLegacy()">
-                            <p class='mb-header'>-= Legacy =-</p>
+                            <p class='mb-header' data-tt="Prestige to make more progress!">-= Legacy =-</p>
                             <br><!--<button class='fancy-button' onclick="prestigeButton()">Ascend Now<br>Costs 1 Trillion Lootboxes</button>-->
                             <br><span>Prestige Level if you Ascend now:</span> <span id="prestige-amnt-now">0</span><br>
                             <span>Lootboxes Required for next Prestige Level:</span> <span id="prestige-next-lvl">0</span><br>
@@ -164,19 +178,19 @@
                             </div>
                         </div>
                         <div id="mb-ach-tab" class="container" onclick="mbSwitchToAchievements()">
-                            <p class='mb-header'>-= Achievements =-</p>
+                            <p class='mb-header' data-tt="Special milestones to flex with">-= Achievements =-</p>
                             <span>Coming Soon!</span>
                             <div id='ach-container'>
                                 4Head
                             </div>
                         </div>
                         <div id='mb-changelog-tab' class="container" onclick="mbSwitchToChangelog()">
-                            <p class='mb-header' style="overflow-y: hidden">-= Changelog =-</p>
+                            <p class='mb-header' data-tt="Look at how the game has changed!">-= Changelog =-</p>
                             <div id="changelog-content" style="overflow-y: scroll; height: 94%; border-style:solid; border-color: black; border-width: 5px; border-radius: 10px">
                             </div>
                         </div>
                         <div id="mb-chat-tab" class="container" onclick="mbSwitchToChat()">
-                            <p class="mb-header" style="text-align: center; font-size: 20px">-= Chat =-</p>
+                            <p class="mb-header" data-tt="Chat with other people playing the game!">-= Chat =-</p>
                             <div id='chat-login-prompt'><div style='display:flex'><div style='text-align: right; width: 20%'><div>Server Address</div> <div style='margin-top:5px'>Username</div></div><div style='margin-left: 1%;width:88%'><input type='text' id='clp-address' style='width:99%' placeholder='Server Address'><br><input type='text' style='width:99%;margin-top:2px' id='clp-user' placeholder='Username'></div></div><div style="text-align: center;width:100%;margin-top:3px"><button class='fancy-button' onclick='loginToChatWithForm()'>Login</button></div></div>
                             <div id='chat-log' class='log-output'><b>Type /connect [address] [username] to connect to chat</b></div>
                             <div class='input-bar'><input type='text' id='chat-input' placeholder="Type a message here!" style="width: 90%"> <button id='chat-button' onclick='sendChatMessage()' style='width: 9%' class='fancy-button'>Send</button></div>
@@ -207,7 +221,7 @@
             </div>-->
         </div>
         <span id='notif-count' style='position: fixed; top:0;right:0'>0</span>
-        <div id='footer'><b>-= </b><a href="https://github.com/leotomasmc/idle-battle-royale">source</a> <b>=-=</b> <a href="https://discord.gg/nHkGBun">discord</a> <b>=-=</b> <span id='save-area'><button id="save-button" onclick="saveGame()" class='fancy-button'>save</button></span> <b>=-=</b> <span id="version-display" style="text-align: right">Loading...</span> <b>=-</b><span id='save-indicator'><b>=</b> Game Saved!<b>=-</b></span></div>
+        <div id='footer'><b>-= </b><a href="https://github.com/leotomasmc/idle-battle-royale">source</a> <b>=-=</b> <a href="https://discord.gg/nHkGBun">discord</a> <b>=-=</b> <span id='save-area'><button id="save-button" onclick="saveGame()" class='fancy-button'>save</button></span> <b>=-=</b> <span id="version-display" style="text-align: right">Loading...</span> <b>=-</b><span id='save-indicator'><b>=</b> Game Saved! <b>=-</b></span></div>
         <div style='height:1em'></div>
     </body>
 </html>
