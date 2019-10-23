@@ -1,4 +1,7 @@
 var upgrades = [];
+function uicon(name) {
+    return "./icons/upgrades/" + name + '.png'
+}
 
 var baseUpgrade = { 
     name: "Upgrade Name", // the display name of the upgrade that is displayed to the user
@@ -33,7 +36,7 @@ var clickPower1 = {
     name: "Assistant",
     desc: "Cost: 100<br>You get one extra lootbox per click",
     id: "clickPower1",
-    icon: "click1.png",
+    icon: uicon('pause'),
     unlock: function() {return window.game.totalLootboxClicks >= 50},
     cost: function(lbs) {return lbs >= 100},
     onBuy: function() {

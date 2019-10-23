@@ -165,14 +165,48 @@ window.onmousemove = function (e) {
     if (!int.isLoaded) {return}
     var x = e.clientX,
         y = e.clientY;
-    document.getElementById('tooltip').style.top = (y+5) + 'px';
-    document.getElementById('tooltip').style.left = (x+5) + 'px';
 
-    if (x < window.innerWidth / 3.5) {
-        document.getElementById('tooltip').style.transform = "translate(0, 0)";
+    var flipX = false;
+    var flipY = false;
+
+    var trX = null;
+    var trY = null;
+
+    var mvX = null;
+    var mvY = null;
+
+    if (x < document.getElementById('tooltip').offsetWidth + window.innerWidth * 0.01) {
+        flipX = false;
     } else {
-        document.getElementById('tooltip').style.transform = "translate(-100%, 0)";
+        flipX = true;
     }
+
+    if (y < window.innerHeight - document.getElementById('tooltip').offsetHeight - window.innerHeight / 10) {
+        flipY = false;
+    } else {
+        flipY = true;
+    }
+
+    if (flipX) {
+        trX = "-100%"
+        mvX = -5
+    } else {
+        trX = "0"
+        mvX = 5
+    }
+
+    if (flipY) {
+        trY = "-100%"
+        mvY = -5
+    } else {
+        trY = "0"
+        mvY = 5
+    }
+
+
+    document.getElementById('tooltip').style.top = (y+mvY) + 'px';
+    document.getElementById('tooltip').style.left = (x+mvX) + 'px';
+    document.getElementById('tooltip').style.transform = "translate(" + trX + ", " + trY + ")";
 
 
     hoveredElement = document.elementFromPoint(x, y)
@@ -198,6 +232,10 @@ function showPopupDialog(title, content) {
     
 }
 
+function calculatePopupPosition() {
+    
+}
+
 window.onerror = function(e) {
-    notify('Error!', "Check the console for details! ")
+    notify('Error!', "Check the console for details!")
 }

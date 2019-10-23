@@ -120,6 +120,9 @@ function changeSplash() {
         "youve been gnomed",
         "im a gnome",
         "Now with ominous forshadowing!",
+        "now with a lack of sound",
+        "this is a splash",
+        "greetings boomer",
         "Now with 0% more battling!" //When battle royale mode gets added, change to 100%
         ];
     var splashElement = document.getElementById('header-splash');
@@ -282,6 +285,7 @@ jk
 
 -= Programming =-
 Leotomas
+GloopBloop
 
 -= UI =-
 Leotomas

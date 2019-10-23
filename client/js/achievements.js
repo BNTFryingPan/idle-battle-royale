@@ -1,11 +1,16 @@
 var achs = []
+function aicon(name) {
+    return "./icons/achs/" + name + '.png'
+}
 
 baseAch = {
     name: "Base Achievement",
     id: "baseAch",
     desc: "Base achievement for other achievements", //the description of the ach
+    icon: "./icons/achs/ach.png", // the icon for the achievement
     req: "Nothing, you cant get this ach!", //the requirements presented to the user
     type: "shadow", //type can be `shadow`, `normal`, or `hidden`. shadow achs dont give rewards, normal and hidden do. shadow and hidden arent visible until unlocked
+    unlocked: false, // this should be here, not true
     checkUnlock: function(){
         return false; //this function should reture true if the user meets the requirements to unlock the ach
         // You can make this always return false, and manually grant it on a certian event using grantAchivement(id)
@@ -21,8 +26,10 @@ cheatAch = {
     name: "bruh you cheated!",
     id: "cheatAch",
     desc: "Why would you ever do this?",
+    icon: "./icons/achs/cheat.png",
     req: "Cheat in some way",
     type: "shadow",
+    unlocked: false,
     checkUnlock: function(){
         if (window.game.hasCheated) {
             return true;
@@ -42,13 +49,9 @@ function loadAchievements() {
     for (var ach in achs) {
         var ta = achs[ach];
         var achIcon = document.createElement('div');
-        //var achDesc = document.createElement('div');
-        //achDesc.setAttribute('class', 'ach-desc');
-        //achDesc.setAttribute('id', 'ach-desc-' + ta.id);
-        //achDesc.innerHTML = ta.name + '<br>' + ta.desc;
         achIcon.setAttribute("id", "ach-icon-" + ta.id);
         achIcon.setAttribute('class', 'upgrade');
-        achIcon.setAttribute('onmouseover', 'setToolTip("' + ach.desc + '")')
+        achIcon.setAttribute('data-tt', ta.desc)
         achContainer.appendChild(achIcon)
     }
 }

@@ -51,7 +51,7 @@ function gameSave() {
     Object.assign(this.buildings, buildings);
 }
 
-function loadGame(saveString = null) {
+function loadGame() {
     window.game = loadSaveFromLocalStorage('SaveName')
 
     var verdisplay = window.game.gameVersionString + " - <i>[" + window.game.buildNumber + "]</i>";

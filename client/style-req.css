@@ -176,6 +176,10 @@ p {
     transition-timing-function: cubic-bezier(.51,1.19,.78,.73);
 }
 
+.building.locked {
+    display: none;
+}
+
 .building > * {
     opacity: 0;
 }
@@ -208,33 +212,9 @@ p {
     transition-duration: 100ms
 }
 
-.upgrade-desc{
-    height: 0em;
-    width: 0em;
-    border: solid;
-    border-width: 0px;
-    position: absolute;
-    transform: translate(-100%, 0);
-    text-align: center;
-    overflow: hidden;
-    transition: cubic-bezier(0.175, 0.885, 0.32, 1);
-    transition-duration: 250ms;
+.upgrade.locked {
+    display: none;
 }
-
-.upgrade:hover > .upgrade-desc{
-    height: 6em;
-    width: 21.6em;
-    overflow: hidden;
-    border-width: 5px;
-    border-radius: 10px;
-    transition-duration: 250ms;
-}
-
-/*.upgrade-desc:hover {
-    opacity: 0.9;
-    transition: cubic-bezier(0.175, 0.885, 0.32, 1);
-    transition-duration: 250ms;
-}*/
 
 .upgrade:hover{
     transition: linear;
@@ -342,7 +322,7 @@ p {
     font-size: 0.75em;
 }
 
-.log-output > div {
+.log-output > * {
     font-family: Ubuntu, Ubuntu, monospace;
 }
 
@@ -359,7 +339,7 @@ p {
     width: 25em;
     opacity: 1;
     transition: ease-in-out;
-    transition-duration: 200ms;
+    transition-duration: 100ms;
     position: relative;
     left: 40%;
     bottom: .7em;
@@ -435,7 +415,7 @@ p {
 
 #tooltip {
     position: fixed;
-    opacity: 0;
+    opacity: 0.5;
     transform: translate(-100%, 0);
     text-align: center;
     overflow: hidden;
