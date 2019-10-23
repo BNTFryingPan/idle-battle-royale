@@ -385,7 +385,7 @@ upgrades.push(buildingPrice3);
 
 var noob_momsCard = {
     name: "Mom's Credit Card",
-    desc: "Cost: " + abbrNum(1e10, 'short') + "<br>The noobs will steal their parents credit card and buy 1000 times more lootboxes",
+    desc: "Cost: " + abbrNum(5e10, 'short') + "<br>The noobs will steal their parents credit card and buy 1000 times more lootboxes",
     id: "noob_momsCard",
     icon: "n_card.png",
     unlock: function(){return window.game.lootboxesPerSecond >= 1e10},
@@ -397,3 +397,18 @@ var noob_momsCard = {
 }
 
 upgrades.push(noob_momsCard)
+
+var multiplier1 = {
+    name: "IBR FREE LOOTBOXES HACK 2019 WORKING",
+    desc: "Cost: " + abbrNum(5e15, 'short') + "<br>Total lootbox multiplier +1%<br><i>FREE LOOTBOXES AT <a href='http://win2003.verylegit.link/+download$781cracked_windows7+downloader.min.css.docm'>http://win2003.verylegit.link/+download$781cracked_windows7+downloader.min.css.docm</a></i>",
+    id: "multiplier1",
+    icon: "n_card.png",
+    unlock: function(){return window.game.totalLootboxes >= 1e15},
+    cost: function(lbs){return lbs >= 5e15},
+    onBuy: function(){
+        window.game.lootboxes = window.game.lootboxes - 5e15;
+        window.game.totalMultiplier *= 1.01;
+    }
+}
+
+upgrades.push(multiplier1)
