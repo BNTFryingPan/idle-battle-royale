@@ -119,6 +119,7 @@ function changeSplash() {
         "ok boomer",
         "youve been gnomed",
         "im a gnome",
+        "Now with ominous forshadowing!",
         "now with a lack of sound",
         "this is a splash",
         "greetings boomer",
