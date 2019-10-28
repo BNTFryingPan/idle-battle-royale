@@ -1,7 +1,83 @@
 var changelog = {
     "allUpdates": [
         {
-            "header": "Alpha 0.5.0 - Build 65 - Themeing Update - [9/25]",
+            "versionInfo": {
+                "branch": "release",
+                "date": "10/28/2019",
+                "build": 74,
+                "verString": "Alpha dev-0.5.4.1",
+                "verName": "The Spooky Update"
+            },
+            "note": "i though it would be fitting if there was a halloween update. for now. you know",
+            "changes": [
+                "+ added a new themes",
+                "--- halloween dark",
+                "--- honestly, i think it looks spooky, but not great",
+                "btw, this update was ported poorly from the test branch, but whatever"
+            ]
+        },
+        {
+            "versionInfo": {
+                "branch": "test",
+                "date": "10/24/2019",
+                "build": 73,
+                "verString": "Alpha 0.5.4",
+                "verName": null
+            },
+            "note": "hey, have you wanted keyboard shortcuts in ibr? well now you do",
+            "changes": [
+                "+ added keyboard shortcuts",
+                "+ ctrl + s: save",
+                "+ shift + n: online tab",
+                "+ shift + h: cheats tab",
+                "+ shift + s: stats tab",
+                "+ shift + o: options tab",
+                "+ shift + l: legacy tab",
+                "+ shift + a: ach tab",
+                "+ shift + g: changelog tab",
+                "+ t: chat tab",
+                "+ c: click (you can hold it btw)",
+                "+ shift + b: toggle building buy/sell mode",
+                "+ shift + u: toggle hide unaffordable upgrades",
+                "* fixed a bug where putting your cursor over the main document scroll bar would spam errors",
+                "+ added test icons to all upgrades and buildings",
+                "- disabled using tab to cycle through stuff, because it messes with certian things"
+            ]
+        },
+        {
+            "versionInfo": {
+                "branch": "test",
+                "date": "10/11/2019",
+                "build": 71,
+                "verString": "Alpha 0.5.3",
+                "verName": null
+            },
+            "note": "still making progress on sorting out all the code. also remembered about some upgrades features i never implemented but wanted to",
+            "changes": [
+                "+ working on changing the changelog generator a bit. it will automatically format the header string based on build info",
+                "+ added a wip popup notif to replace js alert() calls used for cheats messages, and will be used for other prompts in the future",
+                "+ idk what else"
+            ]
+        },
+        {
+            "header": "TB> Alpha 0.5.2 - Build 70 - [10/9/2019]",
+            "note": "im not sure how im going to format test branch version numbers yet. you tell me",
+            "changes": [
+                "+ working on possible support for easy custom themes by changing accent colors and stuff.",
+                "+ added some placeholder buildings, so there are 16 total, with a few place holders"
+            ]
+        },
+        {
+            "header": "Alpha 0.5.1 - Build 68 - [10/1/19]",
+            "note": "you mightve heard that 0.6 dev will happen in a [test-branch]. and you would be correct. but ill still put test branch changelogs in the 'stable' build",
+            "changes": [
+                "+ revamped the save and load system. not quite save breaking proof yet, but that will happen soon<sup>tm</sup>",
+                "+ moved some stuff between files, the upgrade loader is now in its own file, an the building loader and future ach loader will also be in their own files",
+                "+ also moved some library code to its own library file."
+            ]
+        },
+        {
+            "header": "Alpha 0.5.0 - Build 65 - Themeing Update - [9/25/19]",
             "note": "hey, finally a 'minor' update. according to semantic versioning (which i dont really follow) its major.minor.patch",
             "changes": [
                 "+ more important than themes, we now have a (still WIP) import and export. really easy to cheat with but whatever",
@@ -16,7 +92,7 @@ var changelog = {
             ]
         },
         {
-            "header": "Alpha 0.4.9 - Build 62 - Themes-pre1 - [9/22]",
+            "header": "Alpha 0.4.9 - Build 62 - Themes-pre1 - [9/22/19]",
             "note": "i was experimenting with theming, and found that it was really easy so i just did it.",
             "changes": [
                 "+ added, oh idk, <b>THEMES</b>.",
@@ -216,7 +292,7 @@ var changelog = {
         "- prestige - ascend (probably alpha 0.7 or 0.8)",
         "- prestige - trancend (probably beta)",
         "- acheivements (probably beta something)",
-        "- online chat (THIS UPDATE PROBABLY)",
+        "- online chat (SOON MAYBE IDK THERES A LOT OF ISSUES AHHH)",
         "- clickables like golden cookies (maybe alpha 0.7ish)",
         "- online play (beta probably)",
         "- some kind of mod support with an API for making new stuff"
@@ -224,7 +300,8 @@ var changelog = {
     "header": [
         "<p style='text-align: center;color: red;'>If you play on FireFox, Opera, IE, or Normal Edge, you may have problems!</p>",
         "<p style='text-align: center;color: red;'>This game was mostly tested in <a href='https://microsoftedgeinsider.com'>Edge Canary 79 (Edge Insider Build)</a> and <a href='https://www.google.com/chrome/canary/'>Chrome Canary 79</a></p>",
-        "<br><a href='https://discord.gg/nHkGBun'>Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>"
+        "<br><a href='https://discord.gg/nHkGBun'>Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>",
+        "<p>Hey, theres a [test-branch] now!"
     ]
 }
 
@@ -244,12 +321,49 @@ function changelogNext() {
     return ret + "</div>"
 }
 
+/*
+"versionInfo": {
+                "branch": "test",
+                "date": "10/11/2019",
+                "build": 71,
+                "verString": "Alpha 0.5.3",
+                "verName": null
+            },
+            */
+function formatChangelogHeader(data) {
+    ret = ""
+
+    if (data['branch'] == "test") {
+        ret += "TB> "
+    } else if (data['branch'] == "release") {
+        ret += "Release> "
+    } else {
+        ret += data['branch'] + "> "
+    }
+
+    ret += data['verString']
+
+    if (data['verName'] != null) {
+        ret += " - " + data['verName']
+    }
+
+    ret += " - Build " + data['build'].toString() + " - "
+    ret += "[" + data['date'] + "]"
+
+    ret = "<h3 style='margin-bottom:0px'>" + ret + "</h3>"
+    return ret;
+}
+
 function changelogContent() {
     ret = ""
     for (var update in changelog['allUpdates']) {
         tu = changelog["allUpdates"][update]
         ret += "<div class='cl-update'>"
-        ret += "<h3 style='margin-bottom:0px'>" + tu.header + "</h3>"
+        if (tu['versionInfo'] != null) {
+            ret += formatChangelogHeader(tu['versionInfo'])
+        } else {
+            ret += "<h3 style='margin-bottom:0px'>" + tu.header + "</h3>"
+        }
         if (tu.note != "") {
             ret += tu.note + "<br>"
             if (tu.changes.length > 0) {
@@ -269,8 +383,6 @@ function changelogContent() {
         ret += "</div>"
         ret += "<br>"
     }
-    //replaces preset strings with other preset strings
-    ret = ret.replace("[discord]", "<a href='https://discord.gg/nHkGBun'>discord</a>")
 
     return ret
 }
@@ -281,5 +393,10 @@ function populateChangelogTab() {
     fullContent += changelogHeader()
     fullContent += changelogNext() + "<hr>"
     fullContent += changelogContent() + "<hr>You reached the end of the changelog!"
+
+
+    fullContent = fullContent.replace("[discord]", "<a href='https://discord.gg/nHkGBun'>discord</a>")
+    fullContent = fullContent.replace("[test-branch]", "<a href='https://thederpymemesquad.github.io/ibr-beta/client/index.html'>test branch</a>")
+    
     cl.innerHTML = fullContent;
 }

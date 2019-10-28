@@ -66,8 +66,8 @@ function getUrlParam(parameter, defaultvalue){ var urlparameter = defaultvalue; 
 
 function internal() {
     //internal data that we dont want to save
-    this.buildNumber = 65;
-    this.gameVersionString = "Alpha dev-0.5";
+    this.buildNumber = 75;
+    this.gameVersionString = "Alpha dev-0.5.4.2";
     this.isLoaded = false;
     this.saveTick = 0;
     this.splashTick = 250;

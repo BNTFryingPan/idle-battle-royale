@@ -114,7 +114,19 @@ function changeSplash() {
         "The Nintendo Light Switch",
         "Epic Gamer Time",
         "🅱ruh Moment"
-        ];
+    ];
+
+    halloweenSplashes = [
+        "get spooked",
+        "now with 100% more spooks",
+        "ok spooker",
+        "spook moment",
+        "uh oh... spooky",
+        "Epic spook moment",
+    ];
+    splashes = halloweenSplashes;
+
+    
     var splashElement = document.getElementById('header-splash');
     var newSplash = ''
     var newSplash = splashes[parseInt(Math.random() * splashes.length)];

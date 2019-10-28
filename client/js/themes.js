@@ -14,6 +14,10 @@ var themes = [
     {
         'name': 'Custom',
         'file': '%custom%'
+    },
+    {
+        'name': "Halloween (Dark)",
+        "file": "halloween-dark"
     }
 ]
 
