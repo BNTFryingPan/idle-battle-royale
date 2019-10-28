@@ -301,7 +301,8 @@ var changelog = {
         "<p style='text-align: center;color: red;'>If you play on FireFox, Opera, IE, or Normal Edge, you may have problems!</p>",
         "<p style='text-align: center;color: red;'>This game was mostly tested in <a href='https://microsoftedgeinsider.com'>Edge Canary 79 (Edge Insider Build)</a> and <a href='https://www.google.com/chrome/canary/'>Chrome Canary 79</a></p>",
         "<br><a href='https://discord.gg/nHkGBun'>Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>",
-        "<p>Hey, theres a [test-branch] now!"
+        "<p>Hey, theres a [test-branch] now!",
+        "<b>the halloween event will end <i>november 6th</i></b>"
     ]
 }
 
