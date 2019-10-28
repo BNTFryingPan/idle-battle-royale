@@ -2,6 +2,49 @@ var changelog = {
     "allUpdates": [
         {
             "versionInfo": {
+                "branch": "release",
+                "date": "10/28/2019",
+                "build": 75,
+                "verString": "Alpha dev-0.5.4.2",
+                "verName": "The Spooky Update"
+            },
+            "note": "i though it would be fitting if there was a halloween update. for now. you know",
+            "changes": [
+                "+ added a new themes",
+                "--- halloween dark",
+                "--- honestly, i think they look spooky, but not great"
+            ]
+        },
+        {
+            "versionInfo": {
+                "branch": "test",
+                "date": "10/24/2019",
+                "build": 73,
+                "verString": "Alpha 0.5.4",
+                "verName": null
+            },
+            "note": "hey, have you wanted keyboard shortcuts in ibr? well now you do",
+            "changes": [
+                "+ added keyboard shortcuts",
+                "+ ctrl + s: save",
+                "+ shift + n: online tab",
+                "+ shift + h: cheats tab",
+                "+ shift + s: stats tab",
+                "+ shift + o: options tab",
+                "+ shift + l: legacy tab",
+                "+ shift + a: ach tab",
+                "+ shift + g: changelog tab",
+                "+ t: chat tab",
+                "+ c: click (you can hold it btw)",
+                "+ shift + b: toggle building buy/sell mode",
+                "+ shift + u: toggle hide unaffordable upgrades",
+                "* fixed a bug where putting your cursor over the main document scroll bar would spam errors",
+                "+ added test icons to all upgrades and buildings",
+                "- disabled using tab to cycle through stuff, because it messes with certian things"
+            ]
+        },
+        {
+            "versionInfo": {
                 "branch": "test",
                 "date": "10/11/2019",
                 "build": 71,
@@ -245,6 +288,7 @@ var changelog = {
         }
     ],
     "next": [
+        "- 1.0 will probably a complete rewrite",
         "- prestige - ascend (probably alpha 0.7 or 0.8)",
         "- prestige - trancend (probably beta)",
         "- acheivements (probably beta something)",
@@ -257,7 +301,8 @@ var changelog = {
         "<p style='text-align: center;color: red;'>If you play on FireFox, Opera, IE, or Normal Edge, you may have problems!</p>",
         "<p style='text-align: center;color: red;'>This game was mostly tested in <a href='https://microsoftedgeinsider.com'>Edge Canary 79 (Edge Insider Build)</a> and <a href='https://www.google.com/chrome/canary/'>Chrome Canary 79</a></p>",
         "<br><a href='https://discord.gg/nHkGBun'>Join the discord for the latest news, updates, and to provide feedback or bug reports.</a>",
-        "<p>Hey, theres a [test-branch] now!"
+        "<p>Hey, theres a [test-branch] now!",
+        "<b>the halloween event will end <i>november 6th</i></b>"
     ]
 }
 
@@ -339,9 +384,6 @@ function changelogContent() {
         ret += "</div>"
         ret += "<br>"
     }
-    //replaces preset strings with other preset strings
-    ret = ret.replace("[discord]", "<a href='https://discord.gg/nHkGBun'>discord</a>")
-    ret = ret.replace("[test-branch]", "<a href='https://thederpymemesquad.github.io/ibr-beta/client/index.html'>test branch</a>")
 
     return ret
 }
@@ -351,6 +393,11 @@ function populateChangelogTab() {
     var fullContent = ""
     fullContent += changelogHeader()
     fullContent += changelogNext() + "<hr>"
-    fullContent += changelogContent() + "<hr>You reached the end of the changelog!"
+    fullContent += changelogContent() + "<hr>You reached the end of the changelog!<br>just between us, beta 1.0 will be g r e a t"
+
+
+    fullContent = fullContent.replace("[discord]", "<a href='https://discord.gg/nHkGBun'>discord</a>")
+    fullContent = fullContent.replace("[test-branch]", "<a href='https://thederpymemesquad.github.io/ibr-beta/client/index.html'>test branch</a>")
+    
     cl.innerHTML = fullContent;
 }

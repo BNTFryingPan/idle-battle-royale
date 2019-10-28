@@ -160,7 +160,6 @@ function getUrlParam(parameter, defaultvalue) {
     return urlparameter;
 }
 
-
 window.onmousemove = function (e) {
     if (!int.isLoaded) {return}
     var x = e.clientX,
@@ -208,12 +207,17 @@ window.onmousemove = function (e) {
     document.getElementById('tooltip').style.left = (x+mvX) + 'px';
     document.getElementById('tooltip').style.transform = "translate(" + trX + ", " + trY + ")";
 
-
+    var htt = true;
     hoveredElement = document.elementFromPoint(x, y)
-    hoveredElementTT = hoveredElement.getAttribute('data-tt')
-    if (hoveredElementTT != null) {
-        setToolTip(hoveredElementTT);
-    } else {
+    if (hoveredElement != null) {
+        hoveredElementTT = hoveredElement.getAttribute('data-tt')
+        if (hoveredElementTT != null) {
+            setToolTip(hoveredElementTT);
+            htt = false
+        }
+    }
+    
+    if (htt) {
         hideToolTip()
     }
     

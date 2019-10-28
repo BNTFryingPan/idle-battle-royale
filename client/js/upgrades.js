@@ -1,6 +1,6 @@
 var upgrades = [];
 function uicon(name) {
-    return "./icons/upgrades/" + name + '.png'
+    return "./icons/upgrades/" + "pause" + '.png'
 }
 
 var baseUpgrade = { 
@@ -36,7 +36,7 @@ var clickPower1 = {
     name: "Assistant",
     desc: "Cost: 100<br>You get one extra lootbox per click",
     id: "clickPower1",
-    icon: uicon('pause'),
+    icon: uicon('cp1'),
     unlock: function() {return window.game.totalLootboxClicks >= 50},
     cost: function(lbs) {return lbs >= 100},
     onBuy: function() {
@@ -49,7 +49,7 @@ var clickPower2 = {
     name: "Dual Assistants",
     desc: "Cost: 500<br>You get two extra lootboxes per click",
     id: "clickPower2",
-    icon: "click2.png",
+    icon: uicon('cp2'),
     unlock: function() {return window.game.totalLootboxClicks >= 100},
     cost: function(lbs) {return lbs >= 500},
     onBuy: function() {
@@ -62,7 +62,7 @@ var clickPower3 = {
     name: "Good Friend",
     desc: "Cost: 1500<br>Lootboxes per click doubled",
     id: "clickPower3",
-    icon: "click3.png",
+    icon: uicon('cp3'),
     unlock: function() {return window.game.totalLootboxClicks >= 500},
     cost: function(lbs) {return lbs >= 1500},
     onBuy: function() {
@@ -79,7 +79,7 @@ var clickCPS1 = {
     name: "6 Finger Hand",
     desc: "Cost: 500<br>Clicking gains 1% of your LBPS",
     id: "clickCPS1",
-    icon: "click1.png",
+    icon: uicon('click1'),
     unlock: function() {return ( window.game.lootboxesPerClickFinal <= ( .1 * window.game.lootboxesPerSecond ) )},
     cost: function(lbs) {return lbs >= 500},
     onBuy: function() {
@@ -94,7 +94,7 @@ var noobPower1 = {
     name: "Double Noob",
     desc: "Cost: 100<br>+0.2 production from Noobs<br><i>Some say that the noob becomes a player<br>at some point, but that cant possibly be true</i>",
     id: "noobPower1",
-    icon: "noob1.png",
+    icon: uicon('noob1'),
     unlock: function(){return window.game.buildings['noob'].amount >= 2},
     cost: function(lbs){return lbs >= 100},
     onBuy: function(){
@@ -108,7 +108,7 @@ var noobPower2 = {
     name: "Tri-Noob",
     desc: "Cost: 500<br>Doubles production from Noobs",
     id: "noobPower2",
-    icon: "noob2.png",
+    icon: uicon('noob2'),
     unlock: function(){return window.game.buildings['noob'].amount >= 10},
     cost: function(lbs){return lbs >= 500},
     onBuy: function(){
@@ -121,7 +121,7 @@ var noobPower3 = {
     name: "Quad-Noob",
     desc: "Cost: 1500<br>Doubles production from Noobs",
     id: "noobPower3",
-    icon: "noob3.png",
+    icon: uicon('noob3'),
     unlock: function(){return window.game.buildings['noob'].amount >= 50},
     cost: function(lbs){return lbs >= 1500},
     onBuy: function(){
@@ -138,7 +138,7 @@ var playerPower1 = {
     name: "Better Players",
     desc: "Cost: 500<br>+2 production from Players",
     id: "playerPower1",
-    icon: "player1.png",
+    icon: uicon('player1'),
     unlock: function(){return window.game.buildings['player'].amount >= 10},
     cost: function(lbs){return lbs >= 500},
     onBuy: function(){
@@ -151,7 +151,7 @@ var playerPower2 = {
     name: "Improved Players",
     desc: "Cost: 1500<br>Double production from Players",
     id: "playerPower2",
-    icon: "player2.png",
+    icon: uicon('player2'),
     unlock: function(){return window.game.buildings['player'].amount >= 25},
     cost: function(lbs){return lbs >= 1500},
     onBuy: function(){
@@ -164,7 +164,7 @@ var playerPower3 = {
     name: "Even Better Players",
     desc: "Cost: 2750<br>Double production from Players",
     id: "playerPower3",
-    icon: "player3.png",
+    icon: uicon('player3'),
     unlock: function(){return window.game.buildings['player'].amount >= 50},
     cost: function(lbs){return lbs >= 2750},
     onBuy: function(){
@@ -182,7 +182,7 @@ var gamerPower1 = {
     name: "Improved Gamers",
     desc: "Cost: 1500<br>+2 production from gamers",
     id: 'gamerPower1',
-    icon: "gamer1.png",
+    icon: uicon('gamer1'),
     unlock: function() {return window.game.buildings['gamer'].amount >= 10}, //return true if conditions to show upgrade is true
     cost: function(lbs) {return lbs >= 1500}, //return true if the user can purchase this upgrade
     onBuy: function() {
@@ -195,7 +195,7 @@ var gamerPower2 = {
     name: "Even Better Gamers",
     desc: "Cost: 2750<br>Double production from gamers",
     id: 'gamerPower2',
-    icon: "gamer2.png",
+    icon: uicon('gamer2'),
     unlock: function() {return window.game.buildings['gamer'].amount >= 25}, //return true if conditions to show upgrade is true
     cost: function(lbs) {return lbs >= 2750}, //return true if the user can purchase this upgrade
     onBuy: function() {
@@ -208,7 +208,7 @@ var gamerPower3 = {
     name: "Almost Epic Gamers",
     desc: "Cost: 6000<br>Double production from gamers<br><i>But not quite epic gamers</i>",
     id: 'gamerPower3',
-    icon: "gamer3.png",
+    icon: uicon('gamer3'),
     unlock: function() {return window.game.buildings['gamer'].amount >= 50}, //return true if conditions to show upgrade is true
     cost: function(lbs) {return lbs >= 6000}, //return true if the user can purchase this upgrade
     onBuy: function() {
@@ -223,7 +223,7 @@ var nolifePower1 = {
     name: "Life Waster",
     desc: "Cost: 2750<br>+5 production from No Lifers",
     id: 'nolifePower1',
-    icon: "nolife1.png",
+    icon: uicon('nl1'),
     unlock: function() { return window.game.buildings['nolife'].amount >= 10 },
     cost: function(lbs) {return lbs >= 2750 },
     onBuy: function() {
@@ -236,7 +236,7 @@ var nolifePower2 = {
     name: "Life Consumer",
     desc: "Cost: 6000<br>Double production from No Lifers",
     id: 'nolifePower2',
-    icon: "nolife2.png",
+    icon: uicon('nl2'),
     unlock: function() { return window.game.buildings['nolife'].amount >= 25 },
     cost: function(lbs) {return lbs >= 6000 },
     onBuy: function() {
@@ -249,7 +249,7 @@ var nolifePower3 = {
     name: "Longer Lives",
     desc: "Cost: " + abbrNum(1e4, 'short') + "<br>Double production from No Lifers<br><i>Longer Lives, More Production</i>",
     id: 'nolifePower3',
-    icon: "nolife3.png",
+    icon: uicon('nl3'),
     unlock: function() { return window.game.buildings['nolife'].amount >= 25 },
     cost: function(lbs) {return lbs >= 1e4 },
     onBuy: function() {
@@ -264,7 +264,7 @@ var epicGamerPower1 = {
     name: "True Epic Gamer",
     desc: "Cost: " + abbrNum(8e3, 'short') + "<br>+10 production from Epic Gamers",
     id: "epicGamerPower1",
-    icon: "egamer1.png",
+    icon: uicon('eg1'),
     unlock: function() { return window.game.buildings['epicgamer'].amount >= 10 },
     cost: function(lbs) {return lbs >= 8e3 },
     onBuy: function() {
@@ -277,7 +277,7 @@ var epicGamerPower2 = {
     name: "Truer Epic Gamer",
     desc: "Cost: " + abbrNum(15e3, 'short') + "<br>Double production from Epic Gamers",
     id: "epicGamerPower2",
-    icon: "egamer2.png",
+    icon: uicon('eg1'),
     unlock: function() { return window.game.buildings['epicgamer'].amount >= 25 },
     cost: function(lbs) {return lbs >= 15e3 },
     onBuy: function() {
@@ -290,7 +290,7 @@ var epicGamerPower3 = {
     name: "Truest Epic Gamer",
     desc: "Cost: " + abbrNum(32e3, 'short') + "<br>Double production from Epic Gamers<br><i>The truest from of all epic gamer</i>",
     id: "epicGamerPower3",
-    icon: "egamer3.png",
+    icon: uicon('eg3'),
     unlock: function() { return window.game.buildings['epicgamer'].amount >= 50 },
     cost: function(lbs) {return lbs >= 32e3 },
     onBuy: function() {
@@ -305,7 +305,7 @@ var speedrunnerPower1 = {
     name: "Speed Tech",
     desc: "Cost: " + abbrNum(30e3, 'short') + "<br>+200 production from Speedrunners<br><i>Speedrunners, although competitive, still do work together to find faster routes</i>",
     id: "speedrunnerPower1",
-    icon: 'speedr1.png',
+    icon: uicon('sr1'),
     unlock: function() { return window.game.buildings['speedrunner'].amount >= 10 },
     cost: function(lbs) { return lbs >= 30e3 },
     onBuy: function() {
@@ -318,7 +318,7 @@ var speedrunnerPower2 = {
     name: "Micro Optimization",
     desc: "Cost: " + abbrNum(64e3, 'short') + "<br>Double production from Speedrunners<br><i>Sometimes pusing the WR down by a few seconds makes beating it much harder</i>",
     id: "speedrunnerPower2",
-    icon: "speedr2.png",
+    icon: uicon('sr2'),
     unlock: function() {return window.game.buildings['speedrunner'].amount >= 25},
     cost: function(lbs) {return lbs >= 64e3},
     onBuy: function() {
@@ -331,7 +331,7 @@ var speedrunnerPower3 = {
     name: "GDQ Appearence",
     desc: "Cost: " + abbrNum(32e4, 'short') + "<br>Double production from Speedrunners<br><i>GDQ is a large speedrunning event 2 times a year, and is very popular</i>",
     id: "speedrunnerPower3",
-    icon: "speedr3.png",
+    icon: uicon('sr3'),
     unlock: function() {return window.game.buildings['speedrunner'].amount >= 50},
     cost: function(lbs) {return lbs >= 32e4},
     onBuy: function() {
@@ -347,7 +347,7 @@ var buildingPrice1 = {
     name: "Bob the Builder",
     desc: "Cost: " + abbrNum(5e6, 'short') + "<br>Buildings cost 25% less<br><i>Can we fix it? Yes we can!</i><br>This upgrade is subject to removal in the future",
     id: "buildingPrice1",
-    icon: "bp1.png",
+    icon: uicon('bp1'),
     unlock: function(){return window.game.totalBuildings >= 123},
     cost: function(lbs){return lbs >= 5e6},
     onBuy: function(){
@@ -360,7 +360,7 @@ var buildingPrice2 = {
     name: "Master Builder",
     desc: "Cost: " + abbrNum(25e6, 'short') + "<br>Buildings cost 25% less<br>This upgrade is subject to removal in the future",
     id: "buildingPrice2",
-    icon: "bp2.png",
+    icon: uicon('bp2'),
     unlock: function(){return window.game.totalBuildings >= 350},
     cost: function(lbs){return lbs >= 25e6},
     onBuy: function(){
@@ -373,7 +373,7 @@ var buildingPrice3 = {
     name: "Steve",
     desc: "Cost: " + abbrNum(55.2e6, 'short') + "<br>Buildings cost 25% less<br>This upgrade is subject to removal in the future",
     id: "buildingPrice3",
-    icon: "bp3.png",
+    icon: uicon('bp3'),
     unlock: function(){return window.game.totalBuildings >= 885},
     cost: function(lbs){return lbs >= 552e3},
     onBuy: function(){
@@ -390,7 +390,7 @@ var noob_momsCard = {
     name: "Mom's Credit Card",
     desc: "Cost: " + abbrNum(1e10, 'short') + "<br>The noobs will steal their parents credit card and buy 1000 times more lootboxes",
     id: "noob_momsCard",
-    icon: "n_card.png",
+    icon: uicon('n_card1'),
     unlock: function(){return window.game.lootboxesPerSecond >= 1e10},
     cost: function(lbs){return lbs >= 5e10},
     onBuy: function(){

@@ -1,45 +1,54 @@
-function loadBuildings() {
+function loadNewBuilding(buildingData) {
     var buildingContainer = document.getElementById("buildings");
+    var tb = buildingData;
+    //console.log("loading b: " + tb.name)
+    var element = document.createElement("div");
+    element.setAttribute("id", "building-" + tb.intname);
+    element.setAttribute("class", "building");
+    element.setAttribute('data-tt', "<b>" + tb.name + "</b><br>" + tb.desc)
+    element.hidden = true;
+    var elementTopRow = document.createElement("p");
+    elementTopRow.setAttribute('id', 'building-' + tb.intname + '-toprow')
+    elementTopRow.setAttribute('class', 'building-toprow')
+    elementTopRow.innerHTML = tb.name + " x0 | LBPS: " + tb.basepersec + " [0]"
+    elementTopRow.setAttribute('data-tt', "<b>" + tb.name + "</b><br>" + tb.desc)
+    var elementBuy1 = document.createElement("button");
+    elementBuy1.setAttribute("id", "building-" + tb.intname + "-buy1");
+    elementBuy1.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 1)");
+    elementBuy1.setAttribute("class", "fancy-button buy-1")
+    elementBuy1.innerHTML = "Buy 1 " + tb.name;
+    var elementBuy10 = document.createElement("button");
+    elementBuy10.setAttribute("id", "building-" + tb.intname + "-buy10");
+    elementBuy10.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 10)");
+    elementBuy10.setAttribute("class", "fancy-button buy-10")
+    elementBuy10.innerHTML = "x10";
+    var elementBuy100 = document.createElement("button");
+    elementBuy100.setAttribute("id", "building-" + tb.intname + "-buy100");
+    elementBuy100.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 100)");
+    elementBuy100.setAttribute("class", "fancy-button buy-100")
+    elementBuy100.innerHTML = "x100";
+    var elementCost = document.createElement("div");
+    elementCost.setAttribute("id", "building-" + tb.intname + "-cost");
+    elementCost.setAttribute('class', 'building-cost')
+    elementCost.innerHTML = "Cost: " + tb.basecost;
+    elementCost.setAttribute('data-tt', "<b>" + tb.name + "</b><br>" + tb.desc)
+    var buildingIcon = document.createElement("img")
+    buildingIcon.setAttribute('src', tb.icon)
+    buildingIcon.setAttribute('class', 'building-icon')
+    buildingIcon.setAttribute('data-tt', "<b>" + tb.name + "</b><br>" + tb.desc)
+    
+    element.appendChild(elementTopRow);
+    element.appendChild(elementCost);
+    element.appendChild(elementBuy1);
+    element.appendChild(elementBuy10);
+    element.appendChild(elementBuy100);
+    element.appendChild(buildingIcon);
+    buildingContainer.appendChild(element);
+}
 
+function loadBuildings() {
     for (var build in buildings) {
-        console.log("loading b: " + buildings[build].name)
-        var tb = buildings[build];
-        var element = document.createElement("div");
-        element.setAttribute("id", "building-" + tb.intname);
-        element.setAttribute("class", "building");
-        element.setAttribute('data-tt', "<b>" + tb.name + "</b><br>" + tb.desc)
-        element.hidden = true;
-        var elementTopRow = document.createElement("p");
-        elementTopRow.setAttribute('id', 'building-' + tb.intname + '-toprow')
-        elementTopRow.setAttribute('class', 'building-toprow')
-        elementTopRow.innerHTML = tb.name + " x0 | LBPS: " + tb.basepersec + " [0]"
-        elementTopRow.setAttribute('data-tt', "<b>" + tb.name + "</b><br>" + tb.desc)
-        var elementBuy1 = document.createElement("button");
-        elementBuy1.setAttribute("id", "building-" + tb.intname + "-buy1");
-        elementBuy1.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 1)");
-        elementBuy1.setAttribute("class", "fancy-button buy-1")
-        elementBuy1.innerHTML = "Buy 1 " + tb.name;
-        var elementBuy10 = document.createElement("button");
-        elementBuy10.setAttribute("id", "building-" + tb.intname + "-buy10");
-        elementBuy10.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 10)");
-        elementBuy10.setAttribute("class", "fancy-button buy-10")
-        elementBuy10.innerHTML = "x10";
-        var elementBuy100 = document.createElement("button");
-        elementBuy100.setAttribute("id", "building-" + tb.intname + "-buy100");
-        elementBuy100.setAttribute("onclick", "buyBuilding('" + tb.intname + "', 100)");
-        elementBuy100.setAttribute("class", "fancy-button buy-100")
-        elementBuy100.innerHTML = "x100";
-        var elementCost = document.createElement("div");
-        elementCost.setAttribute("id", "building-" + tb.intname + "-cost");
-        elementCost.setAttribute('class', 'building-cost')
-        elementCost.innerHTML = "Cost: " + tb.basecost;
-        elementCost.setAttribute('data-tt', "<b>" + tb.name + "</b><br>" + tb.desc)
-        element.appendChild(elementTopRow);
-        element.appendChild(elementCost);
-        element.appendChild(elementBuy1);
-        element.appendChild(elementBuy10);
-        element.appendChild(elementBuy100);
-        buildingContainer.appendChild(element);
+        loadNewBuilding(buildings[build])
     }
 }
 

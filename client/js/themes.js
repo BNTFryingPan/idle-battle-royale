@@ -12,6 +12,14 @@ var themes = [
         'file': 'light'
     },
     {
+        'name': "Hacker",
+        'file': "hacker"
+    },
+    {
+        'name': "Halloween (Dark)",
+        'file': 'halloween-dark'
+    },
+    {
         'name': 'Custom',
         'file': '%custom%'
     }

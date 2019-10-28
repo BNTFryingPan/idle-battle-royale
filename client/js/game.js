@@ -1,7 +1,7 @@
 function internal() {
     //internal data that we dont want to save for any reason
-    this.buildNumber = 69;
-    this.gameVersionString = "Alpha dev-0.5.1";
+    this.buildNumber = 75;
+    this.gameVersionString = "Alpha dev-0.5.4.1";
     this.isLoaded = false;
     this.saveTick = 0;
     this.splashTick = 250;
@@ -39,7 +39,7 @@ function gameSave() {
     this.totalMultiplier = 1;
     this.buildingDiscount = 1;
     this.buildings = {};
-    this.options = {'shortNumbers': 'short', 'tab': 'stats', 'saveInterval': 3000, "uiRefreshRate":100, 'autoCloseNotifs':true, 'theme':'classic'};
+    this.options = {'shortNumbers': 'short', 'tab': 'stats', 'saveInterval': 3000, "uiRefreshRate":100, 'autoCloseNotifs':true, 'theme':'classic', 'disableKb':false};
     this.sellMultiplier = 0.5
     this.upgrades = {};
     //this.acheivementsUnlocked = {};
@@ -53,17 +53,23 @@ function gameSave() {
 
 function loadGame() {
     window.game = loadSaveFromLocalStorage('SaveName')
-
-    var verdisplay = window.game.gameVersionString + " - <i>[" + window.game.buildNumber + "]</i>";
-    if (int.updateAvailable) {
-        verdisplay += "<b>Update Available!</b>"
+    var verdisplay = int.gameVersionString;
+    if (int.gameVersionString != window.game.gameVersionString) {
+        verdisplay += " (" + window.game.gameVersionString + ")"
     }
-    document.getElementById('version-display').innerHTML = verdisplay
-
+    verdisplay += " - <i>[" + int.buildNumber;
+    if (int.buildNumber != window.game.buildNumber) {
+        verdisplay += " (" + window.game.buildNumber + ")";
+    }
+    verdisplay += "]</i>"
+    
+    //var verdisplay = int.gameVersionString + " (" + window.game.gameVersionString + ") - <i>[" + int.buildNumber + " (" + window.game.buildNumber + ")]</i>";
     if (window.game.buildNumber < int.gameVersionNumber) {
         int.updateAvailable = true;
+        verdisplay += "<b>Update Available!</b>"
         notify("Update!", "Hey! Theres cool new stuff if you reset your save!")
     }
+    document.getElementById('version-display').innerHTML = verdisplay
 }
 
 function updateLBPS() {

@@ -124,6 +124,18 @@ function changeSplash() {
         "greetings boomer",
         "Now with 0% more battling!" //When battle royale mode gets added, change to 100%
         ];
+    halloweenSplashes = [
+        "get spooked",
+        "now with 100% more spooks",
+        "im a spook, and youve been spooked",
+        "ok spooker",
+        "spook moment",
+        "uh oh... spooky",
+        "epic spook moment",
+    ];
+    splashes = halloweenSplashes;
+
+    
     var splashElement = document.getElementById('header-splash');
     var newSplash = ''
     var newSplash = splashes[parseInt(Math.random() * splashes.length)];
@@ -142,26 +154,27 @@ function changeSplash() {
 
 function hideAllTabs () {
     cheatsTab.setAttribute('class', 'container');
-    //cheatsButton.disabled = false;
+    cheatsTab.scrollTo(0,0)
     onlineTab.setAttribute('class', 'container');
-    //onlineButton.disabled = false;
+    onlineTab.scrollTo(0,0)
     achievementsTab.setAttribute('class', 'container');
-    //achievementsButton.disabled = false;
+    achievementsTab.scrollTo(0,0)
     statsTab.setAttribute('class', 'container');
-    //statsButton.disabled = false;
+    statsTab.scrollTo(0,0)
     legacyTab.setAttribute('class', 'container');
-    //legacyButton.disabled = false;
+    legacyTab.scrollTo(0,0)
     optionsTab.setAttribute('class', 'container');
-    //optionsButton.disabled = false;
+    optionsTab.scrollTo(0,0)
     changelogTab.setAttribute('class', 'container');
-    //changelogButton.disabled = false;
+    changelogTab.scrollTo(0,0)
     chatTab.setAttribute('class', 'container');
-    //chatButton.disabled = false;
+    chatTab.scrollTo(0,0)
 }
 
 function upgradesToggleHideExpensive() {
     var hide = document.getElementById("upgrades-hide-box").checked;
     int.hideExpensiveUpgrades = hide;
+    document.getElementById('upgrades-hidden-notice').hidden = !hide
 }
 
 function optionsTabUpdateNumberFormat() {
@@ -185,6 +198,11 @@ function optionsTabUpdateUIUpdateRate() {
 function optionsTabUpdateTimeoutNotifs() {
     var timeoutNotifs = document.getElementById("option-uirate").checked;
     window.game.options['autoCloseNotifs'] = timeoutNotifs;
+}
+
+function optionsTabUpdateShortcuts() {
+    var disableKb = document.getElementById('option-disable-kb').checked;
+    window.game.options['disableKb'] = disableKb;
 }
 
 /*function optionstabUpdateSpeed() {

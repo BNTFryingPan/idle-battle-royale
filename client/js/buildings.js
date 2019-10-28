@@ -1,8 +1,12 @@
 // sorry ortiel but i stole your balancing because its so good lol
+function bicon(name) {
+    return './icons/buildings/' + "noob" + '.png'
+}
 
 var noob = {
     name: "Noob",
     intname: "noob",
+    icon: bicon('noob'),
     parent: {amount: 1},
     desc: "<i>quiet, these people cant know whats actually going on</i>",
     basepersec: 0.1,
@@ -18,6 +22,7 @@ var noob = {
 var player = {
     name: "Player",
     intname: "player",
+    icon: bicon('player'),
     parent: "noob",
     desc: "just your average player of video games",
     basepersec: 1,
@@ -33,6 +38,7 @@ var player = {
 var gamer = {
     name: "Gamer",
     intname: "gamer",
+    icon: bicon('gamer'),
     parent: "player",
     desc: "<b>gamer time</b>",
     basepersec: 8,
@@ -48,6 +54,7 @@ var gamer = {
 var nolife = {
     name: "No Lifer",
     intname: "nolife",
+    icon: bicon('nolife'),
     parent: "gamer",
     desc: "Dont you hate it when you have to fight someone whos played their entire life and you just started?",
     basepersec: 47,
@@ -63,6 +70,7 @@ var nolife = {
 var epicgamer = {
     name: "Epic Gamer",
     intname: "epicgamer",
+    icon: bicon('epicgamer'),
     parent: "nolife",
     desc: "These guys really know what they are doing",
     basepersec: 260,
@@ -78,6 +86,7 @@ var epicgamer = {
 var speedrunner = {
     name: "Speedrunner", 
     intname: "speedrunner",
+    icon: bicon('speedrunner'),
     parent: "epicgamer",
     desc: "Id like to somehow make this game appeal at GDQ. not sure how. probably some interesting button placement",
     basepersec: 1400,
@@ -93,6 +102,7 @@ var speedrunner = {
 var streamer = {
     name: "Streamer",
     intname: "streamer",
+    icon: bicon('streamer'),
     parent: "speedrunner",
     desc: "shoutouts to twitch.......<br><a href='https://twitch.tv/titan_unlimited'>and titan",
     basepersec: 7800,
@@ -108,6 +118,7 @@ var streamer = {
 var modder = {
     name: "Modder",
     intname: "modder",
+    icon: bicon('modder'),
     parent: "streamer",
     desc: "Shoutouts to mods. they are pretty fun",
     basepersec: 44e3,
@@ -123,6 +134,7 @@ var modder = {
 var celery = {
     name: "Celebrity",
     intname: "celery",
+    icon: bicon('celery'),
     parent: "modder",
     desc: "They only play because you give them free stuff",
     basepersec: 26e5,
@@ -138,6 +150,7 @@ var celery = {
 var memelord = {
     name: "Meme Lord",
     intname: "memelord",
+    icon: bicon('memelord'),
     parent: "celery",
     desc: "Knows everything there is to know about memes",
     basepersec: 1.6e5,
@@ -152,6 +165,7 @@ var memelord = {
 var lawer = {
     name: "Legal Team",
     intname: "lawer",
+    icon: bicon('lawer'),
     parent: "memelord",
     desc: "These guys are true boomers",
     basepersec: 1e7,
@@ -166,6 +180,7 @@ var lawer = {
 var b12 = {
     name: "Building 12",
     intname: "b12",
+    icon: bicon('b12'),
     parent: "lawer",
     desc: "Placeholder building to help with progression. have an idea what should go here? put it on discord!",
     basepersec: 65e7,
@@ -180,6 +195,7 @@ var b12 = {
 var b13 = {
     name: "Building 13",
     intname: "b13",
+    icon: bicon('b13'),
     parent: "b12",
     desc: "Placeholder building to help with progression. have an idea what should go here? put it on discord!",
     basepersec: 43e7,
@@ -194,6 +210,7 @@ var b13 = {
 var b14 = {
     name: "Building 14",
     intname: "b14",
+    icon: bicon('player'),
     parent: "b13",
     desc: "Placeholder building to help with progression. have an idea what should go here? put it on discord!",
     basepersec: 29e8,
@@ -208,6 +225,7 @@ var b14 = {
 var b15 = {
     name: "Building 15",
     intname: "b15",
+    icon: bicon('player'),
     parent: "b14",
     desc: "Placeholder building to help with progression. have an idea what should go here? put it on discord!",
     basepersec: 21e9,
@@ -222,6 +240,7 @@ var b15 = {
 var b16 = {
     name: "Building 16",
     intname: "b16",
+    icon: bicon('player'),
     parent: "b15",
     desc: "Placeholder building to help with progression. have an idea what should go here? put it on discord!",
     basepersec: 15e10,

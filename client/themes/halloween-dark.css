@@ -1,0 +1,169 @@
+:root {
+    --dark-color-1: rgba(187, 69, 0, 0.7);
+    --light-color-1: #0a0;
+    --borders-dark: #f50;
+}
+
+body {
+    background-color: rgb(56, 21, 0);
+    color: var(--light-color-1);
+}
+
+a {
+    color: #8080ff
+}
+
+#header {
+    color:#8080ff;
+}
+
+#client-border {
+    background-color: var(--light-color-1);
+    border-color: var(--borders-dark);
+}
+
+.client {
+    background-color: #121212;
+}
+
+/* //commented out because this is unused now (keeping in theme file, just incase)
+.mb-button {
+    background-color: #8080ff;
+    color: #232233;
+}
+
+.mb-button:hover:enabled {
+    background-color: #0000ff;
+    color: #bbbbbb;
+}
+
+.mb-button:disabled {
+    background-color: #6868ff;
+    color: #ffffff;
+}*/
+
+.bar {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.container {
+    background-color: var(--dark-color-1);
+}
+
+#middle-bar .container:hover { 
+    background-color: rgba(50, 50, 50, 1);
+}
+
+#middle-bar .container.selected:hover {
+    background-color: var(--dark-color-1);
+}
+
+.building {
+    background-color: rgba(10, 10, 10, 0.7);
+}
+
+.building:hover {
+    background-color: rgba(20, 20, 20, 0.8);
+}
+
+.upgrade-cont:hover {
+    background-color: rgba(30, 30, 30, 0.9);
+}
+
+.upgrade {
+    background-color: var(--dark-color-1);
+}
+
+#tooltip {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: var(--light-color-1);
+    border-color: var(--borders-dark);
+    border-width: 2px !important;
+}
+
+.upgrade:hover{
+    background-color: rgba(80, 80, 80, 0.8);
+}
+
+.upgrade.upgrade-flash-red, .upgrade.upgrade-flash-red:hover {
+    background-color: red;
+}
+
+.fancy-button {
+    background-color: var(--light-color-1);
+}
+
+.fancy-button:hover {
+    color: #000;
+    background-color: #090;
+}
+
+.fancy-buton:disabled {
+    background-color: #050;
+}
+
+.notif-body {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.notif-dismiss-button {
+    background-color: red;
+}
+
+.notif-dismiss-button:hover {
+    background-color: orangered;
+}
+
+.log-output {
+    background-color: #000;
+    color: var(--light-color-1);
+}
+
+.log-output > div {
+    background-color: #000;
+}
+
+.log-output > div:nth-child(even) {
+    background-color: #090909;
+}
+
+.log-output.chat-only {
+    background-color: #888888;
+}
+
+#header-splash {
+    color: #999;
+}
+
+#header-splash > * {
+    color: inherit;
+}
+
+.reset-button {
+    background-color:red;
+}
+
+.reset-button:hover {
+    background-color: orangered;
+    border-color: red;
+}
+
+.cl-update {
+    background-color: #000;
+}
+
+/*.cl-update:hover {
+    background-color: #444;
+}*/
+
+.cl-update-notes {
+    background-color: rgb(50, 50, 50, 0.6);
+}
+
+.cl-next {
+    background-color: #333;
+}
+
+#chat-login-prompt {
+    background-color: #444444;
+}
