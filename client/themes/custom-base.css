@@ -2,7 +2,11 @@
 This file will help you make your own Idle Battle Royale themes.
 Currently, assuming you havent made any changes yet, is just the classic theme
 however, you can change almost all the colors of the UI.
+this will also be used for a user friendly theme editor
 */
+/*:root {
+    --container-background: 
+}*/
 
 body {
     /*
@@ -17,10 +21,6 @@ body {
 
 a {
     color: #8080ff
-}
-
-#header {
-    color:#8080ff;
 }
 
 #client-border {

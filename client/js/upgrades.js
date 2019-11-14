@@ -3,34 +3,64 @@ function uicon(name) {
     return "./icons/upgrades/" + "pause" + '.png'
 }
 
-var baseUpgrade = { 
-    name: "Upgrade Name", // the display name of the upgrade that is displayed to the user
-    desc: "Cost: [cost]<br>Description of effect[<br><i>lore</i>]", // the content of the description box of the upgrade
-    id: 'upgradeId', // the id of the upgrade. do not duplicate this with another. [best done with namespaces, vanilla will use ibr:]
-    icon: 'upgradeIconID.png', // icon for repeat or teir upgrades, and false state for toggle upgrades
-    icon2: null, // the icont for the true state of a toggle upgrade
-    toggleCount: 0, // amount of times a repeatable or toggle upgrade was used
-    startState: false, // in a teir upgrade, icon2, toggleCount, startState, and currentState are ignored, and dont need to be included
-                        // start state sets the starting state (for example, if you wanted a toggle to turn an event off, you could start on true as the event is active, or you could enable an event by starting false)
-    currentState: false, // in a toggle upgrade, the state currently
-    type: "teir", //upgrades without the type flag default to teir
-    //types:
-    // teir - a teired upgrade that upgrades something
-    // toggle - an upgrade that acts as a toggle, will save toggle count, and current state (true/false), and can be set to start on true or false
-    // toggle upgrades can have a second icon, the first icon (icon) is the false state, and the second (icon2) is the true state
-    // repeatable - an upgrade than can be bought multiple times. saves purchase count, which can be used to multiply the price however you wish
-    // please note that currently only teir has been actually implemented, so the others dont actually have functionality yet
-    unlock: function() {return false}, //return true if conditions to show upgrade is true
-    cost: function(lbs) {return false}, //return true if the user can purchase this upgrade with the given lbs
-    onBuy: function() {
-        return; //you dont need to return anything, just put the effect of the purchasing the upgrade here
+class baseUpgrade {
+    constructor() {
+        this.name = "Upgrade Name"
+        // the display name of the upgrade that is displayed to the user
+        this.desc = "Cost: [cost]<br>Description of effect[<br><i>lore</i>]"
+        // the content of the description box of the upgrade
+        this.id = 'upgradeId'
+        // the id of the upgrade. do not duplicate this with another. [best done with namespaces, vanilla will use ibr:]
+        this.icon = 'upgradeIconID.png'
+        // icon for repeat or teir upgrades, and false state for toggle upgrades
+        this.icon2 = null
+        // the icont for the true state of a toggle upgrade
+        this.toggleCount = 0
+        // amount of times a repeatable or toggle upgrade was used
+        this.startState = false
+        // in a teir upgrade, icon2, toggleCount, startState, and currentState are ignored, and dont need to be included
+        // start state sets the starting state (for example, if you wanted a toggle to turn an event off, you could start on true as the event is active, or you could enable an event by starting false)
+        this.currentState = false 
+        // in a toggle upgrade, the state currently
+        this.type = "teir" 
+        //upgrades without the type flag default to teir
+        //types:
+        // teir - a teired upgrade that upgrades something
+        // toggle - an upgrade that acts as a toggle, will save toggle count, and current state (true/false), and can be set to start on true or false
+        // toggle upgrades can have a second icon, the first icon (icon) is the false state, and the second (icon2) is the true state
+        // repeatable - an upgrade than can be bought multiple times. saves purchase count, which can be used to multiply the price however you wish
+        // please note that currently only teir has been actually implemented, so the others dont actually have functionality yet
+    }
+
+    unlock() {
+        return false; //return true if conditions to show upgrade is true
+    } 
+
+    cost(lbs) {
+        return false; //return true if the user can purchase this upgrade with the given lbs
+    } 
+
+    onBuy() {
+        return;
+        //you dont need to return anything, just put the effect of the purchasing the upgrade here
         //note that the game will check this.cost() every tick, so dont actually take from lootboxes in cost.
         //you should remove lootboxes here, in onBuy();
     }
+
+    onToggle() {
+        return;
+    }
 }
+    
 
 //upgrades.push(baseUpgrade); //this line adds the upgrade to the upgrade list. They are put in order of when they are added, from top to bottom of the file
 // upgrade order will be changed later to be based on a number, and lowest is first
+
+class basicCostUpgrade extends baseUpgrade {
+    constructor(cost, name, desc, id, icon) {
+        super()
+    }
+}
 
 var clickPower1 = {
     name: "Assistant",

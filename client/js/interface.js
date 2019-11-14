@@ -134,7 +134,7 @@ function changeSplash() {
         "uh oh... spooky",
         "epic spook moment",
     ];
-    splashes = halloweenSplashes;
+    //splashes = halloweenSplashes;
 
     
     var splashElement = document.getElementById('header-splash');
@@ -294,6 +294,10 @@ TheDerpyMemeSquad
 Leotomas
 GloopBloop
 Titan_Unlimited
+CptSpaceToaster
+
+-= Ideas =-
+CptSpaceToaster
 
 -= Server Hosting =-
 Leotomas
@@ -310,6 +314,8 @@ Leotomas
 
 -= Special Thanks =-
 Titan_Unlimited
+The Titan FAM
+CptSpaceToaster
 Random people on StackOverflow
 Anyone playtesting
 A bunch of people at school
@@ -318,21 +324,15 @@ And most importantly...
 YOU!
 Thanks for playing!`
 
-creditsOpen = false
-creditsKeepScrollingIn = 500
-creditsPauseAutoscroll = false
-creditsAutoscrolled = true
+//function loadCreditsText() {
+//    var req = new XMLHttpRequest();
 
-function scrollCredits(manual) {
-    if (manual) {
-        creditsPauseAutoscroll = true
-        creditsKeepScrollingIn = 500
-    } else {
-        creditsAutoscrolled = true
-        document.getElementById('credits').scrollBy(0, 0.5)
-        creditsAutoscrolled = false
-    }
-}
+//    req.open("GET", "")
+//}
+
+creditsOpen = false
+creditsKeepScrollingIn = 100
+creditsPauseAutoscroll = false
 
 function rollCredits() {
     CreditsScroll = window.setInterval(function(){autoscrollCredits(), 20})
@@ -342,13 +342,8 @@ function rollCredits() {
     creditsElement.setAttribute('id', 'credits')
     creditsElement.classList.add('client')
     creditsElement.style = 'display:block;overflow-y:scroll'
-    creditsElement.addEventListener('scroll', function(){
-        //console.log(blab)
-        console.log('credits was scrolled ' + creditsAutoscrolled)
-        if (creditsAutoscrolled != true){
-            //scrollCredits(true)
-            //console.log('manually')
-        }
+    creditsElement.addEventListener('wheel', function(){
+        creditsPauseAutoscroll = true;
     })
     //creditsElement.addEventListener()
     creditsP = document.createElement('p')
@@ -368,7 +363,7 @@ function rollCredits() {
 }
 
 function closeCredits() {
-    CreditsScroll = null
+    window.clearInterval(CreditsScroll);
     creditsOpen = false
     document.getElementById('credits').remove()
     document.getElementById('client').style.display = 'flex';
@@ -379,17 +374,12 @@ function closeCredits() {
 
 function autoscrollCredits() {
     if (creditsOpen == true) {
-        creditsAutoscrolled = false
         if (creditsPauseAutoscroll == true) {
-            creditsKeepScrollingIn = 500
+            creditsKeepScrollingIn = 100
             creditsPauseAutoscroll = false
         } else {
             if (creditsKeepScrollingIn <= 0) {
-                //console.log('autoscrolling')
-                //document.getElementById('credits').scrollBy(0, 1)
-                scrollCredits(false)
-                //creditsAutoscrolled = false
-                //creditsPauseAutoscroll = false
+                document.getElementById('credits').scrollBy(0, 0.5)
             } else {
                 creditsKeepScrollingIn -= 1
             }

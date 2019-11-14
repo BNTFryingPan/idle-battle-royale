@@ -17,6 +17,7 @@ var noob = {
     multiplier: 1,
     onBuy: function() {},
     onSell: function() {}
+    //cc: cursor
 }
 
 var player = {
@@ -33,6 +34,7 @@ var player = {
     multiplier: 1,
     onBuy: function() {},
     onSell: function() {}
+    //cc: grandma
 }
 
 var gamer = {
@@ -49,6 +51,7 @@ var gamer = {
     multiplier: 1,
     onBuy: function() {},
     onSell: function() {}
+    //cc: farm
 }
 
 var nolife = {
@@ -65,6 +68,7 @@ var nolife = {
     multiplier: 1,
     onBuy: function() {},
     onSell: function() {}
+    //cc: mine
 }
 
 var epicgamer = {

@@ -62,9 +62,75 @@ showUpgradesCommand = {
     }
 }
 
+setValueCommand = {
+    trigger: 'set',
+    minArgs: 1,
+    maxArgs: 2,
+    description: "set values of stuff",
+    onTrigger: function(cmd) {
+        args = cmd.split(" ")
+        if (args[1] == "-list") {
+            log("Property list: lootboxes, totallootboxes")
+        } else if (setValue(args[1], args[2], false)) {
+            log("Succesfully set " + args[2] + " to " + args[1])
+        } else {
+            log("Unknown property '" + args[1] + "', use 'set -list' for a list of properties")
+        }
+    }
+}
+
+addValueCommand = {
+    trigger: 'add',
+    minArgs: 1,
+    maxArgs: 2,
+    description: "add values to stuff",
+    onTrigger: function(cmd) {
+        args = cmd.split(" ")
+        if (args[1] == "-list") {
+            log("Property list: lootboxes, totallootboxes")
+        } else if (setValue(args[1], args[2], true)) {
+            log("Succesfully added " + args[2] + " to " + args[1])
+        } else {
+            log("Unknown property '" + args[1] + "', use 'add -list' for a list of properties")
+        }
+    }
+}
+
+function setValue(item, value, add=false) {
+    if (item == 'lootboxes') {
+        if (add) {
+            window.game.lootboxes += value;
+        } else {
+            window.game.lootboxes = value;
+        }
+    } else if (item == "totallootboxes") {
+        if (add) {
+            window.game.totalLootboxes += value;
+        } else {
+            window.game.totalLootboxes = value;
+        }
+    } else {return false;}
+    log('set value ending')
+    return true;
+}
+
+function setGameFlag(flag, value) {
+    /*
+    flags:
+    useCustomTheme
+    disableSelectOptions
+    hideExpensiveUpgrades
+    saveDisplay
+    showingAllUpgrades
+    fastSplash
+    */
+}
+
 commands.push(baseCommand)
 commands.push(showUpgradesCommand)
 commands.push(helpCommand)
+commands.push(setValueCommand)
+commands.push(addValueCommand)
 
 function loadCommand(cmd) {
     if (!(cmd in loadedCommands)) {
@@ -96,36 +162,15 @@ function executeCheatCommand() {
 
     log("> " + cmd)
 
-    if (cmd.startsWith('set ')) {
-        if (args[1] == 'lootboxes') {
-            var count = parseInt(args[2])
-            window.game.lootboxes = count
-            log('set lootbox count to ' + count)
-        } else if (args[1] == 'totallootboxes') {
-            var count = parseInt(args[2])
-            window.game.totalLootboxes = count
-            log('set total lootbox count to ' + count)
-        } 
-    } else if (cmd.startsWith('add ')) {
-        if (args[1] == 'lootboxes') {
-            var count = parseInt(args[2])
-            window.game.lootboxes += count
-            log('added ' + count + ' lootboxes to count')
-        } else if (args[1] == 'totallootboxes') {
-            var count = parseInt(args[2])
-            window.game.totalLootboxes = count
-            log('added ' + count + ' to total lootbox count')
-        }   
-    } else {
-        //log('looking for commands')
-        for (lcmd in loadedCommands) {
-            tcmd = loadedCommands[lcmd]
-            if (tcmd.trigger == args[0]) {
-                log('running cmd')
-                tcmd.onTrigger()
-                return
-            }
+
+    //log('looking for commands')
+    for (lcmd in loadedCommands) {
+        tcmd = loadedCommands[lcmd]
+        if (tcmd.trigger == args[0]) {
+            log('running cmd')
+            tcmd.onTrigger(cmd)
+            return
         }
-        log("Unknown command '" + args[0] + "'. Type help for a list of commands.")
     }
+    log("Unknown command '" + args[0] + "'. Type help for a list of commands.")
 }

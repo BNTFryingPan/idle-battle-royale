@@ -400,4 +400,4 @@ function populateChangelogTab() {
     fullContent = fullContent.replace("[test-branch]", "<a href='https://thederpymemesquad.github.io/ibr-beta/client/index.html'>test branch</a>")
     
     cl.innerHTML = fullContent;
-}
+}   

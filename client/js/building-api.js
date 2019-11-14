@@ -1,3 +1,28 @@
+class building {
+    constructor(id, basePrice, baseLbps, name, description, icon) {
+        this.id = id;
+        this.basePrice = basePrice;
+        this.baseLbps = baseLbps;
+        this.name = name;
+        this.description = description;
+        this.icon = icon;
+
+        this.amount = 0;
+        this.price = this.basePrice;
+        this.lbps = 0;
+        this.unlocked = false;
+    }
+
+    buy() {
+
+    }
+
+    cost() {
+
+    }
+}
+
+
 function loadNewBuilding(buildingData) {
     var buildingContainer = document.getElementById("buildings");
     var tb = buildingData;
